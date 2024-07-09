@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script type="module" src="/js/admin/coupon/list.js" defer></script>
+    <style>
+        .dropdown-transformx {
+            transform: translateX(-140px);
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="main"
+      class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pt:8 md:pt:13 pr:4 pl:4 md:pr:0 md:pl:0 ">
+    <nav>
+        <h1 class="d:none">탭</h1>
+        <ul id='tabbar' class="n-tabbar n-tab-grow w:10p">
+            <li :class="tabIndex == 0 ? 'active' : ''"><a href="#" class="h:3 md:h:4" @click="clickTab(0)">쿠폰</a></li>
+            <li :class="tabIndex == 1 ? 'active' : ''"><a href="#" class="h:3 md:h:4" @click="clickTab(1)">적립금</a></li>
+        </ul>
+    </nav>
+
+    <section class="d:flex jc:center w:10p">
+        <h1 class="d:none">검색폼</h1>
+        <form class="pos:relative w:10p md:w:8 h:2">
+            <!-- <input type="text" @keyup.enter="getList" v-model="query" class="n-textbox border-color:main-6 bd-radius:4 pr:1 pl:4" placeholder="검색어를 입력해 주세요">
+            <button @click.prevent="getList" class="pos:absolute m-right:1 icon cursor:pointer icon:magnifying_glass icon-size:4 icon-color:base-5" style="top:2px; right:4px;">검색 버튼</button> -->
+            <input type="text" class="n-textbox border-color:main-6 bd-radius:4 pr:1 pl:4" placeholder="검색어를 입력해 주세요">
+            <button class="pos:absolute m-right:1 icon cursor:pointer icon:magnifying_glass icon-size:4 icon-color:base-5"
+                    style="top:2px; right:4px;">검색 버튼
+            </button>
+        </form>
+    </section>
+
+    <section>
+        <label class="font-size:2 font-weight:1">
+            적립금 지급
+            <input type="checkbox" class="n-toggle n-toggle-size:1"/>
+        </label>
+    </section>
+
+    <section class="d:flex fl-dir:column gap:4">
+        <h1 class="d:none">전체선택</h1>
+        <div class="d:flex gap:2 md:gap:4 w:10p jc:space-between">
+            <label>
+                <!-- <input type="checkbox" class="n-toggle n-toggle-type:check-box" @change="checkAll" /> -->
+                <input type="checkbox" class="n-toggle n-toggle-type:check-box n-toggle-size:2"/>
+                전체선택
+            </label>
+        </div>
+    </section>
+
+    <section class="d:flex fl-dir:column gap:5 md:gap:10 w:10p">
+        <h1 class="d:none">상품카드 목록</h1>
+        <div class="fl-grow:1 n-btn n-btn:outline border-color:base-3 box-shadow:1 ml:7 h:4" @click="goReg()">
+            <a class="w:10p icon icon-size:4 icon:plus"> 상품 추가</a>
+        </div>
+
+        <div class="d:flex ai:center fl-dir:row gap:3" v-for="coupon of list">
+            <div>
+                <input type="checkbox" class="n-toggle n-toggle-type:check n-toggle-size:2" name="state">
+            </div>
+            <div class="d:flex n-item color:color-base-4 fl-grow:1 gap:2">
+
+                <div class="d:flex fl-dir:column gap:2 w:10p" @click="goDetail(coupon)">
+                    <div class="d:flex fl-dir:row jc:space-between ai:center">
+                        <span class="fw:3"> {{coupon.name}} </span>
+                        <div class="n-dropdown ">
+                            <button id="dropdown-btn" type="button"
+                                    class="icon icon:dots_three_outline_vertical_fill icon-size:1 cursor:pointer"
+                                    @click.prevent="clickDropdown(coupon)">버튼
+                            </button>
+                            <ul :class="
+                                            [
+                                                coupon.showDropdown ? 'active' : '',
+                                                'dropdown-list dropdown-transformx'
+                                            ]">
+                                <li>
+                                    <button>
+                                        <span class="va:middle deco icon-size:1 icon:pencil_simple">수정하기</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <span class="va:middle deco icon-size:1 deco-color:accent-2 icon:trash color:accent-2">삭제하기</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span>할인 비율/금액 : {{ coupon.discountAmount }}{{ coupon.discountUnit }}</span>
+                    <span>기한 : 가입일로부터 7일</span>
+                    <span>상태 : 진행중</span>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+</main>
+</body>
+</html>

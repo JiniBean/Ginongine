@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!--구매정보 안내팝업(모바일)-->
+<section id="order-info" class="d:none d:flex fl-dir:column gap:8 ai:center md:d:none w:9p bottom:2 pos:sticky">
+    <h1 class="d:none">구매정보안내팝업</h1>
+    <div class="n-item n-item:outline d:flex fl-dir:column ai:center gap:8 w:10p">
+        <div class="close icon icon:caret_down icon-size:4">닫기 아이콘 </div>
+        <div class="w:10p d:flex fl-dir:column">
+            <div class="bg-color:base-3 p:5 d:flex fl-dir:column gap:3 fl-grow:1">
+                <div th:text="${productView.name+'*'+productView.weight+productView.weightCategory+'('+productView.quantity+productView.quantityCategory+')'}">국산 유기농 감 1kg 내외 (5~6개입)</div>
+                <div class="d:flex fl-dir:row ai:center jc:space-between">
+                <span class="numberBox bd bd-color:base-1 of:hidden pos:relative bd-radius:1 bg-color:main-1 bd w:4" style="height: 36px">
+                  <a th:data-btn="minus" class="btn-minus left:1"></a>
+                  <input type="text" class="quantity-input w:100p h:100p fw:3 txt-al:center" style="line-height: 36px" maxlength="3" th:value=1 />
+                  <a th:data-btn="plus" class="btn-plus right:1"></a>
+                </span>
+                <span class="w:1/5 txt-al:right" th:text="${#numbers.formatInteger(productView.price, 3, 'COMMA') +'원'}">10,000원</span>
+                </div>
+            </div>
+            <div class="total d:flex bd bd-color:base-3 h:3 p:3 d:flex fl-dir:row ai:center jc:space-between">
+                <div>
+                    <span class="fw:3">총 수량&emsp;<span class="total-quantity color:sub-5" th:text="1">1</span>개</span>
+                </div>
+                <div>
+                    <span class="total-price color:sub-5 fw:3" th:text="${#numbers.formatInteger(productView.price, 3, 'COMMA') +'원'}">10000</span>
+                    <input type="hidden" class="total-price-input" name="total-price" th:value="${productView.price}">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="navi d:flex md:d:none w:10p bg-color:base-1 bottom:1 p:4 pos:sticky">
+    <div class="pay-box d:flex fl-dir:row ai:center gap:2 w:10p">
+        <div class="icon icon:heart icon-color:main-6 icon-size:4 h:2 bd bd-color:base-3 bd-radius:2" style="width: 46px">찜버튼</div>
+        <div class="d:flex ai:center fl-grow:1 gap:1">
+            <button th:data-btn="cart" class="n-btn n-btn-type:outline w:10p">장바구니</button>
+            <button th:data-btn="order" class="n-btn w:10p">바로 구매하기</button>
+            <input type="hidden" class="product-id" th:value="${productView.id}">
+        </div>
+    </div>
+</section>
+</html>

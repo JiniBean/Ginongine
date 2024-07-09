@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="/js/admin/order/detail.js"></script>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pt:2  pr:4 pl:4 md:pt:0 md:pr:0 md:pl:0 md:pb:4">
+
+    <div class="d:none md:d:flex ai:center fs:4 fw:3 jc:center h:4 w:10p" th:text="${'주문 상세 - ' + member.name + '님'}">주문 상세</div>
+    <section class="d:flex fl-dir:column gap:8 md:gap:11">
+        <h1 class="d:none">주문 내역</h1>
+        <!-------- 주문 정보 ------------>
+        <div class="d:flex fl-dir:column gap:3 md:gap:4">
+            <div >
+                <div class="fw:3">주문자</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${member.name}">박경인</div>
+            </div>
+            <div >
+                <div class="fw:3">연락처</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${member.phone}">박경인</div>
+            </div>
+        </div>
+        <!-------- 수령인 정보 ------------>
+        <div class="d:flex fl-dir:column gap:3 md:gap:4">
+            <div class="md:d:flex fl-dir:column gap:1">
+                <div class="fw:3">수령인</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${locationHistory.receiverName}">박경인</div>
+            </div>
+            <div class="d:flex fl-dir:column gap:1">
+                <div class="fw:3">연락처</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${locationHistory.receiverPhone}" >박경인</div>
+            </div>
+            <div class="d:flex fl-dir:column gap:1">
+                <div class="fw:3">배송주소</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${locationHistory.addr1 + ' ' + locationHistory.addr2}">박경인</div>
+            </div>
+        </div>
+        <!-------- 주문 정보 ------------>
+        <div class="d:flex fl-dir:column gap:3 md:gap:4">
+            <div class="d:flex fl-dir:column gap:1 md:gap:2">
+                <div class="fw:3">주문정보</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:center h:2" th:each="o:${list}">
+                    <span class="fl-grow:1" th:text="${o.prettyName}" >당근</span>
+                    <span class="w:2 md:w:4" th:text="${o.quantity}">당근</span>
+                    <span class="w:2 md:w:4 txt-al:end" th:text="${#numbers.formatInteger(o.quantity*o.price, 3, 'COMMA')}">당근</span>
+                </div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:center h:2 fw:3">
+                    <span class="fl-grow:1" >총계</span>
+                    <span class="w:2 md:w:4" th:text="${totalQty}">당근</span>
+                    <span class="w:2 md:w:4 txt-al:end" th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}">당근</span>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:1">
+                <div class="fw:3">주문일자</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${#dates.format(list[0].date, 'yyyy년 MM월 dd일  hh:mm')}">박경인</div>
+            </div>
+            <div class="d:flex fl-dir:column gap:1">
+                <div class="fw:3">운송장번호</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end h:2" th:text="${list[0].trackingNum}">박경인</div>
+            </div>
+        </div>
+
+        <!-------- 결제 정보 ------------>
+        <div class="d:flex fl-dir:column gap:3 md:gap:4">
+            <div class="md:d:flex fl-dir:column gap:1">
+                <div class="fw:3">결제수단</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end jc:end h:2" th:text="${payment.categoryName}">박경인</div>
+            </div>
+            <div class="md:d:flex fl-dir:column gap:1">
+                <div class="fw:3">환불방법</div>
+                <div class="n-textbox n-textbox-type:underline d:flex ai:end jc:end h:2" th:text="${payment.refundType?'적립금':'결제수단'}">박경인</div>
+            </div>
+        </div>
+
+        <!-------- 주문 금액 정보 ------------>
+        <div class="d:flex fl-dir:column gap:3 md:gap:4">
+            <div class="d:flex fl-dir:column gap:1 md:gap:2">
+                <div class="fw:3">결제정보</div>
+                <div class="n-textbox n-textbox-type:underline d:flex jc:space-between ai:center h:2" >
+                    <span>총 상품 금액</span>
+                    <span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}">당근</span>
+                </div>
+                <div class="n-textbox n-textbox-type:underline d:flex jc:space-between ai:center h:2" >
+                    <span>적립금 사용금액</span>
+                    <span class="color:sub-1" th:text="${#numbers.formatInteger(payment.pointAmt, 3, 'COMMA')}">당근</span>
+                </div>
+                <div class="n-textbox n-textbox-type:underline d:flex jc:space-between ai:center h:2" >
+                    <span>쿠폰 사용금액</span>
+                    <span class="color:sub-1" th:text="${#numbers.formatInteger(payment.couponAmt, 3, 'COMMA')}">당근</span>
+                </div>
+                <div class="n-textbox n-textbox-type:underline d:flex  jc:space-between ai:center h:2 fw:3">
+                    <span>총계</span>
+                    <span th:text="${#numbers.formatInteger(payment.totalAmt, 3, 'COMMA')}">당근</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <button th:disabled="${list[0].trackingNum}" id="modal-btn" class="n-btn w:10p">출고</button>
+
+
+    <section id="modal" class="n-modal w:7 d:none" tabindex="-1" >
+        <form method="post" class="d:flex fl-dir:column gap:3">
+            <h1 class="n-font:subtitle text-align:center">운송장 번호를 입력해주세요</h1>
+            <div><input type="text" name="trackingNum" class="n-textbox"></div>
+            <div class="mt:4 d:flex jc:space-between gap:2">
+                <button id="close-btn" type="submit" class="n-btn n-btn-type:outline n-btn-size:2 h:1 fl-grow:1">취소</button>
+                <button id="submit-btn" type="submit" class="n-btn n-btn-size:2 h:1 fl-grow:1">확인</button>
+            </div>
+        </form>
+    </section>
+
+</main>
+
+</body>
+</html>

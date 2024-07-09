@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <link rel="stylesheet" href="/css/user/faq.css">
+    <script src="/js/user/faq.js" defer></script>
+</head>
+<body>
+
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+    <!--  페이지 제목-->
+    <nav>
+        <h1 class="d:none">탭</h1>
+        <ul id='tabbar' class="n-tabbar n-tab-grow w:10p">
+            <li :class="tabIndex == 0 ? 'active' : ''"><a href="#" class="h:3 md:h:4" @click="clickTab(0)">FAQ</a></li>
+            <li :class="tabIndex == 1 ? 'active' : ''"><a href="/inquiry/list" class="h:3 md:h:4" @click="clickTab(1)">1:1 문의</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="d:flex fl-dir:column gap:5 ">
+        <h1 class="d:none">FAQ 목록</h1>
+        <div>
+            <div class="faq-title d:flex jc:space-between" @click="toggleArrow(0)">
+                <div class="faq-question deco icon:carrot icon-color:main-4 deco-size:4 icon-size:4 h:3">일반 택배 배송 언제오나요?</div>
+                <div class="arrow icon icon:caret_down_bold icon-size:4 " :class="{ 'rotate-180': isRotated[0] }"></div>
+            </div>
+            <div :class="['faq-answer', 'bg-color:main-1', { 'open': isRotated[0] }]">
+                기농이네 고객센터입니다.
+                일반 택배는 평일에 20시 이전 주문시 당일 발송되며,
+                금요일 20시~일요일 19시 이전에 주문하시면 일요일 포장하여 발송해드리고 있습니다. 감사합니다.
+            </div>
+        </div>
+        <div>
+            <div class="faq-title d:flex jc:space-between" @click="toggleArrow(1)">
+                <div class="faq-question deco icon:carrot icon-color:main-4 deco-size:4 icon-size:4 h:3">지리산암반수 냉동 생수병 물 먹어도되나요?</div>
+                <div class="arrow icon icon:caret_down_bold icon-size:4 " :class="{ 'rotate-180': isRotated[1] }"></div>
+            </div>
+            <div :class="['faq-answer', 'bg-color:main-1', { 'open': isRotated[1] }]">
+                기농이네 고객센터입니다.
+
+                친환경 포장을 위해 냉매로 사용중인
+                아이스팩과 냉동 생수를 병행하여 보냉 포장을
+                진행하고 있습니다.
+
+                포장 시 사용된 냉동 생수는 기존 아이스팩과 동일 수준의
+                냉매 역할을 하게되며, 판매 중인 생수와 동일 제품의 생수를
+                그대로 얼린 만큼 언제든 음용이 가능합니다.
+
+                앞으로도 고객 편익 증대와 환경 보호에 더욱 노력하도록 하겠습니다.
+
+                감사합니다.
+            </div>
+        </div>
+        <div>
+            <div class="faq-title d:flex jc:space-between" @click="toggleArrow(2)">
+                <div class="faq-question deco icon:carrot icon-color:main-4 deco-size:4 icon-size:4 h:3">제품의 가격이 왜 저렴하나요?</div>
+                <div class="arrow icon icon:caret_down_bold icon-size:4 " :class="{ 'rotate-180': isRotated[2] }"></div>
+            </div>
+            <div :class="['faq-answer', 'bg-color:main-1', { 'open': isRotated[2] }]">
+                기농이네 고객센터입니다.
+
+                산지 생산자와의 직거래를 통해
+                중간 유통단계를 획기적으로 줄여,
+                고객님께 합리적인 가격으로
+                질 좋은 상품을 제공하고 있습니다.
+
+                가격·품질·서비스 감동을 실천하기 위한
+                기농이네의 가치를 전달하기 위해
+                앞으로도 좋은 가격의 질 좋은 상품을
+                제공하겠습니다.
+            </div>
+        </div>
+
+    </section>
+</main>
+</body>
+</html>

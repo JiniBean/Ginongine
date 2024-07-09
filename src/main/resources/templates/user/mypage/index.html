@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/user/mypage/index.js" defer></script>
+    <link rel="stylesheet" href="/css/user/mypage/index.css">
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
+<h1 class="d:none">마이페이지</h1>
+    <div class="d:flex jc:space-between">
+        <aside class="aside-mypage d:none md:d:block md:d:flex fl-dir:column md:min-w:4 ai:center gap:8">
+            <h1 class="d:none">사이드메뉴</h1>
+            <div class="d:flex jc:center ai:center h:4 fw:3 fs:6">마이페이지</div>
+            <div><a href="/mypage/location/list" th:href="@{info-detail(t='location')}">배송지 관리</a></div>
+            <div><a href="/order/list" th:href="@{/order/list(id=${memberId})}">주문내역</a></div>
+            <div><a href="">자주구매 한 상품</a></div>
+            <div><a href="/product/recent" th:href="@{/product/recent(id=${memberId})}">최근 본 상품</a></div>
+            <div><a href="/mypage/review/wirte_list" th:href="@{review/wirte_list(id=${memberId})}">구매 후기</a></div>
+            <div><a href="/mypage/cancle/list" th:href="@{cancle/list(id=${memberId})}">주문 취소 내역</a></div>
+            <div><a href="/mypage/order/exchange" th:href="@{order/exchange(id=${memberId})}">교환/ 환불 내역</a></div>
+            <div><a href="">상품 문의 내역</a></div>
+            <div><a href="/mypage/user_info/update" th:href="@{info-detail}">회원 정보 관리</a></div>
+        </aside>
+        <article class="article-mypage d:flex fl-dir:column w:10p md:w:8p md:pl:10 gap:8 md:gap:20">
+            <section class="user-info d:flex bd-color:base-3 gap:10 h:5">
+                <h1 class="d:none">유저이름, 적립금</h1>
+                <div class="d:flex w:5p jc:center ai:center bd-right bd-color:base-3">
+                    <div class="d:flex jc:center ai:center ml:8 fl-grow:1">
+                        <a href="/mypage/info-detail" class="d:flex"><span th:text="${name}">기농이</span>
+                        <span class="d:block md:d:none"> 님></span>
+                        <span class="d:none md:d:block"> 님 환영합니다!</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="d:flex fl-dir:column md:fl-dir:row w:5p jc:center ai:center">
+                    <div class="fl-grow:1 d:flex jc:center ai:center">적립금</div>
+                    <div class="fl-grow:1 d:flex jc:center ai:center"><span th:text="${#numbers.formatInteger(amountPoint,0,'COMMA')}">1,500</span> <span> P</span></div>
+                </div>
+            </section>
+            <section class="d:flex jc:space-around ai:center bd-bottom bd-color:base-3 gap:10 py:10">
+                <h1 class="d:none">사이트 사용 정보</h1>
+                <div class="d:flex fl-dir:column ai:center jc:center gap:2">
+                    <div><a href="/order/list" th:text="${countOrder}">1</a></div>
+                    <div>주문내역</div>
+                </div>
+                <div class="d:flex fl-dir:column ai:center jc:center gap:2">
+                    <div><a href="" th:text="${countCoupon}">0</a></div>
+                    <div>쿠폰</div>
+                </div>
+                <div class="d:flex fl-dir:column ai:center jc:center gap:2">
+                    <div><a href="" th:text="${countReview}">0</a></div>
+                    <div>후기</div>
+                </div>
+                <div class="d:flex fl-dir:column ai:center jc:center gap:2">
+                    <div><a href="/inquiry/list" th:text="${countInquiry}">0</a></div>
+                    <div>1:1 문의</div>
+                </div>
+            </section>
+            <section class="d:flex fl-dir:column gap:5 md:gap:8 p:4 bd-bottom bd-color:base-3 bg-color:base-2 md:bg-color:transparent">
+                <h1 class="d:none">최근 주문 상태</h1>
+                <div v-if="info" class="d:flex fl-dir:column gap:10 p:5">
+                    <div class="d:flex jc:space-between">
+                        <div>
+                            <span class="fs:2 md:fs:3 fw:3 color:base-9 pr:1">{{ formatDate(new Date(info.date)) }}</span>
+                            <span class="fs:2 md:fs:3 fw:3 color:base-9">주문</span>
+                        </div>
+                        <div>
+                            <span class="fs:2 md:fs:3 fw:3 color:base-9 pr:1">주문번호</span>
+                            <span class="fs:2 md:fs:3 fw:3 color:base-9">{{ info.id }}</span>
+                        </div>
+
+                    </div>
+                    <div class="d:flex jc:space-between gap:4 p:5">
+                        <div class="d:flex fl-dir:column ai:center gap:2 md:gap:3" v-for="status in state" :key="status.id" >
+                            <div :class="info.categoryId == status.id?'bg-color:main-6':''" class="n-item n-item-type:outline-box bd-radius:full n-list-item-padding:1 ai:center d:flex jc:cente bg-color:base-4" style="width: 36px; height: 36px;"></div>
+
+                            <span :class="info.categoryId == status.id?'color:main-6':''" class="fs:1 md:fs:3 color:base-4">{{ status.name }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="pb:10 d:flex fl-dir:column gap:10">
+                    <div class="fs:2 md:fs:3 fw:3 color:base-9 pr:1">최근 주문 상품</div>
+                    <div class="d:flex ai:center jc:center">최근 주문하신 내역이 없습니다.</div>
+                </div>
+            </section>
+            <section class="d:flex fl-dir:column gap:10 p:5">
+                <h1 class="fs:2 md:fs:3 fw:3 color:base-9 pr:1">추천 상품</h1>
+                <div class="Wrapper d:flex of:hidden jc:space-between ai:center">
+                     <div class="arrow left" v-on:click="pre" v-bind:class="{ hidden: selected == 0 }">
+                        <i class="icon icon:caretDoubleLeft left icon-size:3 icon-color:main-6 zi:2"></i>
+                    </div>
+                    <div class="imageContainer">
+                        <div class="imageWrapper" v-bind:style="{ transform: 'translateX(-' + selected * 33.3 + '%)' }">
+                            <div class="d:flex fl-dir:column gap:5 px:8" v-for="(img, index) in images" :key="index" style="width:33%;">
+                                <div class="image gap:10 d:flex csr:pointer" v-bind:style="{ 'background-image': 'url(' + img + ')' }"
+                                     @click.prevent="goProductDetail(ids[index])"></div>
+                                <div >{{ names[index] }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="arrow right" v-on:click="next" v-bind:class="{ hidden: selected >= length }">
+                        <i class="icon icon:caretDoubleRight right icon-size:3 icon-color:main-6 zi:2"></i>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </div>
+</main>
+</body>
+</html>

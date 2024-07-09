@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/admin/order/list.js" defer></script>
+</head>
+<body>
+<main layout:fragment="main" class=" d:flex fl-dir:column gap:8 md:gap:13 md:pt:1 md:pb:4 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
+
+    <div class="n-tabbar d:flex h:2 md:h:4 w:10p">
+        <div @click="getList(1)" :class="{active :orderType==1}" class="n-tab d:flex ai:center jc:center fl-grow:1 h:10p">주문</div>
+        <div @click="getList(2)" :class="{active :orderType==2}" class="n-tab d:flex ai:center jc:center fl-grow:1 h:10p">교환</div>
+        <div @click="getList(3)" :class="{active :orderType==3}" class="n-tab d:flex ai:center jc:center fl-grow:1 h:10p">환불</div>
+        <div @click="getList(4)" :class="{active :orderType==4}" class="n-tab d:flex ai:center jc:center fl-grow:1 h:10p">취소</div>
+    </div>
+
+    <section class="d:flex jc:center w:10p">
+        <h1 class="d:none">검색폼</h1>
+        <form class="pos:relative w:10p md:w:8 h:2">
+            <input type="text" @keyup.enter="getList(orderType)" v-model="query" class="n-textbox border-color:main-6 bd-radius:4 pr:1 pl:4" placeholder="검색어를 입력해 주세요">
+            <button @click.prevent="getList(orderType)" class="pos:absolute m-right:1 icon cursor:pointer icon:magnifying_glass icon-size:4 icon-color:base-5" style="top:2px; right:4px;">검색 버튼</button>
+        </form>
+    </section>
+
+    <div @click="getList(1,!sortType)" :class="{'d:none':orderType!=1, 'icon-color:main-6':sortType}" class=" deco icon:check_circle deco-size:4 icon-size:4 icon-color:base-5" style="height: 24px">출고 전만 보기</div>
+    <div :class="{'d:none':orderType!=2}" class="pos:relative d:flex gap:3 cursor:pointer" style="height: 24px">
+        <span @click="getList(2,1)" :class="{'color:main-6':sortType==1}">승인 전</span>
+        <span class="bar"></span>
+        <span @click="getList(2,2)" :class="{'color:main-6':sortType==2}">출고 전</span>
+    </div>
+    <div @click="getList(3,!sortType)" :class="{'d:none':orderType!=3,'icon-color:main-6':sortType}" class="deco icon:check_circle deco-size:4 icon-size:4 icon-color:base-5" style="height: 24px">승인 전만 보기</div>
+
+    <section class="d:flex fl-dir:column gap:7 md:gap:10" >
+        <h1 class="d:none">주문내역</h1>
+        <div class="d:flex fl-dir:column gap:2 cursor:pointer" v-for="l of list" :key="l.id" @click="goDetail(l)">
+            <div v-if="orderType !=4">{{category[orderType]}} 상태 :
+                <span v-if="orderType===1" :class="{'color:sub-2': l.categoryId==1}">{{l.category}}</span>
+                <span v-else-if="orderType===2" :class="{'color:sub-2': l.exchState < 3}">{{category[orderType]}}{{code[l.exchState]}}</span>
+                <span v-else-if="orderType===3" :class="{'color:sub-2': l.rfndState==1}">{{category[orderType]}}{{code[l.rfndState]}}</span>
+            </div>
+            <div class="d:flex fl-dir:column gap:2 md:gap:4 p:4 bd bd-color:base-5 bd-radius:2 box-shadow:1">
+                <div>주문 정보 : {{l.prettyName}}
+                    <span v-if="l.count>0">외 {{l.count}}건</span>
+                </div>
+                <div>주문 번호 : {{l.id}}</div>
+                <div>주문 일자 : {{l.date}}</div>
+                <div v-if="orderType ==2">교환 사유 : {{l.exchDesc}}</div>
+                <div v-if="orderType ==3">환불 사유 : {{l.rfndDesc}}</div>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+</body>
+</html>

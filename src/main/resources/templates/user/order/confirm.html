@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+  <link rel="stylesheet" href="/css/error/error.css">
+  <script type="text/javascript" src="/js/user/order/confirm.js"></script>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0">
+
+  <section class="error d:flex fl-dir:column ai:center gap:16 md:gap:18 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0s">
+
+    <div class="fs:8 fw:3">결제 진행 중...</div>
+
+    <div class="d:flex fl-dir:column gap:15 ai:center jc:centerr">
+      <div class="pr:2"><img src="/img/success.png" alt="order success"></div>
+      <div>결제 정보를 확인 중입니다.  잠시만 기다려주세요</div>
+    </div>
+  </section>
+
+
+
+
+
+</main>
+
+</body>
+</html>

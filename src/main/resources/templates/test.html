@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/js/portoneAPI/portoneIMP.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Sample Payment</title>
+    <link rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/newtil-css@0.1.49/dist/style.css"/>
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/utill.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/icon.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/component.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!-- ################################################################################### -->
+<header class="header w:10p d:flex h:5 jc:center md:h:6 bg-color:base-1 top:1 pos:sticky zi:1">
+    <div class="d:flex jc:space-between max-w:10 h:5 md:h:6 bd-bottom bd-color:base-2 fl-grow:1 mr:4 ml:4 md:mr:0 md:ml:0">
+        <h1 class="d:flex ai:center"><a href="/index">
+            <img src="/img/logo-leaf.png" width="100" height="57.69" class="d:none"/>
+            <img src="/img/logo-hat.png" width="100" height="50.3" class=" md:d:inline"/>
+            <img src="/img/logo-leaf.png" width="140" height="80.77" class="d:none"/>
+            <img src="/img/logo-hat.png" width="140" height="70.41" class="d:none md:d:none "/>
+        </a>
+        </h1>
+        <div class="d:flex fl-dir:column ac:center jc:center gap:2">
+            <nav class="d:none md:d:flex ai:center">
+                <h1 class="d:none">top</h1>
+                <ul class="d:flex gap:3">
+                    <li>
+                        <a href="/signin" class="color:main-6 fw:3">로그인</a>
+                    </li>
+                    <li>
+                        <span class="user color:main-6 fw:3" th:text="${#authentication.name}"> 유저아이디</span>
+                        <span class="fw:3"> 님  </span>
+                        <a href="/logout" class="color:main-6 fw:3">로그아웃</a>
+                    </li>
+                    <li>
+                        <a href="/signup/step1" class="color:main-6 fw:3">회원가입</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav class="d:flex jc:end">
+                <h1 class="d:none">down</h1>
+                <ul class="d:flex gap:3 pos:relative">
+                    <li>
+                        <div>
+                            <input type="text">
+                        </div>
+                        <a href="" class="icon icon:magnifying_glass icon-size:5">검색</a></li>
+                    <li class="d:none md:d:block"><a href="/mypage/index" class=" icon icon:user icon-size:5">마이페이지</a>
+                    </li>
+                    <li>
+                        <a href="/cart" class="icon icon:shopping_cart_simple icon-size:5">장바구니</a>
+                        <span class="cart-circle d:none">1</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- ################################################################################### -->
+<aside class="aside d:none">
+    <h1>전체메뉴</h1>
+    <ul>
+        <li><a href="product/list?c=1">과채</a></li>
+        <li><a href="product/list?c=2">양념</a></li>
+        <li><a href="product/list?c=3">가공식품</a></li>
+        <li><a href="/notice/list">공지사항</a></li>
+        <li><a href="/mypage/index">마이페이지</a></li>
+        <li><a href="/recents/list">최근 본 상품</a></li>
+        <li><a href="/inquiry/faq">고객센터</a></li>
+    </ul>
+</aside>
+<!-- ################################################################################### -->
+<nav class="category d:none md:d:flex jc:center w:10p top:3 pos:sticky bg-color:base-1 zi:1">
+    <h1 class="d:none">PC 카테고리</h1>
+    <ul class="n-tabbar d:flex h:4 max-w:10 jc:space-between fl-grow:1">
+        <li class="h:10p" th:class="${{param.c}}==1 ? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=1" class="h:10p fw:3 fs:3"
+               th:class="${{param.c}}==1 ? 'fw:3 fs:3 h:10p': 'fs:3 h:10p'" th:data-id=1>과일/채소류</a>
+        </li>
+        <li class="h:10p"  th:class="${{param.c}}==2 ? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=2" class="h:10p"
+               th:class="${{param.c}}==2 ? 'fw:3 fs:3 h:10p': 'fs:3 h:10p'" th:data-id=1>양념/장류</a>
+        </li>
+        <li class="h:10p"  th:class="${{param.c}}==3 ? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=3" class="h:10p"
+               th:class="${{param.c}}==3 ? 'fw:3 fs:3 h:10p': 'fs:3 h:10p'" th:data-id=1>반찬/가공식품류</a>
+        </li>
+        <li class="h:10p">
+            <a href="/order/list" class="fs:3 h:10p">주문 내역</a>
+        </li>
+        <li class="h:10p">
+            <a href="/notice/list" class="fs:3 h:10p">공지사항</a>
+        </li>
+        <li class="h:10p">
+            <a href="/inquiry/faq" class="fs:3 h:10p">고객센터</a>
+        </li>
+    </ul>
+
+</nav>
+
+<nav class="category d:flex md:d:none w:10p bg-color:base-1 top:2 pos:sticky zi:1">
+    <h1 class="d:none">모바일 카테고리</h1>
+    <ul class="n-tabbar d:flex h:2 jc:space-between fl-grow:1 mr:4 ml:4 md:mr:0 md:ml:0 ">
+        <li class="h:10p" th:class="${{param.c}}==1 ? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=1" class="h:10p fw:3" th:class="${{param.c}}==1 ? 'fw:3 h:10p': 'h:10p'" th:data-id=1>과채</a>
+        </li>
+        <li class="h:10p" th:class="${{param.c}}==2 ? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=2" class="h:10p fw:3" th:class="${{param.c}}==2 ? 'fw:3 h:10p': 'h:10p'" th:data-id=2>양념</a>
+        </li>
+        <li class="h:10p" th:class="${{param.c}}==3? 'active h:10p' : 'h:10p'">
+            <a href="/product/list?c=3" class="h:10p fw:3" th:class="${{param.c}}==3 ? 'fw:3 h:10p': 'h:10p'" th:data-id=3>가공식품</a>
+        </li>
+        <li class="h:10p"><a href="/notice/list" class="h:10p">공지사항</a></li>
+        <li class="h:10p"><a href="/inquiry/faq" class="h:10p">고객센터</a></li>
+    </ul>
+</nav>
+<!-- ################################################################################### -->
+<main>
+    <h1>This is main</h1>
+</main>
+</body>
+</html>

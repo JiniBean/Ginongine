@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script src="/js/user/notice/detail.js" defer></script>
+    <link rel="stylesheet" href="/css/user/product/list.css">
+</head>
+<body>
+    <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+        <section class="pt:3 pb:3">
+            <h1 class="d:none">공지사항</h1>
+            <div class="d:none md:d:flex fl-dir:column fw:3 fs:3 ai:center md:fs:4">공지사항</div>
+       
+            <div class="d:flex fl-dir:column p:2 md:p:4">
+                <div class="d:flex fl-dir:row p:2 md:p:4">
+                    <span class="fs:2 md:fs:3" v-text="notice.title">연휴 기간 배송 지연 안내</span>
+                    <span></span>
+                </div>
+                <div class="d:flex fl-dir:row pos:relative gap:3 bd-top bd-color:base-4 p:2 md:p:4">
+                    <span>작성일</span>
+                    <span class="bar"></span>
+                    <span v-text="notice.regDate">2024-01-27</span>
+                </div>
+            </div>
+            <div class="bd bd-color:main-6 white-space:pre-line m:2 md:m:4 p:5 fs:2 md:fs:3" v-text="notice.content">
+                <!-- <pre> -->
+                안녕하세요. 기농이네입니다.
+                <!-- </pre>   -->
+            </div>
+        </section>
+        <section>
+            <h1 class="기농이 안내문 & 기농이 로고"></h1>
+            <div class="d:flex">
+                <div class="p:4 fw:3 color:base-8 fl-grow:1" >
+                    기농이네는 언제나 고객님의
+                    가정과 건강에 도움이 되기를
+                    기대합니다.
+                </div>
+                <div>
+                    <img src="" th:src="@{/img/potato-ginong.png}"  height="60px">
+                </div>
+            </div>
+        </section>
+        <section class="d:flex jc:center">
+            <h1 class="d:none">버튼</h1>
+            <div class="n-btn n-btn-size:1 w:3 md:w:4" @click="goList()">목록</div>
+        </section>
+    </main>
+
+</body>
+</html>

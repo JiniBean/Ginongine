@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+  <meta charset="UTF-8">
+  <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="/js/user/inquiry/list.js" defer></script>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
+  <h1 class="d:none">1:1문의</h1>
+  <section class="d:flex jc:space-between py:10 bd-bottom bd-w:3 bd-color:base-3 ">
+    <h1 class="d:none">1:1 문의 내역</h1>
+    <div class="fw:3 fs:5">1:1 문의 내역</div>
+    <div class="fw:3 fs:5">총 {{count}}개</div>
+  </section>
+    <section>
+      <h1 class="d:none">등록 버튼</h1>
+      <div class="">
+        <a href="/inquiry/reg" class="n-btn n-btn:outline n-btn-size:2 w:10p">문의 등록하기</a>
+      </div>
+    </section>
+
+
+    <section v-for="lists in list" :key="lists.id"
+            class="d:flex fl-dir:column gap:10 py:10 bd-bottom bd-color:base-3">
+      <h1 class="d:none">1:1문의 내용 카드</h1>
+      <div class="d:flex jc:space-between">
+        <div><a :href="`/inquiry/detail?inquiryId=${lists.id}`">
+          <span class="fw:3 fs:3">Q [ {{ getCategoryName(lists.categoryId) }} ] </span>
+          <span class="fw:3 fs:3"> {{lists.title}}</span>
+        </a></div>
+        <div>{{getStateText(state)}}</div>
+      </div>
+      <div><p>{{lists.content}}</p></div>
+      <div class="d:flex jc:space-between">
+        <div>
+          <span class="color:base-6">작성일 : </span>
+          <span class="color:base-6">{{lists.regDate}}</span>
+        </div>
+        <div class="d:flex fl-dir:row gap:2">
+          <div class="deco icon:notePencil deco-size:3 icon-size:2 csr:pointer" @click="goUpdate(lists.id)">수정</div>
+          <div class="deco icon:trash deco-size:3 icon-size:2 csr:pointer" @click="deleteInquiry(lists.id)">삭제</div>
+        </div>
+      </div>
+    </section>
+
+</main>
+</body>
+</html>

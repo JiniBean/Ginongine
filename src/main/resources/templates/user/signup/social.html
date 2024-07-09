@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="user/inc/layout" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Product-List</title>
+    <link rel="stylesheet" href="/css/user/signup/social.css">
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+    <h1 class="d:none">소셜로그인 시 유저 정보 없을 때</h1>
+    <section class="d:flex fl-dir:column gap:8 md:gap:13 jc:center ai:center pt:10">
+        <h1 class="d:none">안내 문구</h1>
+        <div class="logo-signin"></div>
+        <div class="fs:4 md:fs:5">가입된 정보가 없습니다.</div>
+        <div class="fs:4 md:fs:5">지금 가입하여 기농이네와 함께 건강한 식탁을 시작해보세요!</div>
+    </section>
+    <section class="d:flex jc:center ai:center">
+        <h1 class="d:none">회원가입 버튼</h1>
+        <a href="/signup/step1" class="n-btn n-btn-size:2 min-w:3 w:10p">회원가입</a>
+    </section>
+</main>
+</body>
+</html>

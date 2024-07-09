@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://fastly.jsdelivr.net/npm/newtil-css@0.1.49/dist/style.css" />
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/utill.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/icon.css">
+    <link rel="stylesheet" href="/css/component.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+        <!-- header 부분 -->
+        <div th:replace="~{admin/inc/header-index}">헤더</div>
+
+        <!-- aside 부분 -->
+        <div th:replace="~{admin/inc/aside}">전체메뉴</div>
+
+        <!-- category 부분 -->
+        <div th:replace="~{admin/inc/category}">카테고리(PC)</div>
+
+        <!-- main 부분 -->
+        <div layout:fragment="main">메인</div>
+
+        <!-- footer 부분 -->
+        <div th:replace="~{admin/inc/footer}">푸터</div>
+
+        <!-- navi 부분 -->
+        <div th:replace="~{admin/inc/navi}">네비게이션바</div>
+</body>
+</html>

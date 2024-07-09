@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/admin/member/list.js"></script>
+    <title>기농이네 관리자</title>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pt:8 md:pt:13  pr:4 pl:4 md:pr:0 md:pl:0 ">
+
+    <section class="d:flex jc:center w:10p">
+        <h1 class="d:none">검색폼</h1>
+        <form class="pos:relative w:10p md:w:8 h:2" method="get">
+            <fieldset>
+                <legend class="d:none">회원검색</legend>
+                <input type="text" @keyup.enter="getList" class="n-textbox border-color:main-6 bd-radius:4" placeholder="검색어를 입력해 주세요" name="q">
+                <button class="pos:absolute m-right:1 icon icon:magnifying_glass icon-size:3 icon-color:base-5" style="top:2px; right:4px;"></button>
+            </fieldset>
+        </form>
+    </section>
+
+    <section class="d:flex ji:left">
+        <h1 class="d:none">총 회원수</h1>
+        <div>
+            <span>총회원수 :</span>
+            <span th:text="${totalMemberCount}+'명'">100명</span>
+        </div>
+    </section>
+
+    <table class="n-table n-table-hover n-table-border:bottom txt-al:center" id="memberTable">
+        <thead class="bg-color:base-3">
+        <tr>
+            <th scope="col" class="w:auto txt-al:center">이름</th>
+            <th scope="col" class="w:auto txt-al:center">아이디</th>
+            <th scope="col" class="w:auto txt-al:center">생년월일</th>
+            <th scope="col" class="w:auto txt-al:center">휴대폰</th>
+            <th scope="col" class="d:none md:d:table-cell w:3 txt-al:center">회원상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-row" th:each="m: ${members}" th:data-id="${m.id}">
+            <th scope="row" class="w:auto txt-al:center" th:text="${m.name}">박경인</th>
+            <td style="width: 100px" class="w:auto txt-al:center" th:text="${m.userName}">kingofnewlecure</td>
+            <td style="width: 100px" class="w:auto txt-al:center" th:text="${#dates.format(m.birthDate, 'yy-MM-dd')}">98-08-15</td>
+            <td style="width: 100px" class="w:auto txt-al:center" th:text="${m.phone}">0815</td>
+            <td class="d:none md:d:table-cell w:3 txt-al:center" th:text="${m.state == 0 ? '비활성화' : '활성화'}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+</body>
+</html>

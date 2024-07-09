@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="/js/admin/notice/reg.js" defer></script>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:20 max-w:9 w:10p pl:4 pr:4 pt:4 md:pl:0 md:pr:0 md:pb:4">
+    <div class="d:none md:d:flex w:10p jc:center fw:3 fs:4">공지 등록</div>
+
+    <section class="w:10p">
+        <h1 class="d:none">공지 등록</h1>   
+
+        <form class="n-form:outline-none d:flex fl-dir:column gap:8 md:gap:13 h:10p">
+            <div class="d:flex fl-dir:column gap:2">
+                <div>제목</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="title" 
+                    required v-model="notice.title"/>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <label>작성일</label>
+                <input type="date" class="n-textbox n-textbox-type:underline" name="regDate" 
+                    required v-model="notice.regDate" readonly="readonly">
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>공지유형</div>
+                <div id="category" class="n-dropdown category w:5">
+                    <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right"
+                            @click.prevent="clickDropdown()">
+                        <span class="fl:fill">{{ getCategoryName() }}</span>
+                    </button>
+                    <ul :class="
+                            [
+                                showDropdown ? 'active' : '',
+                                'dropdown-list w:10p'
+                            ]" >
+                        <li class="d:flex jc:center p:1" v-for="c of category"
+                            @click.prevent="clickDropdownElement(c)">{{ c.name }}</li>
+                    </ul>
+                    <div>
+                        <input type="hidden" name="categoryId" required title="공지 유형을 선택해주세요">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <label>공지기간</label>
+                <div class="d:flex fl-dir:row gap:2 ai:center">
+                    <input type="date" class="n-textbox n-textbox-type:underline" name="startDate" 
+                        required title="공지 게시일을 선택해주세요" v-model="notice.startDate">
+                    <span>-</span>
+                    <input type="date" class="n-textbox n-textbox-type:underline" name="endDate" 
+                        required title="공지 종료일을 선택해주세요" v-model="notice.endDate">
+                </div>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <span>내용</span>
+                <input type="text" class="n-textbox min-h:6" name="title" v-model="notice.content"/>
+            </div>
+            
+            <div class="d:flex fl-grow:1 gap:8">
+                <button class="n-btn n-btn:outline n-btn-size:2 min-w:3 w:10p" @click.prevent="goList()">취소</button>
+                <button class="n-btn n-btn-size:2 min-w:3 w:10p" @click.prevent="regNotice()">등록</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+
+</html>

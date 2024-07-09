@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-signup">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/user/signup/find.css">
+    <script src="/js/user/signup/change-pwd.js" defer></script>
+    <title>Title</title>
+
+<body>
+<main layout:fragment="main" class="md:gap:20 max-w:10 w:10p  pr:4 pl:4 md:pr:0 md:pl:0">
+    <section id = confirm-pwd>
+        <form method = "post" class = "password-form d:flex fl-dir:column gap:8 ">
+            <section class="d:flex fl-dir:column gap:2 centered-container h:3p">
+                <h1 class="d:none">안내문</h1>
+                <div class="icon icon:checkCircle icon-color:main-6 ">아이콘</div>
+                <div class="d:flex r">비밀번호를 변경해주세요!</div>
+            </section>
+
+            <section class="col-gap:2 pos:relative">
+                <h1 class="d:none">비밀번호</h1>
+                <div>
+                    <div><span>비밀번호</span><span class="emphasis color:accent-3">*</span></div>
+                    <input type="password" name= "password" class="password n-textbox n-textbox-type:underline" required/>
+                    <div class="verify-pwd d:none color:accent-3 mt:2">비밀번호를 입력해주세요</div>
+                    <div class="check-pwd d:none color:accent-3 mt:2">영문, 숫자를 조합하여 최소 7자리 이상 입력하셔야 합니다.</div>
+                </div>
+                <div class="check-pwd d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 사용가능 ]</div>
+            </section>
+
+            <section class="col-gap:2 pos:relative">
+                <h1 class="d:none">비밀번호 확인</h1>
+                <div>
+                    <div>비밀번호 재확인</div>
+                    <input type="password" name="verify-password" class="verify-password n-textbox n-textbox-type:underline" required/>
+                </div>
+                <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 일치 ]</div>
+                <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 불일치 ]</div>
+            </section>
+
+            <section class="d:flex gap:8">
+                <h1 class="d:none">버튼</h1>
+                <button type="button" class="n-btn n-btn:outline w:10p">뒤로가기</button>
+                <button type="submit" class="submit-button n-btn w:10p">비밀번호 변경</button>
+            </section>
+        </form>
+    </section>
+</main>
+</body>
+</html>

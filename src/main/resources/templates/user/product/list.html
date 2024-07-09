@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <link rel="stylesheet" href="/css/user/product/list.css">
+    <script type="module" src="/js/user/product/list.js" defer></script>
+    
+</head>
+
+<body>
+    <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
+
+        <!--  카테고리  -->
+        <section id="sort" class="w:10p d:flex ai:center jc:space-between">
+            <h1 class="d:none">정렬 카테고리</h1>
+            <div>
+                <div class="md:d:none">
+                    <a href="#" class="icon icon:squares_four">정렬버튼</a>
+                    <a href="#" class="icon icon:list_bullets d:none">정렬버튼</a>
+                </div>
+                
+                <div class="dropdown d:none md:d:flex">
+                    <button class="dropdown-btn" aria-haspopup="menu">
+                        <span class="currentNum" th:text="${r} + '개씩 보기'">20개씩 보기</span>
+                        <span class="arrow"></span>
+                    </button>
+                    <ul class="dropdown-content" role="menu">
+                        <li><a href="#" data-value="20">20개씩 보기</a></li>
+                        <li><a href="#" data-value="40">40개씩 보기</a></li>
+                        <li><a href="#" data-value="60">60개씩 보기</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pos:relative d:flex gap:3">
+                <a th:href="@{list(c=${param.c}, q=${param.q}, r=${param.r}, s=1)}"  th:classappend="${{param.s}}==1 ? 'color:main-6': ''"
+                      href="list?s=1" class="price">가격순</a>
+                <span class="bar"></span>
+                <a th:href="@{list(c=${param.c}, q=${param.q}, r=${param.r}, s=2)}"  th:classappend="${{param.s}}==2 ? 'color:main-6': ''">추천순</a>
+            </div>
+        </section>
+
+        <!--  상품 영역 모바일  -->
+        <section id="prd-list">
+            <h1 class="d:none">상품 리스트</h1>
+
+            <!--  아이템 목록(리스트 / 확인)  -->
+            <section class="menu-card-row d:flex fl-dir:column md:d:none gap:5">
+                <h1 class="d:none">상품카드 - row</h1>
+                <div th:each="m:${list}">
+                    <a href="" th:href="@{/product/detail(id=${m.id})}">
+                    <div class="d:flex w:10p gap:3">
+                        <div class="pos:relative">
+                            <img th:src="${m.thumbnailPath +'/'+ m.thumbnailName}" src="" height="110px" width="110px" alt="상품 이미지" class="bd-radius:1"/>
+                            <div class="cart-section">
+                                <div class="cart-box" th:data-id="${m.id}"
+                                     th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">
+                                    <span th:if="${m.cartQty == null}"
+                                          class="icon icon:shopping_cart_simple icon-color:base-1 icon-size:4">장바구니아이콘
+                                    </span>
+                                    <span th:if="${m.cartQty != null}" th:text="${m.cartQty}" class="color:base-1"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="d:flex fl-dir:column jc:center gap:3">
+                            <div class="d:flex fl-dir:column jc:center gap:1">
+                                <div th:text="${m.name + ', ' + m.quantity + m.quantityCategory + '(' + m.weight + m.weightCategory + ')'}">텃밭 흙 당근, 2개입</div>
+                                <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
+                            </div>
+                            <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 icon-size:1 deco-size:1">1234</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </section>
+
+            <!--  아이템 목록(바둑판) / 확인  -->
+            <section class="menu-card-col d:flex flex-wrap:wrap ai:center gap:2 md:d:none d:none">
+                <h1 class="d:none">상품카드 - col</h1>
+                <div th:each="m:${list}">
+                    <a href="#" th:href="@{/product/detail(id=${m.id})}" class="">
+                    <div class="d:flex fl-dir:column gap:3" style="width: 180px; height: 294px">
+                        <div class="pos:relative">
+                            <img th:src="${m.thumbnailPath +'/'+ m.thumbnailName}" src="" height="180px" width="180px" alt="상품 이미지" class="bd-radius:1"/>
+                            <div class="cart-section">
+                                <div class="cart-box" th:data-id="${m.id}"
+                                     th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">
+                                    <span th:if="${m.cartQty == null}"
+                                          class="icon icon:shopping_cart_simple icon-color:base-1 icon-size:4">장바구니아이콘
+                                    </span>
+                                    <span th:if="${m.cartQty != null}" th:text="${m.cartQty}" class="color:base-1"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d:flex fl-grow:1 fl-dir:column jc:center jc:space-between">
+                            <div class="d:flex fl-dir:column jc:center gap:2">
+                                <div th:text="${m.name + ', ' + m.quantity + m.quantityCategory + '(' + m.weight + m.weightCategory + ')'}">텃밭 흙 당근, 2개입</div>
+                                <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
+                            </div>
+                            <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 deco-size:1 icon-size:1">1234</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </section>
+        </section>
+
+        <!--  상품 영역 PC  -->
+        <section class="prd-list-pc d:none md:d:flex flex-wrap:wrap row-gap:20 ai:center gap:2">
+            <h1 class="d:none">상품카드 - pc</h1>
+            <div th:each="m : ${list}" class="font-size:3" style="width:280px; height:404px">
+                <a href="#" th:href="@{/product/detail(id=${m.id})}">
+                <div class="product-card d:flex fl-dir:column w:10p h:10p jc:space-between">
+                    <div class="pos:relative">
+                        <div style="height: 100%">
+                            <img th:src="${m.thumbnailPath +'/'+ m.thumbnailName}" src="" height="280px" width="280px" alt="상품 이미지" class="bd-radius:1"/>
+                        </div>
+                        <div class="cart-section">
+                            <div class="cart-box" th:data-id="${m.id}"
+                                 th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">
+                                    <span th:if="${m.cartQty == null}"
+                                          class="icon icon:shopping_cart_simple icon-color:base-1 icon-size:4">장바구니아이콘
+                                    </span>
+                                <span th:if="${m.cartQty != null}" th:text="${m.cartQty}" class="color:base-1"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d:flex fl-dir:column jc:center gap:4">
+                        <div class="d:flex fl-dir:column jc:center gap:2">
+                            <div th:text="${m.name + ', ' + m.quantity + m.quantityCategory + '(' + m.weight + m.weightCategory + ')'}">텃밭 흙 당근, 2개입</div>
+                            <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
+                        </div>
+                        <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 icon-size:4 deco-size:4">1234</div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <section class="pager d:flex w:10p mb:5 jc:center">
+                <h1 class="d:none">페이저</h1>
+                <!-- 페이지네이션 계산부 -->
+                <!-- `page`: Integer page / 기본값은 1입니다. -->
+                <!-- `rows`: Integer rows / 페이지당 표시되는 상품 수 입니다. -->
+                <!-- `temp1/2`: startnum을 구하기 위한 변수 입니다. 한 변수에 작성하면 형변환 이슈로 에러가 발생해서 나누어 계산합니다. -->
+                <!-- `startnum`: 페이지네이션 첫 번째 페이지 번호를 계산합니다.(페이지네이션 시작 번호) -->
+                <!-- `totalPages`: 총 아이템 수와 페이지당 아이템 수를 바탕으로 총 페이지 수를 계산합니다. -->
+                <!-- `lastnum`: 현재 페이지네이션에서 표시될 마지막 페이지 번호를 결정합니다. -->
+                <ul th:with="
+                        page=${param.p} eq null ? 1 : ${{param.p}},
+                        rows=${r},
+                        temp=(${page} - 1) div ${rows},
+                        temp2=${T(java.lang.Math).floor(temp)},
+                        startnum=${temp2 * rows + 1},
+                        totalPages=${count} mod ${rows} > 0 ? ${count div rows} + 1 : ${count div rows},
+                        lastnum=${totalPages < startnum + rows - 1 ? totalPages : startnum + rows - 1}"
+                    class="n-pager d:flex">
+                    
+                    <!-- [이전] 버튼 영역 -->
+                    <li>
+                        <span th:if="${page} lt 6">이전</span>
+                        <a th:if="${page} gt 5"
+                           th:href="@{./list(p=${startnum - 1}, r=${rows}), s=${param.s}, c=${param.c}}">이전</a>
+                    </li>
+                    
+                    <!-- 페이지네이션 넘버링 -->
+                    <li th:each="n : ${#numbers.sequence(startnum, lastnum)}"
+                        th:class="${page} == ${n} ? 'active' : ''">
+                        <span th:if="${n} gt ${totalPages}" th:text="${n}"></span>
+                        <a th:if="${n} le ${totalPages}" th:href="@{./list(p=${n}, r=${rows}, s=${param.s}, c=${param.c})}" th:text="${n}"></a>
+                    </li>
+                    
+                    <!-- [다음] 버튼 영역 -->
+                    <li>
+                        <span th:if="${totalPages} lt ${startnum + rows}">다음</span>
+                        <a th:if="${totalPages} ge ${startnum + rows}"
+                           th:href="@{./list(p=${startnum + rows}, r=${rows}, s=${param.s}, c=${param.c})}">다음</a>
+                    </li>
+                    
+                </ul>
+            </section>
+        
+        </section>
+    </main>
+    
+</body>
+</html>

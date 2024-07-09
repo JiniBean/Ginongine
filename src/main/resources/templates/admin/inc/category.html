@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <nav class="d:none md:d:flex w:10p max-w:10 bg-color:base-1 top:3 pos:sticky bd-bottom bd-color:base-2 zi:1">
+        <h1 class="d:none">PC 카테고리</h1>
+        <ul class="n-tabbar d:flex ai:center h:4 jc:space-between fl-grow:1 mr:4 ml:4 md:mr:0 md:ml:0 ">
+          <li th:classappend="${active} == 'product' ? 'active fw:3':''" class="h:10p "><a href="/admin/product/list" class="h:10p fs:3">상품관리</a></li>
+          <li th:classappend="${active} == 'member' ? 'active fw:3':''" class="h:10p"><a href="/admin/member/list" class="h:10p fs:3">회원관리</a></li>
+          <li th:classappend="${active} == 'stock' ? 'active fw:3':''" class="h:10p"><a href="/admin/stock/list" class="h:10p fs:3">재고관리</a></li>
+          <li th:classappend="${active} == 'order' ? 'active fw:3':''" class="h:10p"><a href="/admin/order/list" class="h:10p fs:3">주문관리</a></li>
+          <li th:classappend="${active} == 'coupon' ? 'active fw:3':''" class="h:10p"><a href="/admin/coupon/list" class="h:10p fs:3">쿠폰관리</a></li>
+          <li th:classappend="${active} == 'point' ? 'active fw:3':''" class="h:10p"><a href="/admin/point/history/list" class="h:10p fs:3">적립금관리</a></li>
+          <li th:classappend="${active} == 'notice' ? 'active fw:3':''" class="h:10p"><a href="/admin/notice/list" class="h:10p fs:3">공지관리</a></li>
+          <li th:classappend="${active} == 'inquiry' ? 'active fw:3':''" class="h:10p"><a href="/admin/inquiry/list" class="h:10p fs:3">문의관리</a></li>
+          <li th:classappend="${active} == '통계' ? 'active fw:3':''" class="h:10p"><a href="/admin/product/list" class="h:10p fs:3">통계</a></li>
+        </ul>
+      </nav>
+</html>

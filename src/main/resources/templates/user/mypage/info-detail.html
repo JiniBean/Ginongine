@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/user/mypage/info-detail.js" defer></script>
+</head>
+
+<body>
+
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+    <!--  페이지 제목-->
+    <nav>
+        <h1 class="d:none">탭</h1>
+        <ul class="n-tabbar n-tab-grow w:10p">
+            <li :class="{ 'active': currentTab === 'info' }">
+                <a class="h:3 md:h:4"
+                   @click="currentTab = 'info'">
+                    기본 정보 수정
+                </a>
+            </li>
+            <li  :class="{ 'active' : currentTab === 'location' }">
+                <a class="h:3 md:h:4"
+                   @click="currentTab = 'location'">
+                    배송지 정보 수정
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <section class="d:flex fl-dir:column gap:5 " v-if="currentTab === 'info'">
+        <div class="col-gap:2 pos:relative">
+            <h1 class="d:none">인풋박스</h1>
+            <div>
+                <div><span>아이디</span><span class="emphasis color:accent-3">*</span></div>
+                <input :value="memberList.userName" type="text" class="user-name n-textbox n-textbox-type:underline" autofocus required autocomplete="false" readonly/>
+            </div>
+        </div>
+        <div class="col-gap:2 pos:relative">
+            <h1 class="d:none">비밀번호</h1>
+            <div>
+                <div><span>비밀번호</span><span class="emphasis color:accent-3">*</span></div>
+                <input type="password" class="password n-textbox n-textbox-type:underline" required/>
+                <div class="verify-pwd d:none color:accent-3 mt:2">비밀번호를 입력해주세요</div>
+                <div class="check-pwd d:none color:accent-3 mt:2">영문, 숫자를 조합하여 최소 7자리 이상 입력하셔야 합니다.</div>
+            </div>
+            <div class="check-pwd d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 사용가능 ]</div>
+        </div>
+        <div class="col-gap:2 pos:relative">
+            <h1 class="d:none">비밀번호 확인</h1>
+            <div>
+                <div>비밀번호 재확인</div>
+                <input type="password" class="verify-password n-textbox n-textbox-type:underline" required/>
+            </div>
+            <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 일치 ]</div>
+            <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right zi:5 bg-color:base-1" style="top:25px;">[ 불일치 ]</div>
+        </div>
+        <div class="col-gap:2">
+            <h1 class="d:none">이름 입력</h1>
+            <div><span>이름</span><span class="emphasis color:accent-3">*</span></div>
+            <input :value="memberList.name" type="text" class="name n-textbox n-textbox-type:underline" autofocus autocomplete="false" readonly/>
+            <div class="verify-name d:none color:accent-3">이름을 입력해주세요</div>
+        </div>
+        <div>
+            <h1 class="d:none">전화번호 입력</h1>
+            <div><span>전화번호</span><span class="emphasis color:accent-3">*</span></div>
+            <div class="d:flex col-gap:2">
+                <input :value="memberList.phone" type="text" class="phone n-textbox n-textbox-type:underline" autocomplete="false"/>
+            </div>
+            <div class="verify-phone d:none color:accent-3">전화번호를 입력해주세요</div>
+        </div>
+        <div>
+            <h1 class="d:none">생년월일 입력</h1>
+            <div><span>생년월일</span><span class="emphasis color:accent-3">*</span></div>
+            <div class="d:flex col-gap:2">
+                <input type="date" :value="formatDate(memberList.birthDate)" class="birthDate phone n-textbox n-textbox-type:underline" readonly/>
+            </div>
+            <div class="verify-birth d:none color:accent-3">생년월일을 입력해주세요</div>
+            <div class="verify-age d:none color:accent-3">14세 미만의 회원은 가입할 수 없습니다.</div>
+        </div>
+        <form class="mail-form" action="/mailSend" method="post">
+            <section id="email-send">
+                <h1 class="d:none">이메일 입력</h1>
+                <div><span>이메일</span><span class="emphasis color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input :value="memberList.email" type="text" name="email" class="email n-textbox n-textbox-type:underline" autocomplete="false" readonly/>
+<!--                    <button type="submit" class="verify_btn n-btn n-btn:outline color:base-9 send-mail-btn" style="top:-3px;">인증번호 발송</button>-->
+                </div>
+            </section>
+        </form>
+        <div class="d:flex ai:center gap:3">
+            <span>이메일 수신 여부</span>
+            <input type="checkbox" class="n-toggle" v-model="memberList.agree">
+        </div>
+        <div class="d:flex gap:3">
+            <button class="prev n-btn n-btn:outline w:10p color:main-6 md:h:3" @click.prevent="cancel()">취소</button>
+            <button class="prev n-btn w:10p md:h:3">수정</button>
+        </div>
+        <div>
+            <button class="prev n-btn n-btn:outline w:10p border-color:base-1 color:base-1 bg-color:base-4 md:h:3">회원탈퇴</button>
+        </div>
+    </section>
+
+
+    <!--배송지 정보 수정 영역-->
+    <section class="d:flex fl-dir:column gap:5 " v-if="currentTab === 'location'">
+        <h1 class="d:none">배송지 정보 수정</h1>
+        <section class="d:flex fl-dir:column n-item color:color-base-4 fl-grow:1 gap:5 border-color:base-4" v-if="defaultIctList.zipCode!==undefined">
+            <div>
+                <span class="icon icon icon:map_pin_fill icon-color:main-6">배송지 아이콘</span>
+                <span>{{ defaultIctList.label + ' [기본 배송지]' }}</span>
+            </div>
+            <div>
+                <span>{{'[' + defaultIctList.zipCode + '] ' }}</span>
+                <span>{{defaultIctList.addr1}} {{defaultIctList.addr2}}</span>
+            </div>
+            <div class="d:flex gap:3">
+                <div>{{defaultIctList.receiverName}} &ensp;| </div>
+                <div>{{defaultIctList.receiverPhone}}</div>
+            </div>
+            <div>
+                <button class="n-btn n-btn:outline w:3 color:main-6 h:3" @click.prevent="updateLocation(defaultIctList.id)">수정</button>
+            </div>
+        </section>
+        <section v-else>
+            기본 배송지를 추가해주세요.
+        </section>
+
+        <section>
+            <h1 class="d:none">배송지 추가 버튼</h1>
+            <a class="h:10p w:10p d:block" href="location-regform" style="width: fit-content;">
+                <div class="w:10p fl-grow:1 n-btn n-btn:outline border-color:main-6 color:base-8 box-shadow:1 fl-grow:1 h:4 txt-al:center">
+                    + 새 배송지 추가
+                </div>
+            </a>
+        </section>
+
+        <section v-for="item in locationList" :key="item.id">
+            <h1 class="d:none">기본배송지 외 배송지 목록</h1>
+            <div class="d:flex fl-dir:column n-item color:color-base-4 fl-grow:1 gap:5 border-color:base-4">
+                <div>
+                    <span class="icon icon icon:map_pin icon-color:base-5">배송지 아이콘</span>
+                    <span>{{item.label}}</span>
+                </div>
+                <div class="d:flex fl-dir:column gap:3">
+                    <span>{{'[' + item.zipCode + ']' }}  {{item.addr1}}  {{item.addr2}}</span>
+                </div>
+                <div class="d:flex gap:3">
+                    <div>{{item.receiverName}} &ensp;|</div>
+                    <div>{{item.receiverPhone}}</div>
+                </div>
+                <div class="d:flex gap:3">
+                    <div class="d:flex gap:3">
+                        <button class="n-btn n-btn:outline w:3 color:main-6 h:3" @click.prevent="updateLocation(item.id)">수정</button>
+                        <button class="n-btn n-btn:outline w:3 color:main-6 h:3" @click.prevent="confirmDelete(item.id)">삭제</button>
+                    </div>
+                    <button class="n-btn w:4 h:3">기본 배송지로 변경</button>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>

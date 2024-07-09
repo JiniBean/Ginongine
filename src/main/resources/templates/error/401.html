@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+  <link rel="stylesheet" href="/css/error/error.css">
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:12 md:gap:16 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0">
+  <section class="error d:flex fl-dir:column gap:12 md:gap:16 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0s">
+  
+<!--    <section class="d:flex jc:center">-->
+<!--      <h1 class="d:none">에러페이지 이미지</h1>-->
+<!--      <img src="/img/error/404_potato.png" alt="404 error img">-->
+<!--    </section>-->
+    
+    <section class="d:flex fl-dir:column gap:5 ai:center jc:center">
+      <h1 class="d:none">에러페이지 안내문구</h1>
+      <div class="fs:5">
+        <span>401 </span><span class="color:sub-5">UNAUTHORIZED</span>
+      </div>
+      <br>
+      <div>문제가 계속되면 사이트 소유자에게 문의하세요.</div>
+    </section>
+    
+    <section class="d:flex ai:center jc:center gap:1">
+      <h1 class="d:none">button 영역</h1>
+      <a class="n-btn n-btn:outline fw:3 color:main-6" href="javascript:history.back()">이전</a>
+      <a class="n-btn fw:3" href="/index">기농이네 홈</a>
+    </section>
+    
+  </section>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="user/inc/layout-detail">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script type="module" src="/js/user/product/detail.js" defer></script>
+    <link rel="stylesheet" href="/css/user/product/detail.css">
+</head>
+<body>
+<main layout:fragment="main" class=" d:flex fl-dir:column gap:8 md:gap:20 w:10p max-w:10">
+
+    <!--    Mobile================================================================================================-->
+    <section class="d:flex w:10p fl-dir:column gap:7 md:d:none ">
+        <h1 class="d:none">상품 정보</h1>
+        <nav class="mr:4 ml:4">
+            <h1 class="d:none">브래드 크럼</h1>
+            <ul style="display: flex">
+                <li><a href="">홈</a></li>
+                <li><a href="">></a></li>
+                <li><a href="">과일/채소류</a></li>
+            </ul>
+        </nav>
+
+        <div class="d:flex fl-dir:column gap:5">
+            <div><img class="display:flex w:10p " th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}">
+            </div>
+            <div class="d:none">
+                <div><a href="">사진1</a></div>
+                <div><a href="">사진2</a></div>
+                <div><a href="">사진3</a></div>
+                <div><a href="">사진4</a></div>
+            </div>
+        </div>
+
+        <div class="d:flex fl-dir:column gap:5">
+            <div class="d:flex fl-dir:column gap:3 mr:4 ml:4">
+                <div class="fs:2" th:text="${productView.desc}">한줄설명</div>
+                <div class="fs:3 fw:3"
+                     th:text="${productView.name + ', ' + productView.quantity + productView.quantityCategory + '(' + productView.weight + productView.weightCategory + ')'}">
+                    상품명
+                </div>
+                <div class="mt:2">
+                    <span class="fs:3 fw:3 " th:text="${#numbers.formatInteger(productView.price, 3, 'COMMA') +'원'}">상품가격</span>
+                    <!--최근 본 상품 저장시 필요-->
+                    <input type="hidden" class="product-title" th:value="${productView.name + ', ' + productView.quantity + productView.quantityCategory + '(' + productView.weight + productView.weightCategory + ')'}">
+                    <input type="hidden" class="product-price" th:value="${productView.price}">
+                </div>
+            </div>
+            <div class="d:flex ai:center h:3 bd-top bd-bottom bd-color:base-3">
+                <div class="fl-grow:1 d:flex jc:center deco icon:smile deco-color:sub-4 deco-size:2 icon-size:2"
+                     th:text="${productView.likeCount}">추천수
+                </div>
+                <div class="h:6p bd-left bd-color:base-3 " style="width: 1px"></div>
+                <div class="fl-grow:1 d:flex ai:center jc:center"><a href=""
+                                                                     class="deco icon:share_network deco-size:2 icon-size:2">공유하기</a>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:3 mr:4 ml:4">
+                <div class="d:flex gap:11 jc:space-between fs:2">
+                    <span>용량</span>
+                    <span th:text="${productView.quantity + productView.quantityCategory +'/'+productView.weight+productView.weightCategory}">5~6개입/1kg내외</span>
+                </div>
+                <div class="d:flex gap:11 jc:space-between fs:2">
+                    <span>보관방법</span>
+                    <span th:text="${productView.storageType}">신선</span>
+                </div>
+                <div class="d:flex gap:11 jc:space-between fs:2">
+                    <span>배송비</span>
+                    <span>5,000원(3만원 이상 무료)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--    PC=================================================================================================-->
+    <section class="md:d:flex fl-dir:column gap:7 d:none w:10p">
+        <h1 class="d:none">상품 정보</h1>
+        <nav class="mt:1">
+            <h1 class="d:none">브래드 크럼</h1>
+            <ul class="d:flex">
+                <li><a href="">홈</a></li>
+                <li><a href="">></a></li>
+                <li><a href="">과일/채소류</a></li>
+            </ul>
+        </nav>
+        <div class="d:flex gap:9">
+            <div class="d:flex fl-dir:column jc:space-between">
+                <div><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" alt="" style="width: 414px; height:
+            414px;"></div>
+                <div class="d:flex jc:space-between">
+                    <div>
+                        <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" alt="사진1" style="width: 90px; height: 90px;"></a>
+                    </div>
+                    <div>
+                        <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" alt="사진2" style="width: 90px; height: 90px;"></a>
+
+                    </div>
+                    <div>
+                        <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" alt="사진3" style="width: 90px; height: 90px;"></a>
+
+                    </div>
+                    <div>
+                        <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" alt="사진3" style="width: 90px; height: 90px;"></a>
+
+                    </div>
+                </div>
+            </div>
+            <section class="d:flex fl-dir:column jc:space-between w:10p gap:7">
+                <h1 class="d:none">상품 상세</h1>
+                <div class="d:flex fl-dir:column gap:7">
+                    <div class="d:flex fl-dir:column gap:3">
+                        <div th:text="${productView.desc}">껍질째 드실 수 있는 달콤하고 신선한 감</div>
+                        <div class="fw:3 fs:4"
+                             th:text="${productView.name + ', ' + productView.quantity + productView.quantityCategory + '(' + productView.weight + productView.weightCategory + ')'}">
+                            [신선해요] 감*1kg내외(5~6입)
+                        </div>
+                    </div>
+                    <div class="fs:5 fw:3 as:end">
+                        <span th:text="${#numbers.formatInteger(productView.price, 3, 'COMMA') +'원'}">10,000원</span>
+                        <input type="hidden" class="l-price" th:value="${productView.price}">
+                    </div>
+                    <div class="d:flex fl-dir:column gap:4">
+                        <div class="d:flex gap:11 jc:space-between">
+                            <span>용량</span>
+                            <span th:text="${productView.quantity + productView.quantityCategory +'/'+productView.weight+productView.weightCategory}">5~6개입/1kg내외</span>
+                        </div>
+                        <div class="d:flex gap:11 jc:space-between">
+                            <span>보관방법</span>
+                            <span th:text="${productView.storageType}">신선</span>
+                        </div>
+                        <div class="d:flex gap:11 jc:space-between">
+                            <span>배송비</span>
+                            <span>가격(3만원 이상 무료)</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--구매정보 안내(pc버전)-->
+                <div id="l-order-info" class="d:flex fl-dir:column gap:5 pt:10 pb:10 bd-top">
+                    <div class="d:flex fl-dir:row ai:center jc:space-between">
+                <span class="l-numberBox bd of:hidden pos:relative bd-radius:1 bg-color:main-1 bd w:4"
+                      style="height: 36px">
+                  <a th:data-btn="minus" class="btn-minus left:1"></a>
+                  <input type="text" class="l-quantity-input w:100p h:100p fw:3 txt-al:center" style="line-height: 36px"
+                         maxlength="3" value="1"/>
+                  <a th:data-btn="plus" class="btn-plus right:1"></a>
+                </span>
+                    </div>
+
+                    <div class="l-total d:flex fl-dir:row bd h:3 p:3 d:flex fl-dir:row ai:center jc:space-between">
+                        <div>
+                            <span class="fw:3">총 수량&emsp;<span class="l-total-quantity color:sub-5">1</span>개</span>
+                        </div>
+                        <div>
+                            <span class="l-total-price color:sub-5 fw:3"
+                                  th:text="${#numbers.formatInteger(productView.price, 3, 'COMMA') +'원'}">10,000</span>
+                            <input type="hidden" class="l-total-price-input" name="l-total-price"
+                                   th:value="${productView.price}">
+                        </div>
+                    </div>
+                </div>
+                <div class="l-pay-box d:flex gap:13 w:10p col-gap:4">
+                    <div class="fl-grow:1">
+                        <button th:data-btn="cart" type="button" class="l-cart n-btn n-btn-type:outline w:10p">장바구니 담기</button>
+                    </div>
+                    <div class="fl-grow:1">
+                        <button th:data-btn="order" type="button" class=" l-order n-btn n-btn-type:filled w:10p">바로 구매하기</button>
+                        <input type="hidden" class="l-product-id" th:value="${productView.id}">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </section>
+
+    <!--    ===================================================================================================-->
+
+    <nav style="border-top: 6px solid var(--color-base-2);" id="tab">
+        <h1 class="d:none">탭</h1>
+        <ul id='tabbar' class="n-tabbar n-tab-grow">
+            <li><a href="#" class="h:4">상품정보</a></li>
+            <li><a href="#" class="h:4">후기</a></li>
+            <li><a href="#" class="h:4">Q&A</a></li>
+        </ul>
+    </nav>
+
+    <section class="d:flex jc:center mr:4 ml:4 md:mr:0 md:ml:0 m-info">
+        <h1 class="d:none">상품정보</h1>
+<!--        <div><img src="/img/test.gif" alt="상품 상세정보" class="w:10p"/></div>-->
+        <div><img th:src="${productView.thumbnailPath +'/'+ productView.descriptionName}" alt="상품 상세정보" class="w:10p"/></div>
+    </section>
+
+    <!--=======================상품 후기 모바일 버전==================================-->
+    <section class="d:none d:flex fl-dir:column gap:7 md:d:none w:10p pl:5 pr:5 m-review">
+        <h1 class="fs:5 fw:3 d:flex ai:center jc:center">상품 후기</h1>
+
+        <section class="d:flex fl-dir:column gap:2">
+            <h1 class="d:none">사진 후기</h1>
+            <div class="d:flex fl-dir:row jc:space-between">
+                <div class="fs:3 fw:3">사진후기</div>
+                <div><a href="">전체보기</a></div>
+            </div>
+            <div class="d:flex fl-dir:row gap:5">
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="100px" width="100%"/></a>
+                </div>
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="100px" width="100%"/></a>
+                </div>
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="100px" width="100%"/></a>
+                </div>
+
+            </div>
+        </section>
+        <section class="d:flex fl-dir:column gap:1" th:each="r : ${reviewView}">
+            <h1>후기</h1>
+            <div class="d:flex fl-dir:column gap:2 bd-top bd-color:base-5">
+                <div class="d:flex fl-dir:row mt:2 gap:3 ai:center">
+              <span class="deco icon:leaf deco-size:4 icon-size:4 icon-color:sub-5 d:flex ai:center jc:center"
+                    th:text="${r.tagClap ? '최고에요' : (r.tagFresh ? '신선해요' : (r.tagThumbs ? '추천해요' : ''))}">신선해요</span>
+                </div>
+                <div class="d:flex fl-dir:column gap:1">
+                    <div class="pos:relative d:flex fl-dir:row gap:3 ai:center">
+                        <span th:text="${r.userName}">godseokho</span>
+                        <div>
+                            <p th:text="${r.content}">와!!! 정말 맛있어요!!! 이 갓석호가 보증합니다!!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="d:flex ai:center jc:center" th:if="${reviewView == null or reviewView.isEmpty()}">
+            후기가 없습니다.
+        </div>
+    </section>
+
+    <!--        ============================================상품 후기 PC버전========================================-->
+    <section class="d:none md:d:none md:d:flex fl-dir:column gap:20 w:10p pl:5 pr:5 pc-review">
+        <h1 class="d:none">상품 PC 후기</h1>
+
+        <section class="d:flex fl-dir:column gap:5">
+            <h1 class="d:none">사진 후기</h1>
+            <div class="d:flex fl-dir:row jc:space-between">
+                <div class="fs:3 fw:3">사진후기</div>
+                <div><a href="">전체보기</a></div>
+            </div>
+            <div class="d:flex fl-dir:row gap:5">
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="150px" width="100%"/></a>
+                </div>
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="150px" width="100%"/></a>
+                </div>
+                <div>
+                    <a href=""><img th:src="${productView.thumbnailPath + '/'+ productView.thumbnailName}" height="150px" width="100%"/></a>
+                </div>
+            </div>
+        </section>
+        <section class="d:flex fl-dir:column gap:5" >
+            <h1 class="fs:3 fw:3">후기</h1>
+            <div class="d:flex fl-dir:row jc:space-around bg-color:base-2 bd-bottom bd-color:base-3 bd-bottom-w:1 h:4 ai:center">
+                <span class="w:1p">기농태그</span>
+                <span class="w:3p">구매후기</span>
+                <span class="w:1p">작성자</span>
+                <span class="w:1p">작성일</span>
+            </div>
+
+            <div class="ai:center" th:each="r : ${reviewView}">
+
+                <div class="d:flex jc:space-around bd-bottom bd-color:base-3 h:4 ai:center jc:center">
+                    <div class="w:1p d:flex ai:center jc:center">
+                        <span class="deco icon:leaf deco-size:4 icon-size:4 icon-color:sub-5"
+                              th:text="${r.tagClap ? '최고에요' : (r.tagFresh ? '신선해요' : (r.tagThumbs ? '추천해요' : ''))}">신선해요</span>
+                        <span class="n-btn n-btn-size:1 ml:4 d:none"
+                              style="background-color: var(--color-sub-5)">BEST</span>
+                    </div>
+                    <span class="w:3p" th:text="${r.content}">와!!! 정말 맛있어요!!! 이 갓석호가 보증합니다!!</span>
+                    <span class="w:1p" th:text="${r.userName}">godseokho</span>
+                    <span class="w:1p" th:text="${#dates.format(r.date, 'yyyy.MM.dd')}">2024.03.21</span>
+                </div>
+            </div>
+
+            <div class="d:flex ai:center jc:center h:4" th:if="${reviewView == null or reviewView.isEmpty()}">
+                후기가 없습니다.
+            </div>
+
+        </section>
+    </section>
+
+    <!--상품 Q&A 모바일버전-->
+    <section class="d:none d:flex fl-dir:column gap:7 md:d:none w:10p pl:5 pr:5 m-qna">
+        <h1 class="d:none">Q&A</h1>
+        <section>
+            <h1 class="d:none">상품 Q&A</h1>
+
+            <div>
+                <button class="n-btn n-btn:outline fw:3 color:main-6 n-btn-size:2 w:10p">
+                    문의하기
+                </button>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:3">
+                <div class="bd-top bd-color:base-3 pt:3 pb:3">
+                    <div class="d:flex fl-dir:column gap:1" th:each="q:${qnaView}">
+                        <div class="d:flex fl-dir:row jc:space-between">
+                            <span class="fw:3"
+                                  th:text="${q.answerState}">답변완료</span>
+                            <div class="d:flex fl-dir:row gap:1 pos:relative">
+                                <span th:text="${q.userName}">***gyungin</span>
+                                <span class="bar"></span>
+                                <span class="w:1p" th:text="${#dates.format(q.regDate, 'yyyy.MM.dd')}">2024.03.21</span>
+                            </div>
+                        </div>
+                        <div class="fw:3">
+                            <span th:text="${q.qnaCategory}">[상품]</span>
+                            <span th:text="${q.content}">햄버거에 넣어도 맛있을까요??</span>
+                        </div>
+                        <div class="bg-color:main-1 d:flex fl-dir:column gap:1 p:1"
+                             th:text="${q.answer}" th:if="${q.answer != null}">
+                            <span class="fw:3" >기농이네 답변</span>
+                            <div class="">
+                                안녕하세요.<br/>기농이네입니다.<br/>문의 주셔서
+                                감사합니다.<br/>
+                                주문하시면 후회하지 않으실 겁니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d:flex ai:center jc:center" th:if="${qnaView == null or qnaView.isEmpty()}">
+                Q&A가 없습니다.
+            </div>
+
+        </section>
+    </section>
+
+    <!--상품 Q&A PC버전-->
+    <section class="md:d:none d:none md:d:flex fl-dir:column gap:20 w:10p pl:5 pr:5 pc-qna">
+        <h1 class="d:none">Q&A PC</h1>
+        <div class="d:flex fw:3 jc:center fs:6">Q&A</div>
+        <div class="d:flex jc:end">
+            <button class="n-btn fw:3 n-btn-size:2">문의하기</button>
+        </div>
+        <section>
+            <h1 class="d:none">Q&A 리스트</h1>
+            <div class="d:flex fl-dir:row jc:space-around bg-color:base-2 bd-bottom bd-color:base-3 bd-bottom-w:1 h:4 ai:center">
+                <span class="w:1p">문의 유형</span>
+                <span class="w:3p">제목</span>
+                <span class="w:1p">작성자</span>
+                <span class="w:1p">답변 상태</span>
+                <span class="w:1p">등록일</span>
+            </div>
+            <div class="n-expander ai:center" th:each="q:${qnaView}">
+                <div class="d:flex jc:space-around bd-bottom bd-color:base-3 h:4 ai:center jc:center n-expander-title">
+                    <span class="w:1p"
+                          th:text="${q.qnaCategory}">상품</span>
+                    <span class="w:3p"
+                          th:text="${q.content}">햄버거에 넣어도 맛있나요.</span>
+                    <span class="w:1p"
+                          th:text="${q.userName}">***gyungin</span>
+                    <span class="w:1p"
+                          th:text="${q.answerState}">[답변완료]</span>
+                    <span class="w:1p"
+                          th:text="${#dates.format(q.regDate, 'yyyy.MM.dd')}">2024.03.21</span>
+                    <input type="checkbox" class="n-expander-trigger"/>
+                </div>
+                <div class="bg-color:main-1 d:flex fl-dir:column n-expander-content" th:if="${q.answer != null}">
+                    <div class="p:8">
+                        <span class="fw:3">기농이네 답변</span>
+                        <div class=""
+                            th:text="${q.answer}">
+                            안녕하세요.<br/>기농이네입니다.<br/>문의 주셔서 감사합니다.<br/>
+                            주문하시면 후회하지 않으실 겁니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d:flex ai:center jc:center h:4" th:if="${qnaView == null or qnaView.isEmpty()}">
+                Q&A가 없습니다.
+            </div>
+        </section>
+    </section>
+</main>
+</body>
+</html>

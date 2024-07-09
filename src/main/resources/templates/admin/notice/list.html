@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>기농이네 관리자</title>
+        <script type="module" src="/js/admin/notice/list.js" defer></script>
+    </head>
+    <body>
+        <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pt:8 md:pt:13 pr:4 pl:4 md:pr:0 md:pl:0 ">
+            <section class="d:flex jc:center w:10p">
+                <h1 class="d:none">검색폼</h1>
+                <form class="pos:relative w:10p md:w:8 h:2">
+                    <input type="text" class="n-textbox border-color:main-6 bd-radius:4 pr:1 pl:4" placeholder="검색어를 입력해 주세요" @keyup.enter="loadData()" v-model="query">
+                    <button class="pos:absolute m-right:1 icon cursor:pointer icon:magnifying_glass icon-size:4 icon-color:base-5" style="top:2px; right:4px;" @click.prevent="loadData()">검색 버튼</button>
+                </form>
+            </section>
+        
+            <section class="d:flex fl-dir:column gap:8 md:gap:13 w:10p">
+                <h1 class="d:none">상품선택목록</h1>
+                <div class="d:flex jc:space-between ai:center w:10p">
+                        <div class="pos:relative d:flex gap:3">
+                            <a href="">등록순</a>
+                            <span class="bar"></span>
+                            <a href="">최신순</a>
+                        </div>
+                    <div>
+                        <button class="n-btn fw:3" @click="goReg()">등록</button>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h1 class="d:none">공지목록</h1>
+                <table class="n-table n-table-hover n-table-border:bottom txt-al:center" >
+                    <thead class="bg-color:base-3 txt-al:center">
+                    <tr>
+                        <th scope="col" class="w:1 txt-al:center">번호</th>
+                        <th scope="col" class="txt-al:center w:auto">제목</th>
+                        <th scope="col" class="md:d:table-cell txt-al:center w:4">게시일</th>
+                        <th scope="col" class="md:d:table-cell txt-al:center w:4">게시기한</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="notice in list" @click="goDetail(notice)">
+                        <th scope="row" class="w:1" v-text="notice.id">1</th>
+                        <td class="txt-al:center w:auto" v-text="notice.title"></td>
+                        <td class="md:d:table-cell txt-al:center w:4" v-text="notice.startDate"></td>
+                        <td class="md:d:table-cell txt-al:center w:4" v-text="notice.endDate"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

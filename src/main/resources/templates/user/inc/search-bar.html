@@ -1,0 +1,8 @@
+<section th:fragment="search-bar"
+         class="search-bar p:4 d:flex gap:2 jc:center ai:center d:none ">
+    <h1 class="d:none ">검색창</h1>
+    <form action="/product/list" method="get">
+        <input type="text" name="q" placeholder="검색어를 입력해주세요">
+        <button type="submit" class="icon icon:magnifying_glass icon-size:5">검색</button>
+    </form>
+</section>

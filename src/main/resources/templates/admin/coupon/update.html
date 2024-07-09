@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="/js/admin/coupon/update.js" defer></script>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:20 max-w:9 w:10p pl:4 pr:4 pt:4 md:pl:0 md:pr:0 md:pb:4">
+    <div class="d:none md:d:flex w:10p jc:center fw:3 fs:4">쿠폰 수정</div>
+
+    <section class="w:10p">
+        <h1 class="d:none">쿠폰 수정</h1>
+
+        <div class="n-form:outline-none d:flex fl-dir:column gap:8 md:gap:13 h:10p">
+            <!-- 쿠폰 카테고리 -->
+            <div id="coupon-category" class="n-dropdown category w:5">
+                <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right"
+                        @click.prevent="clickCouponDropdown()">
+                    <span class="fl:fill">{{ getCouponCategoryName() }}</span>
+                </button>
+                <ul :class="
+                        [
+                            showCouponDropdown ? 'active' : '',
+                            'dropdown-list w:10p'
+                        ]" >
+                    <li class="d:flex jc:center p:1" v-for="c of couponCategory"
+                        @click.prevent="clickCouponDropdownElement(c)">{{ c.name }}</li>
+                </ul>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>쿠폰 이름</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="title" v-model="coupon.name" />
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>할인율/금액</div>
+                <div>
+                    <div class="d:flex gap:3">
+                        <input type="text" class="n-textbox n-textbox-type:underline" name="rate" v-model="coupon.discountAmount" />
+                        <!-- 할인율 카테고리? -->
+                        <div id="discount-category" class="n-dropdown category w:5">
+                            <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right"
+                                    @click.prevent="clickUnitDropdown()">
+                                <span class="fl:fill">{{ getUnitCategoryName() }}</span>
+                            </button>
+                            <ul :class="
+                                    [
+                                        showUnitDropdown ? 'active' : '',
+                                        'dropdown-list w:10p'
+                                    ]" >
+                                <li class="d:flex jc:center p:1" v-for="c of discountCategory"
+                                    @click.prevent="clickUnitDropdownElement(c)">{{ c.name }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <div>최소 구매 금액</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="rate" v-model="coupon.minPaymentAmt"/>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>최대 할인 금액</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="rate" v-model="coupon.maxDiscountAmt"/>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <label>
+                    <input type="radio"
+                           class="n-toggle n-toggle-type:dot n-toggle-size:2" name="check-button"
+                           value="0" v-model="radioIndex" @click="resetEndDate()"/>
+                    기한 직접 설정
+                </label>
+                <div v-if="radioIndex == 0">
+                    <div class="d:flex fl-dir:row gap:2 ai:center">
+                        <input type="date" class="n-textbox n-textbox-type:underline" name="starDate"
+                               required title="쿠폰 사용 게시일을 선택해주세요" v-model="coupon.startDate">
+                        <span>-</span>
+                        <input type="date" class="n-textbox n-textbox-type:underline" name="endDate"
+                               required title="쿠폰 만료일을 선택해주세요" v-model="coupon.endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <label>
+                    <input type="radio"
+                           class="n-toggle n-toggle-type:dot n-toggle-size:2" name="check-button"
+                           value="1" v-model="radioIndex" @click="changeEndDate()"/>
+                    기한 선택 설정
+                </label>
+                <div v-if="radioIndex == 1" class="d:flex fl-dir:column gap:3">
+                    <div class="d:flex fl-dir:row gap:2 ai:center">
+                        <input type="date" class="n-textbox n-textbox-type:underline" name="starDate"
+                               required title="쿠폰 사용 게시일을 선택해주세요" v-model="coupon.startDate">
+                        <span>-</span>
+                        <input type="date" class="n-textbox n-textbox-type:underline" name="endDate"
+                               required title="쿠폰 만료일을 선택해주세요" v-model="coupon.endDate" disabled>
+                    </div>
+                    <ul class="w:full d:flex jc:space-between gap:2">
+                        <li>
+                            <label class="n-toggle n-toggle-type:outline-box n-toggle-size:2 py:3 px:10">
+                                15일
+                                <input type="radio" class="d:none" name="category" value="15"
+                                       v-model="periodDays" @change="changeEndDate()"/>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="n-toggle n-toggle-type:outline-box n-toggle-size:2 py:3 px:10">
+                                30일
+                                <input type="radio" class="d:none" name="category" value="30"
+                                       v-model="periodDays" @change="changeEndDate()"/>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="n-toggle n-toggle-type:outline-box n-toggle-size:2 py:3 px:10">
+                                60일
+                                <input type="radio" class="d:none" name="category" value="60"
+                                       v-model="periodDays" @change="changeEndDate()"/>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="n-toggle n-toggle-type:outline-box n-toggle-size:2 py:3 px:10">
+                                90일
+                                <input type="radio" class="d:none" name="category" value="90"
+                                       v-model="periodDays" @change="changeEndDate()"/>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>쿠폰 발급 수</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="release_date" v-model="coupon.releaseAmount"/>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <div>쿠폰 사용 수</div>
+                <input type="text" class="n-textbox n-textbox-type:underline" name="rate"/>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <span>상세 설명</span>
+                <input type="text" class="n-textbox min-h:6" name="desc" value="쿠폰 상세 설명" v-model="coupon.desc"/>
+            </div>
+
+            <div class="d:flex flex-direction:row gap:4">
+                <span class="d:flex ai:center">상태</span>
+                    <!-- https://ko.vuejs.org/guide/essentials/forms#checkbox-1 -->
+                <input type="checkbox" class="n-toggle n-toggle-type:slide" name="state" v-model="coupon.type" true-value="1" false-value="0" />
+<!--                    <input type="checkbox" class="n-toggle n-toggle-type:slide" name="state" v-model="coupon.type" :checked="coupon.type == 1" />-->
+            </div>
+
+
+            <div class="d:flex fl-dir:row w:10p md:jc:space-between">
+                <div class="d:none md:d:flex">
+                    <button class="n-btn n-btn:outline n-btn-size:2 min-w:3 w:10p" @click.prevent="goList()">취소</button>
+                </div>
+                <div class="d:flex fl-grow:1 md:fl-grow:0 gap:8">
+                    <button class="n-btn n-btn-size:2 min-w:3 w:10p">임시저장</button>
+                    <button class="n-btn n-btn-size:2 min-w:3 w:10p" @click.prevent="updateCoupon()">수정</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+
+</html>

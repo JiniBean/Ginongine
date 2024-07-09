@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script src="/js/user/inquiry/update.js" defer></script>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
+    <section class="w:10p">
+        <h1 class="d:none">재고 정보</h1>
+        <form class="n-form:outline-none d:flex fl-dir:column gap:8 md:gap:13 h:10p">
+            <div class="d:flex fl-dir:column gap:2">
+                <div>제목</div>
+                <input class="n-textbox n-textbox-type:underline" placeholder="제목을 입력해주세요." type="text" name="title"
+                       required v-model="inquiry.title">
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>문의유형</div>
+                <div id="category" class="n-dropdown w:5">
+                    <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right">
+                        <span class="fl:fill">{{ getCategoryName(inquiry.categoryId) }}</span>
+                    </button>
+                    <ul class="dropdown-list w:10p">
+                        <li class="d:flex jc:center p:1" data-id="1">주문/결제</li>
+                        <li class="d:flex jc:center p:1" data-id="2">회원/정보</li>
+                        <li class="d:flex jc:center p:1" data-id="3">배송관련</li>
+                        <li class="d:flex jc:center p:1" data-id="5">상품관련</li>
+                        <li class="d:flex jc:center p:1" data-id="4">기타</li>
+                    </ul>
+                    <div class="d:none">
+                        <input class="input" type="hidden" name="categoryId" required title="문의유형을 선택해주세요"
+                               v-model="inquiry.categoryId">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <span>내용</span>
+                <textarea type="text" class="n-textbox n-textbox-type:outline min-h:8" name="content" placeholder="내용을 입력해주세요."
+                          required v-model="inquiry.content"></textarea>
+            </div>
+            <div class="d:flex fl-grow:1 ai:end gap:8">
+                <button class="n-btn n-btn:outline n-btn-size:2 min-w:3 w:10p" @click.prevent="goList()">취소</button>
+                <button class="n-btn n-btn-size:2 min-w:3 w:10p" @click.prevent="updateInquiry()">수정</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+
+</html>

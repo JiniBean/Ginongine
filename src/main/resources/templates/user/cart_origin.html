@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-cart">
+<head>
+    <meta charset="UTF-8">
+    <title>cart-List</title>
+    <link rel="stylesheet" href="/css/user/cart.css">
+    <script type="module" src="/js/user/cart.js" defer></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 max-w:9 w:10p mt:0 bg-color:base-3">
+    <div class="bg-color:base-1">
+        <h1 class="d:none md:d:flex jc:center ai:center fs:4 fw:3 h:4 bg-color:base-1">장바구니</h1>
+        <div class="d:flex m:4 jc:space-between">
+            <div class="d:flex gap:1 fs:1 md:fs:3 deco icon:map_pin_fill deco-size:4 icon-size:4 icon-color:main-6">
+                <span th:text="${location.addr1}">서울특별시 마포구 신수동 81-45</span>
+                <span th:text="${location.addr2}">706호</span>
+            </div>
+            <div><a href="" class="n-btn n-btn-type:outline">변경</a></div>
+        </div>
+    </div>
+
+    <section class="d:flex fl-grow:1 fl-dir:column">
+        <h1 class="d:none">상품 리스트</h1>
+        <form id="order" method="post" class="d:flex fl-grow:1 fl-dir:column gap:4">
+            <div><input type="hidden" name="location" th:value="${location.id}"></div>
+            <!-- 전체 삭제 및 삭제 버튼 영역 -->
+            <div class="delete d:flex jc:end pos:relative gap:3 ml:4 mr:4">
+                <a href="" @click.prevent="deleteHandler(false)" class="cursor:pointer">선택삭제</a>
+                <span class="bar"></span>
+                <a href="" @click.prevent="deleteHandler(true)" class="cursor:pointer">전체삭제</a>
+            </div>
+
+            <!-- 상품 영역 -->
+            <div class="d:flex fl-dir:column m:4 bd bd-color:base-2 bd-radius:2 bg-color:base-1">
+                <!-- 상품 한개 영역 -->
+                <div class="d:flex gap:5 p:4 bd-bottom bd-color:base-2" th:each=" i : ${list}" >
+                    <div>
+                        <input type="checkbox" class="n-toggle n-toggle-type:check n-toggle-size:2"
+                               name="chkId" th:value="${i.id}" th:data-id="${i.id}">
+                    </div>
+                    <div><img src="/img/Meongmeong.jpg" height="90px" class="bd-radius:1"></div>
+                    <div class="info flex-grow:1">
+                        <div th:text="${i.name}">텃밭 흙 당근 3개(500g 내외)</div>
+                        <div th:text="${#numbers.formatInteger(i.price,3,'COMMA') + '원'}">2,500원</div>
+                        <div class="d:flex jc:space-between ai:center w:2 h:1 bd bd-radius:1 p:1">
+                            <span @click="qtyHandler" class=" icon icon:minus cursor:pointer" style="width: 16px; height: 16px"></span>
+                            <span class="txt-al:center" th:text="${i.quantity}">2</span>
+                            <span @click="qtyHandler" class=" icon icon:plus cursor:pointer" style="width: 16px; height: 16px"></span>
+                            <input type="hidden" name="prdId" th:value="${i.id}">
+                            <input type="hidden" name="quantity"  value="3" th:value="${i.quantity}">
+                            <input type="hidden" name="curAmt"  value="3" th:value="${i.currentAmt}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 결제 정보 영역 -->
+                <div th:if="${count > 0}" class="d:flex fl-dir:column gap:8 md:gap:10 p:4 pb:6">
+                    <div class="d:flex fl-dir:column gap:6 md:gap:8">
+                        <div class="d:flex fl-dir:column gap:3 md:gap:5">
+                            <div class="d:flex jc:space-between">
+                                <span>상품 금액</span>
+                                <span class="prd" th:data-cost="${totalPrice}" th:text="${totalPrice < 1 ? 0 +'원' : #numbers.formatInteger(totalPrice,3,'COMMA') + '원'}">32,000원</span>
+                            </div>
+                            <div class="d:flex jc:space-between"><span>할인 금액</span><span>0원</span></div>
+                            <div class="d:flex jc:space-between">
+                                <span>배송비</span>
+                                <span class="dlvry" th:data-dlvry="${totalPrice > 30000 || totalPrice < 1 ? 0 : 5000}" th:text="${totalPrice > 30000 || totalPrice < 1 ? 0+'원' : #numbers.formatInteger(5000,3,'COMMA')+'원'}">5,000원</span>
+                            </div>
+                        </div>
+                        <div class="d:flex jc:end gap:1 ">
+                            <span class="fw:3">총 주문 금액</span><span class="fw:3">{{ Number(total).toLocaleString() }}원</span></div>
+                    </div>
+                    <div class="d:flex fl-dir:column gap:2 ai:center">
+                        <span class="txt-al:center fw:3 color:base-7 md:fs:4">제주 및 도서산간 지역 추가 배송비 안내</span>
+                        <span class="d:flex fl-dir:column ai:center color:base-7 gap:1 fs:1">
+                                <p>도서산간 지역의 경우 기본 배송비 외</p>
+                                <p>별도의 추가배송비가 부과되오니 양해 부탁드립니다.</p>
+                        </span>
+                    </div>
+                </div>
+                <div th:if="${count < 1}" class="d:flex ai:center jc:center h:7 fs:4 fw:3 color:base-8" style="height: 280px">
+                    장바구니가 비었어요.
+                </div>
+            </div>
+            <div class="d:flex fl-grow:1 jc:end fl-dir:column gap:2 ai:center m:4 mb:9">
+                <span class="fw:3 fs:5">꼭 확인해주세요</span>
+                <span class="d:flex fl-dir:column gap:1">
+                        <p>배송 불가 상품이 포함되어 있을 경우 주문이 취소될 수 있습니다.</p>
+                        <p>상품 특성에 따라 단순 변심일 경우 환불이 불가할 수 있습니다.</p>
+                    </span>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

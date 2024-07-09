@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-signup">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/user/signup/find.css">
+    <script src="/js/Identity-pwd.js" defer></script>
+    <title>Title</title>
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p  pr:4 pl:4 md:pr:0 md:pl:0">
+
+<!--    ===================휴대폰 인증=================-->
+<!--    <section class="n-tabbar n-tab-grow align-items:stretch">-->
+<!--        <h1 class="d:none" >메뉴바</h1>-->
+<!--        <div class="n-tab active">휴대폰 인증</div>-->
+<!--        <div class="n-tab">이메일 인증</div>-->
+<!--    </section>-->
+
+<!--    <section class="col-gap:2">-->
+<!--        <h1 class="d:none">인풋박스</h1>-->
+<!--        <div>이름</div>-->
+<!--        <input-->
+<!--                type="text"-->
+<!--                class="n-textbox n-textbox-type:underline"-->
+<!--                placeholder="Underline Textbox"/>-->
+<!--    </section>-->
+
+<!--    <section>-->
+<!--        <h1 class="d:none">인증번호 섹션</h1>-->
+<!--        <div>전화번호</div>-->
+<!--        <div class="d:flex col-gap:2">-->
+<!--            <input type="text" class="n-textbox n-textbox-type:underline"/>-->
+<!--            <button class="n-btn n-btn:outline color:base-9 disabled" style="top:-3px;">인증번호 발송</button>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    <section>-->
+<!--        <h1 class="d:none">인증번호 섹션</h1>-->
+<!--        <div>인증번호</div>-->
+<!--        <div class="d:flex col-gap:2">-->
+<!--            <input type="text" class="n-textbox n-textbox-type:underline"/>-->
+<!--            <button id="verify-btn" class="n-btn n-btn:outline color:base-9 disabled" style="top:-3px;">인증번호 확인</button>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!--아이디 찿기 - 이메일인증-->
+    <section class="n-tabbar n-tab-grow">
+        <h1 class="d:none">메뉴바</h1>
+        <div class="n-tab">휴대폰 인증</div>
+        <div class="n-tab active">이메일 인증</div>
+    </section>
+
+    <form class="mail-form" action="/mailSend" method="post">
+        <section  id="email-send" class=" d:flex fl-dir:column gap:8">
+            <div class="col-gap:2">
+                <h1 class="d:none">인풋박스</h1>
+                <div>아이디</div>
+                <div class="d:flex col-gap:2">
+                    <input
+                            type="text"
+                            class="username-input n-textbox n-textbox-type:underline"
+                            placeholder="이름을 입력해주세요."
+                            name="userName"
+                    />
+                </div>
+            </div>
+
+            <div class="col-gap:2">
+                <div>이메일</div>
+                <div class="d:flex col-gap:2">
+                    <input
+                            type="text"
+                            class="email-input n-textbox n-textbox-type:underline"
+                            placeholder="이메일 주소를 입력해주세요."
+                            name="email"
+                    />
+                    <button type="submit" class="n-btn n-btn:outline color:base-9 send-mail-btn" style="top:-3px;">인증 번호 발송</button>
+                </div>
+
+            </div>
+
+        </section>
+    </form>
+
+    <section id="email-confirm">
+        <h1 class="d:none">이메일 인증번호 인풋박스</h1>
+        <form class="verify-form">
+            <div>인증번호</div>
+            <div class="d:flex col-gap:2">
+                <input
+                        type="text"
+                        class="n-textbox n-textbox-type:underline verification-code"
+                        name="verification-code"
+                        placeholder="인증번호를 입력해주세요."/>
+                <button class="n-btn n-btn:outline color:base-9 verify_btn disabled" style="top:-3px;">인증 확인</button>
+            </div>
+            <div class = "d:flex jc:end mr:6">
+                <span class = "countdown"></span>
+            </div>
+        </form>
+        <div class="verification-result"></div>
+    </section>
+
+    <section id="bottom-button" class="d:flex gap:8">
+        <h1 class="d:none">버튼</h1>
+        <button type="button" class="n-btn n-btn:outline w:10p">뒤로가기</button>
+        <button type="button" class="next-button n-btn w:10p disabled">다음</button>
+    </section>
+
+</main>
+</body>
+</html>

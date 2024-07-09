@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<header class="header w:10p d:flex max-w:10 jc:center h:5 md:h:6 bg-color:base-1 top:1 pos:sticky zi:1">
+    <div class="d:flex jc:space-between h:5 md:h:6 fl-grow:1 bd-bottom bd-color:base-2 mr:4 ml:4 md:mr:0 md:ml:0">
+            <h1 class="d:none md:d:flex ai:center"><a href="/admin" class="fs:4 fw:3 ">기농이네 관리자</a></h1>
+            <div class="d:flex ai:center md:d:none"><a href="javascript:history.back()" class="icon icon:caret_left icon-size:5">뒤로가기</a></div>
+
+            <div class="d:flex ai:center md:d:none fs:4 fw:3" th:text="${pageName}">페이지명</div>
+
+            <nav class="d:none md:d:flex ai:center" >
+                <h1 class="d:none">pc</h1>
+                <ul class="d:flex gap:4">
+                    <li sec:authorize = "isAnonymous()">
+                        <a href="/signin" class="color:main-6 fw:3">로그인</a>
+                    </li>
+                    <li sec:authorize = "isAuthenticated()">
+                        <span class="color:main-6 fw:3" th:text="${#authentication.name}"> 유저아이디</span>
+                        <span class="fw:3"> 님</span>
+                        <a href="/logout" class="color:main-6 fw:3">로그아웃</a>
+                    </li>
+                    <li><a href="" class="color:main-6 fw:3">개인정보수정</a></li>
+                </ul>
+            </nav>
+
+            <section class="md:d:none d:flex ai:center">
+                <h1 class="d:none">모바일</h1>
+                <div><a href="" class="icon icon:list icon-size:5">햄버거</a></div>
+            </section>
+
+        </div>
+    </header>
+</html>

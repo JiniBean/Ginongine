@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/user/recent/list.js" defer></script>
+    <script type="module" src="/js/user/recent/cart.js" defer></script>
+</head>
+<body>
+
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+    <section class="d:flex fl-dir:column gap:5" style="margin-top: 20px">
+        <h1 class="d:none">최근 본 상품 목록</h1>
+        <section class="d:flex js-content:space-between">
+            <div class="d:flex ai:center"><span class="icon icon:info icon-color:main-6 icon-size:4 csr:pointer">정보아이콘</span><span>품절 상품 제외</span></div>
+            <button
+                    class="cursor:pointer md:d:none"
+                    @click.prevent="checkVisible=true;btnStatus='complete'"
+                    v-if="btnStatus==='delete'">
+                <span class="icon icon icon:trash icon-color:base-6 icon-size:4 csr:pointer">삭제아이콘</span>
+                삭제</button>
+            <button
+                    class="cursor:pointer md:d:none"
+                    @click.prevent="checkVisible=false;btnStatus='delete'" v-if="btnStatus==='complete'">
+                <span class="icon icon icon:check icon-color:base-6 icon-size:4 csr:pointer">완료아이콘</span>
+                완료</button>
+        </section>
+
+        <div v-if="list.length > 0">
+            <section class="d:flex" v-for="item in list" :key="item.productId">
+                <h1 class="d:none">상품 아이템</h1>
+                <div class="d:flex ai:center">
+                    <span class="icon icon:x_circle_fill icon-color:base-6 icon-size:4 csr:pointer mr:3"
+                          :class="[checkVisible ? '' : 'd:none']"
+                          @click.prevent="confirmDelete(item.productId)"
+                    >아이콘</span>
+                </div>
+                <div class="d:flex gap:4 w:100p">
+                    <div>
+                        <a :href=" 'product/detail?id=' + item.productId">
+                            <img class="w:3 md:w:5"
+                                 src="/img/carrot.png" th:src="@{/img/baechoo.png}"/>
+                        </a>
+                    </div>
+                    <div class="d:flex fl-dir:column jc:center gap:4 w:100p md:gap:11">
+                        <div class="d:flex fl-dir:column gap:4 w:100p pl:1 md:font-size:5">
+                            <div class="d:flex jc:space-between ai:center w:100p">
+                               <div><a :href=" 'product/detail?id=' + item.productId">{{item.title}}</a></div>
+                                <button
+                                        class="cursor:pointer md:d:block d:none"
+                                        @click.prevent="confirmDelete(item.productId)"
+                                        v-if="btnStatus==='delete'">
+                                    <span class="icon icon icon:trash icon-color:base-6 icon-size:4 md:icon-size:5 csr:pointer"></span>
+                                    </button>
+                            </div>
+                            <div><b>{{Intl.NumberFormat().format(item.price) }}원</b></div>
+                        </div>
+                        <div class="d:flex ai:center jc:space-between">
+                            <div>
+                                <span class="icon icon:thumbs_up icon-color:base-6 icon-size:2 md:icon-size:4 csr:pointer">최고예요 아이콘</span>
+                                <span>100</span>
+                            </div>
+                            <div class="d:none md:d:flex gap:3">
+                                <button class="n-btn n-btn-type:outline md:w:4 w:1" @click.prevent="addItem(item.productId)">구매하기</button>
+                                <button
+                                        class="n-btn n-btn-type:outline md:w:4 w:1 cart-box"
+                                        :data-id=item.productId
+                                >담기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div v-else>
+            <h1 class="d:none">최근 본 상품이 없을 시</h1>
+            <div class="d:flex ai:center jc:center p:1">
+                최근 본 상품이 없습니다.
+            </div>
+        </div>
+
+    </section>
+    <!--pc 버전에만 보임 -->
+    <section class="blog-section w:10p h:10p d:none md:d:block">
+        <h1 class="d:none">블로그 정보</h1>
+        <div class="d:flex fl-dir:column pos:relative">
+            <img class="w:10p" th:src="@{/img/blog.png}" src="" alt="">
+            <a href="https://m.blog.naver.com/PostList.naver?blogId=ran6634&tab=1">
+                <div class="w:10p d:flex fl-dir:column ai:center jc:center pos:absolute bottom:0 opacity:5 background-color:base-10 h:6">
+                    <span class="color:base-1">무럭무럭 자라는 채소들의 이야기!</span>
+                    <span class="color:base-1 fs:8">농촌 일기 블로그 바로가기 ></span>
+                </div>
+            </a>
+        </div>
+    </section>
+</main>
+</body>
+</html>

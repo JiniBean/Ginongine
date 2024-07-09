@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/admin/member/detail.js" defer></script>
+    <script src="/js/module/findLocation.js"></script>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0">
+
+    <!--상단탭-->
+    <ul class="n-tabbar d:flex jc:space-between ai:center h:2 md:h:4 w:10p">
+        <li th:classappend="${param.c == 1} ? 'active' : ''" class="fl-grow:1 h:10p" id="tab1">
+            <a th:href="@{/admin/member/detail(id=${param.id})}" class="h:10p">기본 정보</a>
+        </li>
+        <li th:classappend="${param.c == 2} ? 'active' : ''" class="fl-grow:1 h:10p" id="tab2">
+            <a th:href="@{/admin/member/order(id=${param.id})}" class="h:10p">주문 내역</a>
+        </li>
+    </ul>
+
+
+    <form id="memberForm" method="post" enctype="multipart/form-data">
+        <section id="sec1" class="d:flex fl-dir:column gap:10 md:gap:15 mb:8">
+            <h1 class="d:none">회원 정보</h1>
+
+            <!-- 이름 입력 섹션 -->
+            <section>
+                <h1 class="d:none">이름 입력</h1>
+                <div><span>이름</span><span class="emphasis color:accent-3"></span></div>
+                <input type="text" id="name" name="name" class="name n-textbox n-textbox-type:underline" autofocus
+                       autocomplete="false" th:value="${member.name}" readonly/>
+                <div class="verify-name d:none color:accent-3">이름을 입력해주세요</div>
+            </section>
+
+            <!-- 아이디 입력 섹션 -->
+            <section>
+                <h1 class="d:none">아이디 입력</h1>
+                <div><span>아이디</span><span class="emphasis color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" id="userName" name="userName" class="userName n-textbox n-textbox-type:underline"
+                           autocomplete="false" th:value="${member.userName}"/>
+                </div>
+                <div class="verify-phone d:none color:accent-3">아이디를 입력해주세요</div>
+            </section>
+
+            <!-- 가입일 입력 섹션 -->
+            <section>
+                <h1 class="d:none">가입일 입력</h1>
+                <div><span>가입일</span><span class="emphasis color:accent-3"></span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" id="joinDate" name="joinDate" class="joinDate n-textbox n-textbox-type:underline"
+                           autocomplete="false"
+                           th:value="${#dates.format(member.joinDate, 'yyyy-MM-dd')}" readonly/>
+                </div>
+                <div class="verify-phone d:none color:accent-3">가입일을 입력해주세요</div>
+            </section>
+
+            <!-- 총 적립금 입력 섹션 -->
+            <section>
+                <h1 class="d:none">총 적립금 입력</h1>
+                <div><span>총 적립금</span><span class="emphasis color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" id="cost" name="cost" class="cost n-textbox n-textbox-type:underline"
+                           autocomplete="false" th:value="${member.cost}"/>
+                </div>
+                <div class="verify-phone d:none color:accent-3">적립금을 입력해주세요</div>
+            </section>
+
+            <!-- 연락처 입력 섹션 -->
+            <section>
+                <h1 class="d:none">연락처 입력</h1>
+                <div><span>연락처</span><span class="emphasis color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" id="phone" name="phone" class="phone n-textbox n-textbox-type:underline"
+                           autocomplete="false" th:value="${member.phone}"/>
+                </div>
+                <div class="verify-phone d:none color:accent-3">연락처를 입력해주세요</div>
+            </section>
+
+<!--                          &lt;!&ndash; 주소 입력 섹션 &ndash;&gt;-->
+<!--                          <section>-->
+<!--                            <h1 class="d:none">주소 입력</h1>-->
+<!--                            <div><span>주소</span><span class="emphasis color:accent-3">*</span></div>-->
+<!--                            <div class="d:flex col-gap:2">-->
+<!--                              <input type="text" id="addr1" name="addr1" class="addr1 n-textbox n-textbox-type:underline" autocomplete="false" th:value="${member.addr1}"/>-->
+<!--                            </div>-->
+<!--                            <div class="verify-phone d:none color:accent-3">주소를 입력해주세요</div>-->
+<!--                          </section>-->
+
+<!--                          &lt;!&ndash; 상세 주소 입력 섹션 &ndash;&gt;-->
+<!--                          <section>-->
+<!--                            <h1 class="d:none">상세 주소 입력</h1>-->
+<!--                            <div><span>상세 주소</span><span class="emphasis color:accent-3">*</span></div>-->
+<!--                            <div class="d:flex col-gap:2">-->
+<!--                              <input type="text" id="addr2" name="addr2" class="addr2 n-textbox n-textbox-type:underline" autocomplete="false" th:value="${member.addr2}"/>-->
+<!--                            </div>-->
+<!--                            <div class="verify-phone d:none color:accent-3">상세 주소를 입력해주세요</div>-->
+<!--                          </section>-->
+
+            <section id="location">
+                <div class="d:flex fl-dir:column gap:4">
+                    <div>배송지</div>
+                    <div class="d:flex ai:center gap:3">
+                        <input type="text" id="sample6_postcode" class="n-textbox n-textbox-type:underline"
+                               placeholder="우편번호" name="zipCode" th:value="${member.zipCode}">
+                        <input type="button" class="btn-address n-btn n-btn-type:outline md:w:7 w:6" value="주소찾기">
+                    </div>
+                    <input type="text" id="sample6_address" class="n-textbox n-textbox-type:underline" placeholder="주소"
+                           name="addr1" th:value="${member.addr1}">
+                    <input type="text" id="sample6_detailAddress" class="n-textbox n-textbox-type:underline"
+                           placeholder="상세주소" name="addr2" th:value="${member.addr2}">
+                </div>
+            </section>
+
+            <!-- 이메일 입력 섹션 -->
+            <section>
+                <h1 class="d:none">이메일 입력</h1>
+                <div><span>이메일</span><span class="emphasis color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" id="email" name="email" class="email n-textbox n-textbox-type:underline"
+                           autocomplete="false" th:value="${member.email}"/>
+                </div>
+                <div class="verify-phone d:none color:accent-3">이메일을 입력해주세요</div>
+            </section>
+
+            <!-- 버튼 섹션 -->
+            <section id="bottom-button" class="btn-box d:flex gap:8">
+                <h1 class="d:none">버튼</h1>
+                <button type="button" id="prevButton" class="prev n-btn n-btn:outline w:10p">이전</button>
+                <button type="submit" id="submitButton" class="next-button next n-btn w:10p disabled">수정 완료</button>
+            </section>
+        </section>
+    </form>
+
+</main>
+
+</body>
+</html>

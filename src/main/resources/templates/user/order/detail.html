@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+  <meta charset="UTF-8">
+  <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script type="module" src="/js/user/order/detail.js" defer></script>
+  <link rel="stylesheet" href="/css/user/product/list.css">
+  <link rel="stylesheet" href="/css/user/order/detail.css">
+</head>
+<body>
+
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:9 w:10p">
+  <section>
+    <h1 class="d:none">주문 상태 요약</h1>
+    <!--  페이지 제목-->
+    <div class="d:none md:d:flex p:4 bd-bottom bd-color:base-3 jc:center" style="height: 80px">
+      <span class="fw:3 fs:5">주문 상세 - </span>
+      <span class="fw:3 fs:5">{{list[0].prettyName}}</span>
+      <span v-if="list.length >= 2" class="fw:3 fs:5">외 {{(list.length)-1}} 건</span>
+    </div>
+
+    <!--  주문일자 및 주문번호, 주문상태 표시-->
+    <div class="d:flex fl-dir:column gap:5 md:gap:8 p:4 bd-bottom bd-color:base-3 bg-color:base-2 md:bg-color:transparent">
+      <div class="d:flex fl-dir:column gap:5 md:gap:10">
+        <div class="d:flex jc:space-between">
+          <div>
+            <span class="pr:1">{{ order.date }}</span>
+            <span>주문</span>
+          </div>
+          <div>
+            <span class="pr:1">주문번호</span>
+            <span>{{ order.id }}</span>
+          </div>
+        </div>
+        <div class="d:flex jc:space-between gap:4 p:5">
+          <div class="d:flex fl-dir:column ai:center gap:2 md:gap:3" v-for="status in state" :key="status.id" >
+            <div :class="order.categoryId == status.id?'bg-color:main-6':''" class="bd-radius:full ai:center jc:center bg-color:base-4"></div>
+            <div :class="order.categoryId == status.id?'color:main-6':''" class="fs:1 md:fs:3 color:base-4">{{ status.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- 주문한 상품 내역-->
+<form ref="form" method="post" class="d:flex fl-dir:column gap:8 md:gap:20 ">
+  <section class="d:flex fl-dir:column gap:7 md:gap:15 mr:4 ml:4 md:mr:0 md:ml:0">
+    <h1 class="d:none">주문 상품 내역</h1>
+    <div class="d:flex fl-dir:column gap:2 md:gap:4 w:10p ">
+      <label>
+        <input type="checkbox" name="all" class="n-toggle n-toggle-type:check-box" @click="checkAll(!isChecked)" />
+        전체선택
+      </label>
+    </div>
+    <div class="d:flex fl-dir:column gap:5 md:gap:12">
+      <div class="d:flex gap:2 md:gap:4 w:10p" v-for="item in list" :key="item.id">
+        <div><input type="checkbox" class="n-toggle n-toggle-type:check-box" :checked="isChecked" name="prdIds" :value="item.productId" /></div>
+
+        <div class="d:flex ai:center gap:2 md:gap:4 w:10p">
+          <img class="bd-radius:1" :src="`${item.imgPath}/${item.imgName}`" alt="상품 썸네일" width="100px" height="100px">
+          <div class="d:flex fl-dir:column jc:space-between ai:start md:ai:center md:fl-dir:row gap:2 md:gap:3 w:10p h:10p pt:1 pb:1 md:pt:0 md:pb:0">
+            <div class="d:flex fl-grow:1 fl-dir:column jc:space-between gap:1 md:ai:center md:fl-dir:row md:h:10p">
+              <div class="fs:2 fl-grow:1 md:w:5p md:fs:3" v-text="item.prettyName"> </div>
+              <div class="d:flex fl-dir:row pos:relative md:jc:space-between md:ai:center md:pos:none gap:3">
+                <span class="fs:2 md:fs:3 fw:3">{{ Number(item.price).toLocaleString() }}원</span>
+                <span class="md:d:none bar"></span>
+                <span class="fs:2 md:fs:3">{{ item.quantity }}개</span>
+              </div>
+            </div>
+            <div class="button">
+              <div :class="{'d:none':item.cancelId},{'d:none':item.exchId},{'d:none':item.rfndId}">
+                <div v-if="item.categoryId === 4" class="d:flex fl-dir:row md:fl-dir:column gap:2">
+                  <div class="n-btn n-btn-type:outline n-btn-size:1">교환</div>
+                  <div class="n-btn n-btn-type:outline n-btn-size:1">환불</div>
+                </div>
+                <div v-else-if="item.categoryId === 5" class="d:flex fl-dir:row md:fl-dir:column gap:2">
+                  <div class="n-btn n-btn-type:outline n-btn-size:1">후기쓰기</div>
+                  <button class="n-btn n-btn-type:outline n-btn-size:1 " disabled >배송완료</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--  버튼들-->
+  <section class="d:flex fl-dir:column gap:10 mr:4 ml:4 md:mr:0 md:ml:0">
+    <h1 class="d:none">버튼</h1>
+    <div>
+      <span class="d:flex jc:center color:sub-1 fw:3">품절된 상품은 제외됩니다.</span>
+    </div>
+    <div class="d:flex jc:center gap:7 md:gap:10">
+      <button @click.prevent="goInfo" class="n-btn n-btn-size:2 fl-grow:1">선택상품 바로 구매</button>
+      <div @click="addCart" class="n-btn n-btn-size:2 fl-grow:1">선택상품 다시 담기</div>
+    </div>
+    <button v-if="order.categoryId === 1 && order.cancelId==null" @click.prevent="cancel(order)" ref="btn" class="fl-grow:1 n-btn n-btn-type:outline n-btn-size:2">주문 취소</button>
+  </section>
+</form>
+
+<!--  결제정보-->
+  <section class="">
+    <h1 class="d:none">결제정보</h1>
+    <div class="n-expander bd-top bd-color:base-4 bd-width:3 mr:4 ml:4 md:mr:0 md:ml:0">
+      <div class="n-expander-title bd-bottom bd-color:base-4 bd-width:1 fs:5 md:fs:6 fw:3">
+        <input type="checkbox" class="n-expander-trigger" checked/>
+        결제 정보
+      </div>
+      <div class="n-expander-content px:2 gap:4">
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">상품금액</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ Number(payment.totalAmt+payment.pointAmt+payment.couponAmt).toLocaleString() }}원</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">배송비</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ Number(payment.deliveryFee).toLocaleString() }}원</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">적립금</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ Number(payment.pointAmt).toLocaleString() }}P</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">쿠폰</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ Number(payment.couponAmt).toLocaleString() }}원</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">결제수단</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ payment.category }}</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">총 결제금액</span>
+          <span class="fs:3 md:fs:4 fw:3">{{ Number(payment.totalAmt).toLocaleString() }}원</span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">환불 방법</span>
+          <span v-if="!payment.refundType" class="fs:3 md:fs:4 fw:3">결제수단으로 환불</span>
+          <span v-if="payment.refundType" class="fs:3 md:fs:4 fw:3">적립금 환불</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!--  배송지 정보-->
+  <section class="">
+    <h1 class="d:none">배송지 정보</h1>
+    <div class="n-expander bd-top bd-color:base-4 bd-width:3 mr:4 ml:4 md:mr:0 md:ml:0">
+      <div class="n-expander-title bd-bottom bd-color:base-4 bd-width:1 fs:5 md:fs:6 fw:3">
+        <input type="checkbox" class="n-expander-trigger" checked/>
+        배송지 정보
+      </div>
+      <div class="n-expander-content px:2 gap:4">
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">수령인</span>
+          <span class="fs:3 md:fs:4 fw:3"> {{ location.receiverName }} </span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">연락처</span>
+          <span class="fs:3 md:fs:4 fw:3"> {{ location.receiverPhone }} </span>
+        </div>
+        <div class="d:flex fl-dir:column p:2" >
+          <div class="d:flex fl-dir:row jc:space-between">
+            <span class="fs:3 md:fs:4 fw:3">주소</span>
+            <span class="fs:3 md:fs:4 fw:3"> {{ location.addr1 }} </span>
+          </div>
+          <div class="text-align:end ">
+            <span class="fs:3 md:fs:4 fw:3 "> {{ location.addr2 }} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!--  주문자 정보-->
+  <section class="">
+    <h1 class="d:none">주문자 정보</h1>
+    <div class="n-expander bd-top bd-color:base-4 bd-width:3 mr:4 ml:4 md:mr:0 md:ml:0">
+      <div class="n-expander-title bd-bottom bd-color:base-4 bd-width:1 fs:5 md:fs:6 fw:3">
+        <input type="checkbox" class="n-expander-trigger" checked/>
+        주문자 정보
+      </div>
+      <div class="n-expander-content px:2 gap:4">
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">주문인</span>
+          <span class="fs:3 md:fs:4 fw:3" v-text="member.name"></span>
+        </div>
+        <div class="d:flex fl-dir:row jc:space-between w:10p p:2" >
+          <span class="fs:3 md:fs:4 fw:3">연락처</span>
+          <span class="fs:3 md:fs:4 fw:3" v-text="member.phone"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

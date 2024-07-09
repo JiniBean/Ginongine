@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <link rel="stylesheet" href="/css/user/order/info.css">
+    <script src="/js/user/order/info.js" defer></script>
+</head>
+
+<body>
+
+    <main layout:fragment="main" class="d:flex fl-dir:column gap:10 md:gap:20 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0 pt:10 md:pt:0">
+        <h1 class="d:none md:d:flex ai:center jc:center h:4 w:10p fs:5 fw:3">주문하기</h1>
+
+        <section class="d:flex fl-dir:column gap:6 md:gap:12 w:10p">
+            <h1 class="d:none">주문 상품 목록</h1>
+            <section class="w:10p d:flex fl-dir:column gap:4 md:gap:8 " >
+                <h1 class="d:none">상품 영역</h1>
+                <!--상품 카드 한개-->
+                <div class="d:flex w:10p gap:3" th:each=" i : ${items}">
+                    <div>
+                        <a href="">
+                            <img th:src="@{/img/Meongmeong.jpg}" src="" height="110px" width="110px" alt="상품 이미지" class="bd-radius:1"/>
+                        </a>
+                    </div>
+                    <div class="d:flex fl-dir:column gap:3">
+                        <div>
+                            <a href="">
+                                <span th:text="${i.name}">텃밭 흙 당근,2개입</span>
+                            </a>
+                        </div>
+                        <div class="d:flex jc:space-between w:10p">
+                            <div th:text="${#numbers.formatInteger(i.price,3,'COMMA') + '원'}">2500원</div>
+                            <div th:text="${i.quantity}">2개</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w:10p d:flex jc:end gap:3">
+                    <span class="fw:3">총 상품 금액</span>
+                    <span id="total-price" class="color:main-6 fw:3"
+                          th:text="${#numbers.formatInteger(totalPrice,3,'COMMA') + '원'}"
+                          th:data-total="${totalPrice}">
+                    15,000</span>
+                </div>
+            </section>
+
+        <form method="post" class="d:flex fl-dir:column gap:10 md:gap:20">
+            <section class="d:flex fl-dir:column gap:2 md:gap:10 w:10p">
+                <div class="d:flex fl-dir:column gap:2 md:gap:3">
+                    <h1 class="fs:3 fw:3 md:fs:5">주문자 정보</h1>
+                    <div class="fs:1 md:fs:3 color:base-7">주문자와 받는 사람이 다른 경우 송장에 주문자의 이름이 노출됩니다.</div>
+                </div>
+
+                <label class="fs:2 md:fs:3">
+                    보내시는 분
+                    <input type="text" placeholder="이름" th:value="${member.name}"
+                           class="n-textbox  n-textbox-type:underline n-textbox-label:top"/>
+                </label>
+                <label class="fs:2 md:fs:3">
+                    연락처
+                    <input type="text" placeholder="010-1234-6578" th:value="${member.phone}"
+                           class="n-textbox  n-textbox-type:underline n-textbox-label:top"/>
+                </label>
+            </section>
+
+            <section class="d:flex fl-dir:column gap:6 md:gap:12 w:10p">
+                <div class="d:flex jc:space-between">
+                    <h1 class="fs:3 fw:3 md:fs:5">배송지</h1>
+                    <button type="button" class="n-btn n-btn:outline fs:2 fw:3 color:main-6">변경</button>
+                </div>
+                <div>
+                    <div class="d:flex fl-dir:column gap:1 md:gap:4">
+                        <div><span class="small-button bg-color:main-5 color:main-1">기본배송지</span></div>
+                        <div class="d:flex gap:1">
+                            <span  th:text="${'['+location.zipCode+']'}">[12345]</span>
+                            <span th:text="${location.addr1}">서울특별시 마포구 백범로 3</span>
+                            <span th:text="${location.addr2}">3층</span>
+                        </div>
+                        <div class="d:flex gap:1">
+                            <span th:text="${location.receiverName}">신석호</span>
+                            <span th:text="${location.receiverPhone}">010-1234-5678</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="d:flex fl-dir:column gap:4 w:10p">
+                <h1 class="fs:3 fw:3 md:fs:5">배송 요청 사항</h1>
+                <div class="custom-dropdown">
+                    <div class="selected-option deco deco-pos:right icon:RT deco-size:1 icon-size:1 deco-color:main-6 "
+                         id="selectedOptionDesc">직접 받을게요</div>
+                    <ul class="options">
+                        <li class="optionDesc" data-value="직접 받을게요">직접 받을게요</li>
+                        <li class="optionDesc" data-value="문 앞에 놓아주세요">문 앞에 놓아주세요</li>
+                        <li class="optionDesc" data-value="경비실에 맡겨주세요">경비실에 맡겨주세요</li>
+                        <li class="optionDesc" data-value="무인 택배함에 넣어주세요">무인 택배함에 넣어주세요</li>
+                        <li class="optionDesc" data-value="배송 전 연락주세요">배송 전 연락주세요</li>
+                    </ul>
+                </div>
+                <input type="hidden" id="selectedDesc" value="직접 받을게요" name="note">
+            </section>
+
+            <section class="d:flex fl-dir:column gap:4 md:gap:4 w:10p">
+                <h1 class="fs:3 fw:3 md:fs:5">공동현관 출입번호</h1>
+                <div class="d:flex">
+                    <input type="radio" id="huey" name="현관" value="huey" class="n-toggle n-toggle:dot" checked/>
+                    <input type="text" placeholder="" class="n-textbox n-textbox:underline" th:value="${location.gatePwd}"/>
+                </div>
+                <div>
+                    <input type="radio" id="dewey" name="현관" value="비밀번호없음" class="n-toggle n-toggle:dot"/>
+                    비밀번호 없이 자유 출입 가능해요
+                </div>
+            </section>
+            <div class="d:flex gap:8 md:gap:10 w:10p">
+                <button class="n-btn n-btn:outline n-btn-size:2 fl-grow:1 fw:3">취소</button>
+                <button class="n-btn n-btn-size:2 fl-grow:1 fw:3">주문하기</button>
+                <input type = "hidden" th:value="${location.id}" name="locationId">
+                <input type = "hidden" th:value="${location.zipCode}" name="zipCode">
+                <input type = "hidden" th:value="${location.addr1}" name="addr1">
+                <input type = "hidden" th:value="${location.addr2}" name="addr2">
+                <input type = "hidden" th:value="${location.receiverName}" name="receiverName">
+                <input type = "hidden" th:value="${location.receiverPhone}" name="receiverPhone">
+                <input type = "hidden" th:value="${location.gatePwd}" name="gatePwd">
+            </div>
+        </form>
+    </main>
+
+</body>
+</html>

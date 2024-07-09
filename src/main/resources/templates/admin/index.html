@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-index">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script type="text/javascript" src="/js/admin/index.js" defer></script>
+    <script type="text/javascript" src="/js/admin/highchart.js" defer></script>
+
+    <link rel="stylesheet" href="/css/admin/index.css">
+
+
+</head>
+<body>
+<main layout:fragment="main" class=" d:flex fl-dir:column gap:11 md:gap:15 w:10p pt:8 md:pt:13 max-w:10 pr:4 pl:4 md:pr:0 md:pl:0 ">
+
+    <section class="d:flex jc:center w:10p">
+        <h1 class="d:none">검색폼</h1>
+        <form class="pos:relative w:10p md:w:8 h:2">
+            <input type="text" @keyup.enter="getOrderStats" v-model="query" class="n-textbox border-color:main-6 bd-radius:4 pr:1 pl:4" placeholder="검색어를 입력해 주세요">
+            <button @click.prevent="getOrderStats" class="pos:absolute m-right:1 icon cursor:pointer icon:magnifying_glass icon-size:4 icon-color:base-5" style="top:2px; right:4px;">검색 버튼</button>
+        </form>
+    </section>
+
+    <!-- ============================== 주문 ============================== -->
+    <section class="d:flex fl-dir:column gap:4 md:gap:6">
+        <h1 class="fw:3 fs:3 md:fs:4">주문 건수</h1>
+        <table class="n-table n-table-hover n-table-border:bottom txt-al:center" >
+            <thead class="bg-color:base-3 txt-al:center">
+            <tr>
+                <th scope="col" class="w:auto txt-al:center">연간</th>
+                <th scope="col" class="w:auto txt-al:center">월간</th>
+                <th scope="col" class="w:auto txt-al:center">주간</th>
+                <th scope="col" class="w:auto txt-al:center">일간</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row" class="w:auto txt-al:center">{{orderStats.year}}</th>
+                <th class="w:auto txt-al:center">{{orderStats.month}}</th>
+                <th class="w:auto txt-al:center">{{orderStats.week}}</th>
+                <th class="w:auto txt-al:center">{{orderStats.day}}</th>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- ============================== 재고 ============================== -->
+    <section class="d:flex fl-dir:column gap:4 md:gap:6">
+        <h1 class="fw:3 fs:3 md:fs:4">재고 부족 현황</h1>
+        <!------------- mobile ------------->
+        <table class="md:d:none n-table n-table-hover n-table-border:bottom txt-al:center" >
+            <thead class="bg-color:base-3 txt-al:center">
+                <tr>
+                    <th scope="col" class="w:auto txt-al:center">상품명</th>
+                    <th scope="col" class="txt-al:center w:4" >현재 재고</th>
+                    <th scope="col" class="txt-al:center w:4">마지막 변동량</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="s in stockStats" @click="moveStock(s.productId)">
+                    <th scope="row" class="w:auto">{{s.name}}</th>
+                    <td class="txt-al:center w:4">{{s.amount}}</td>
+                    <td :class="{'color:sub-2':s.current<0}" class="txt-al:center color:sub-5 w:4" >{{s.current}}</td>
+                </tr>
+                <tr v-if="stockStats.length<1">
+                    <td colspan="3" class="txt-al:center">내역이 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+        <!------------- pc ------------->
+        <table class="d:none md:d:table n-table n-table-hover n-table-border:bottom txt-al:center" >
+            <thead class="bg-color:base-3 txt-al:center">
+            <tr>
+                <th scope="col" class="w:auto txt-al:center">상품명</th>
+                <th scope="col" class="txt-al:center w:5">현재 재고</th>
+                <th scope="col" class="txt-al:center w:5">마지막 변동량</th>
+                <th scope="col" class="txt-al:center w:5">사유</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="s in stockStats" @click="moveStock(s.productId)">
+                    <th scope="row" class="w:auto">{{s.name}}</th>
+                    <td class="txt-al:center w:5">{{s.amount}}</td>
+                    <td :class="{'color:sub-2':s.current<0}" class="txt-al:center color:sub-5 w:5">{{s.current}}</td>
+                    <td class="txt-al:center w:5">{{s.category}}</td>
+                </tr>
+                <tr v-if="stockStats.length<1">
+                    <td colspan="4" class="txt-al:center h:4">내역이 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ============================== 문의 ============================== -->
+    <section class="d:flex fl-dir:column gap:4 md:gap:6">
+        <div class="d:flex jc:space-between">
+            <h1 class="fw:3 fs:3 md:fs:4">답변 대기중 문의</h1>
+            <div class="color:sub-6">총 {{inquiryStats.length}}건</div>
+        </div>
+        <!------------- mobile ------------->
+        <table class="md:d:none n-table n-table-hover n-table-border:bottom txt-al:center" >
+            <thead class="bg-color:base-3 txt-al:center">
+                <tr>
+                    <th scope="col" class="w:auto txt-al:center">제목</th>
+                    <th scope="col" class="txt-al:center w:4">문의 일자</th>
+                    <th scope="col" class="txt-al:center w:4">분류</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="i in inquiryStats" @click="move(i.id)">
+                    <th scope="row" class="w:auto"> {{i.content}}</th>
+                    <td class="txt-al:center">{{i.date}}</td>
+                    <td class="txt-al:center w:4">{{i.case}}</td>
+                </tr>
+                <tr v-if="inquiryStats.length<1">
+                    <td colspan="3" class="txt-al:center">내역이 없습니다.</td>
+                </tr>
+            </tbody>
+        </table>
+        <!------------- pc ------------->
+        <table class="d:none md:d:table n-table n-table-hover n-table-border:bottom txt-al:center" >
+            <thead class="bg-color:base-3 txt-al:center">
+            <tr>
+                <th scope="col" class="w:auto txt-al:center">제목</th>
+                <th scope="col" class="txt-al:center" style="width: 200px">문의 일자</th>
+                <th scope="col" class="txt-al:center" style="width: 200px">분류</th>
+                <th scope="col" class="txt-al:center" style="width: 200px">유형</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="i in inquiryStats" @click="move(i.id)">
+                <th scope="row" class="w:auto">{{i.content}}</th>
+                <td class="txt-al:center" style="width: 200px">{{i.date}}</td>
+                <td class="txt-al:center" style="width: 200px">{{i.case}}</td>
+                <td class="txt-al:center" style="width: 200px">{{i.category}}</td>
+            </tr>
+            <tr v-if="inquiryStats.length<1">
+                <td colspan="4" class="txt-al:center h:4">내역이 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ============================== 통계 ============================== -->
+    <section>
+        <h1 class="d:none"><b>그래프 모음</b></h1>
+        <div class="d:flex fl-dir:column d:gap:3 md:gap:5">
+            <div id="bestseller-container" class="n-item:shadow w:10p">
+                베스트셀러 그래프
+            </div>
+
+            <div id="join-route-container" class="n-item:shadow w:10p">
+                회원가입 경로 집계 그래프
+            </div>
+
+            <div id="sales-container" class="n-item:shadow w:10p">
+                일별 구매/취소/환불/교환 건수 집계 그래프
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#개발용
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url:
+    username:
+    password:
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/*/*Mapper.xml
+  type-aliases-package: kr.co.ginong.web.entity.**
+
+logging:
+  level:
+    kr:
+      co:
+        ginong:
+          web:
+            repository: trace
+    
+  

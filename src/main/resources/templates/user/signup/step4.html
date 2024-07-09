@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/user/signup/find.css">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+    <script>
+        window.addEventListener("load", function(){
+            let loginBtn = document.querySelector(".n-btn");
+
+            loginBtn.onclick = function (){
+                let url = new URL("/signin", location.origin);
+                location.href= url.toString();
+            }
+        });
+    </script>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p  pr:4 pl:4 md:pr:0 md:pl:0">
+
+    <section class="d:flex fl-dir:column gap:2 centered-container h:3p">
+        <h1 class="d:none">안내문</h1>
+        <div class=" icon icon:checkCircle icon-color:main-6 js:center al:center">아이콘</div>
+        <div class="d:flex js:center al:center fw:bold fs:3">
+            <span th:text="${name}">기농이</span>
+            <span>님의 회원가입이 완료되었습니다.</span>
+        </div>
+        <div class="d:flex js:center al:center color:base-4">가입된 정보로 로그인해주세요.</div>
+    </section>
+
+    <div class="d:flex">
+        <button type="button" class="n-btn w:10p">로그인</button>
+    </div>
+</main>
+
+</body>
+</html>

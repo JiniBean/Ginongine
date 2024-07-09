@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout-back">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <script src="/js/admin/stock/reg.js" defer></script>
+    <link rel="stylesheet" href="/css/admin/stock/update.css">
+</head>
+
+<body>
+<main layout:fragment="main" class="d:flex max-w:9 w:10p pl:4 pr:4 pt:4 md:pl:0 md:pr:0 md:pb:4">
+    <section class="w:10p" id="reg-form">
+        <h1 class="d:none">재고 정보</h1>
+        <form method="post" class="n-form:outline-none d:flex fl-dir:column gap:8 md:gap:13 h:10p">
+            <div class="d:flex fl-dir:column gap:2">
+                <div>상품명</div>
+                <div class="n-textbox n-textbox-type:underline" th:text="${view.prettyName}">텃밭 흙 당근</div>
+                <input type="hidden" name="productId" th:value="${view.productId}">
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <label>수량</label>
+                <input type="number" class="n-textbox n-textbox-type:underline" name="amount" th:placeholder="'현재 재고: '+${view.currentAmount}" th:max="${view.currentAmount}" min="1" th:value="${view.amount}" autofocus>
+            </div>
+
+            <div class="d:flex fl-dir:column gap:2">
+                <div>유형</div>
+                <div id="plma" class="n-dropdown w:5">
+                    <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right" th:text="${view.plma == 1? '입고' : '출고'}">
+                    </button>
+                    <ul class="dropdown-list w:10p">
+                        <li class="d:flex jc:center p:1" data-id="1">입고</li>
+                        <li class="d:flex jc:center p:1" data-id="-1">출고</li>
+                    </ul>
+                    <div class="d:none">
+                        <input class="input" type="hidden" name="plma" th:value="${view.plma}" required title="유형을 선택해주세요">
+                    </div>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <div>입출고 사유</div>
+                <div id="category" class="n-dropdown category w:5">
+                    <button type="button" class="dropdown-btn n-btn n-btn:outline w:10p ai:center jc:space-between icon icon:RT icon-size:1 icon-color:main-6 deco-pos:right" th:text="${view.stockCategoryName}">
+
+                    </button>
+                    <ul class="dropdown-list w:10p" >
+                        <li class="d:flex jc:center p:1" th:each="c:${categories}" th:data-id="${c.id}" th:text="${c.name}"></li>
+                    </ul>
+                    <div>
+                        <input type="hidden" name="categoryId" th:value="${view.stockCategoryId}" required title="입출고 사유를 선택해주세요">
+                    </div>
+                </div>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <label>입출고일</label>
+                <input type="date" class="n-textbox n-textbox-type:underline" name="ioDate" th:value="${#dates.format(view.ioDate, 'yyyy-MM-dd')}" required >
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <label>수확일</label>
+                <input type="date" class="n-textbox n-textbox-type:underline" name="madeDate" th:value="${#dates.format(view.madeDate, 'yyyy-MM-dd')}"required>
+            </div>
+            <div class="d:flex fl-dir:column gap:2">
+                <span>비고</span>
+                <input type="text" class="n-textbox min-h:6" name="desc" th:value="${view.desc}"/>
+            </div>
+            <div class="d:flex fl-grow:1 ai:end gap:8">
+                <a th:href="@{detail(p=${view.productId})}" class="n-btn n-btn:outline n-btn-size:2 min-w:3 w:10p">취소</a>
+                <button class="n-btn n-btn-size:2 min-w:3 w:10p">저장</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+
+</html>

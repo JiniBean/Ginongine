@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/inc/layout-back">
+<head>
+  <meta charset="UTF-8">
+    <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="/js/user/coupon/list.js" defer></script>
+</head>
+<body>
+
+    <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pr:4 pl:4 md:pr:0 md:pl:0">
+        <!--  페이지 제목-->
+        <section class="pt:3 pb:3 bd-bottom bd-color:main-6 md:bd:0 d:none">
+            <h1 class="d:none">쿠폰 내역</h1>
+            <div class="d:flex fl-dir:column fw:3 fs:3 ai:center md:fs:4 ">쿠폰 내역</div>
+        </section>
+
+        <nav>
+            <h1 class="d:none">탭</h1>
+            <ul id='tabbar' class="n-tabbar n-tab-grow w:10p">
+                <li :class="tabIndex == 0 ? 'active' : ''"><a href="#" class="h:3 md:h:4" @click="clickTab(0)">사용 가능 쿠폰</a></li>
+                <li :class="tabIndex == 1 ? 'active' : ''"><a href="#" class="h:3 md:h:4" @click="clickTab(1)">쿠폰 이용 기록</a></li>
+            </ul>
+        </nav>
+        
+        <!-- coupon section -->
+        <section id="coupon-list" class="d:flex fl-dir:column gap:2 pt:5 pb:5">
+            <div v-if="tabIndex == 0" class="d:flex w:10p jc:space-between p:5 md:p:5 bd-bottom bd-w:3 bd-color:base-3">
+                <span class="fw:3">사용 가능 쿠폰</span>
+                <span class="fw:3 color:sub-5">{{ list.length }}장</span>
+            </div>
+            <div v-if="tabIndex == 1" class="d:flex w:10p jc:space-between p:5 md:p:5 bd-bottom bd-w:3 bd-color:base-3">
+                <span class="fw:3">사용한 쿠폰</span>
+                <span class="fw:3 color:sub-2">{{ list.length }}장</span>
+            </div>
+
+            <div v-if="tabIndex==0" v-for="coupon of list">
+            <!-- 쿠폰 리스트-->
+                <div class="d:flex fl-dir:column md:gap:6 p:5 md:p:5 gap:3 md:gap:3 bd-bottom bd-color:base-3">
+                    <div class="d:flex w:10p jc:space-between bd-bottom bd-color:base-3 p:2 pl:0 pr:0 md:p:2">
+                        <span class="fw:3">{{ coupon.couponName }}</span>
+                        <span class="fw:3 color:sub-5">{{ Number(coupon.discountAmount).toLocaleString() }}{{ coupon.discountUnit }}</span>
+                    </div>
+                    <div class="d:flex w:10p jc:space-between md:pl:2 md:pr:2">
+                        <span >내용</span>
+                        <span >{{ coupon.desc }}</span>
+                    </div>
+                    <div class="d:flex w:10p jc:space-between md:pl:2 md:pr:2">
+                        <span >유효기간</span>
+                        <span v-if="coupon.endDate != null" >{{ coupon.endDate }}까지</span>
+                        <span v-else>없음</span>
+                    </div>
+                    <div class="d:flex w:10p jc:right md:pl:2 md:pr:2">
+                        <div class="d:flex fl-dir:row jc:right gap:1">
+                            <span v-if="coupon.minPaymentAmt != 0 || coupon.maxDiscountAmt != 0" class="color:sub-2">* </span>
+                            <span v-if="coupon.minPaymentAmt != 0" span class="color:sub-2">{{ Number(coupon.minPaymentAmt).toLocaleString() }}원 이상 구매 시 </span>
+                            <span v-if="coupon.maxDiscountAmt != 0" span class="color:sub-2"> 최대 {{ Number(coupon.maxDiscountAmt).toLocaleString() }}원 할인</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="tabIndex==1" v-for="coupon of list">
+                <div class="d:flex fl-dir:column md:gap:6 p:5 md:p:5 gap:3 md:gap:3 bd-bottom bd-color:base-3">
+                    <div class="d:flex w:10p jc:space-between bd-bottom bd-color:base-4 p:2 pl:0 pr:0 md:p:2">
+                        <span class="fw:3">{{ coupon.couponName }}</span>
+                        <span v-if="coupon.usedDate != null" class="fw:3 color:sub-2">{{ Number(coupon.discountAmount).toLocaleString() }}{{ coupon.discountUnit }}</span>
+                        <span v-else-if="coupon.endDate != null" class="fw:3 color:base-3">{{ Number(coupon.discountAmount).toLocaleString() }}{{ coupon.discountUnit }}</span>
+                    </div>
+                    <div class="d:flex w:10p jc:space-between md:pl:2 md:pr:2">
+                        <span >내용</span>
+                        <span >{{ coupon.desc }}</span>
+                    </div>
+                    <div class="d:flex w:10p jc:space-between md:pl:2 md:pr:2">
+                        <span >유효기간</span>
+                        <span v-if="coupon.endDate != null" >{{ coupon.endDate }}까지</span>
+                        <span v-else>없음</span>
+                    </div>
+                    <div class="d:flex w:10p jc:space-between md:pl:2 md:pr:2">
+                        <span>상태</span>
+                        <span v-if="coupon.usedDate != null">사용 완료</span>
+                        <span v-else-if="coupon.endDate != null">기간 만료</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

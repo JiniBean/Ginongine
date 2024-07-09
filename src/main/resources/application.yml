@@ -1,0 +1,12 @@
+# 공통 설정 공간
+spring:
+  profiles:
+    active:
+      - dev
+  output:
+    ansi:
+      enabled: always
+
+
+
+
