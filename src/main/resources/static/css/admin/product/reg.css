@@ -1,0 +1,113 @@
+
+.upload {
+    /*position: relative;*/
+    /*display: inline-flex;*/
+}
+
+.upload::before {
+    /*content: url(/icon/camera.svg);*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+
+
+    /*margin-right: 110px; !* 이미지와 텍스트 간격 조정 *!*/
+}
+
+
+
+/*.image-preview {*/
+/*    width: 1300px;*/
+/*    height: 90px;*/
+/*    background-color: #FFFFFF;*/
+/*    display: flex;*/
+/*    gap: 20px;*/
+/*}*/
+.input-wrapper {
+    display: flex;
+    align-items: center; /* 입력 필드와 버튼을 수직 중앙 정렬합니다. */
+}
+
+.input-wrapper input {
+    flex: 1; /* 입력 필드가 가능한 한 많은 공간을 차지하도록 설정합니다. */
+    margin-right: 8px; /* 입력 필드와 버튼 사이의 간격을 조절합니다. */
+}
+
+
+/*========================================*/
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+/*처음 클릭하는 곳 스타일링*/
+.selected-option{
+    background-color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid var(--color-main-5);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 250px;
+    height : 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/*메뉴 고르는곳 스타일링*/
+.options {
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff;
+    border: 1px solid var(--color-main-5);
+    border-top: none;
+    border-radius: 5px;
+    display: none;
+    width: 250px;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.option {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: var(--color-base-2); /*버튼 마우스오버 시 색상 지정*/
+}
+.option-category-list {
+    display: none;
+}
+
+/* 표시될 상태 */
+.option-category-list.active {
+    display: block;
+}
+.option-weight-list {
+    display: none;
+}
+
+/* 표시될 상태 */
+.option-weight-list.active {
+    display: block;
+}
+
+.option-quantity-list {
+    display: none;
+}
+
+/* 표시될 상태 */
+.option-quantity-list.active {
+    display: block;
+}
+
+.option-storage-list {
+    display: none;
+}
+
+/* 표시될 상태 */
+.option-storage-list.active {
+    display: block;
+}

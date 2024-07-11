@@ -1,0 +1,137 @@
+/* button.css */
+.n-btn {
+    /* btn-size:1 */
+    --btn-height-1: 26px;
+    --btn-padding-1: 4px 12px;
+    --btn-font-size-1: 14px;
+    --btn-border-radius-1: 5px;
+
+    /* btn-size:2 */
+    --btn-height-2: 40px;
+    --btn-padding-2: 4px 16px;
+    --btn-font-size-2: 14px;
+    --btn-border-radius-2: 5px;
+
+    /* btn-size:3 */
+    --btn-height-3: 60px;
+    --btn-padding-3: 4px 20px;
+    --btn-font-size-3: 16px;
+    --btn-border-radius-3: 5px;
+
+    /* btn-type:filled */
+    --btn-filled-background-color-default: var(--color-main-6);
+    --btn-filled-background-color-hover: #FA6400;
+    --btn-filled-background-color-active: #C85000;
+    --btn-filled-border: 1px solid transparent;
+    --btn-filled-color: var(--color-base-1);
+
+    /* btn-type:outline */
+    --btn-outline-background-color-default: var(--color-base-1);
+    --btn-outline-background-color-hover: var(--color-base-1);
+    --btn-outline-background-color-active: #F0F0F1;
+    --btn-outline-border: 1px solid var(--color-main-6);
+    --btn-outline-color: var(--color-main-6);
+
+
+    /* btn-color:accent */
+    --btn-background-color-accent-default: var(--color-accent-1);
+    --btn-background-color-accent-hover: #BB2D3B;
+    --btn-border-accent-default: 1px solid var(--color-accent-1);
+    --btn-border-accent-hover: 1px solid var(--color-accent-1);
+    --btn-color-accent: var(--color-base-1);
+
+    /* btn-color:base */
+    --btn-background-color-base-default: var(--color-base-1);
+    --btn-background-color-base-hover: var(--color-base-7);
+    --btn-border-base-default: 1px solid var(--color-base-4);
+    --btn-border-base-hover: 1px solid var(--color-base-4);
+    --btn-color-base: var(--color-base-4);
+}
+
+.n-btn-type\:outline:hover{
+    border-color: #FA6400;
+}
+
+.n-btn:disabled:hover{
+    border-color:transparent;
+}
+
+@media (min-width: 780px) {
+    .n-btn-size\:2{
+        --btn-height-2: 44px;
+        --btn-font-size-2: 16px;
+    }
+
+    .n-btn-size\:1{
+        --btn-height-1: 32px;
+        --btn-font-size-1: 16px;
+    }
+}
+
+/*===================================================================================*/
+.n-tabbar {
+    --tabbar-border-width: 0 0 1px 0;
+    --tabbar-border-style: solid;
+    --tabbar-border-color: var(--color-base-3);
+    --tabbar-border-color-active: var(--color-main-6);
+
+    --tab-color-active: var(--color-base-9);
+}
+@media (min-width: 780px) {
+    .n-tabbar .n-tab, .n-tabbar>li>a, .n-tabbar>li>button  {
+        font-size: var(--font-size-3);
+    }
+}
+
+/*===================================================================================*/
+/* toggle.css */
+.n-toggle {
+    /* toggle-type:check */
+    --toggle-check-border-color: var(--color-base-4);
+    --toggle-check-background-color-checked: var(--color-main-6);
+    --toggle-check-checked-background-color: var(--color-main-6);
+
+    /* toggle-type:dot */
+    --toggle-dot-border-color: var(--color-base-4);
+    --toggle-dot-checked-border-color: var(--color-main-6);
+    --toggle-dot-background-color-checked: var(--color-main-6);
+    --toggle-dot-checked-background-color: var(--color-main-6);
+    --toggle-dot-border-color-checked : var(--color-main-6);
+
+    /* toggle-type:outline-box */
+    --toggle-outline-color: var(--color-main-6);
+    --toggle-outline-background-color: var(--color-base-1);
+    --toggle-outline-border-color: var(--color-main-6);
+    --toggle-outline-checked-color: var(--color-main-6);
+    --toggle-outline-background-color-checked: var(--color-main-6);
+    --toggle-outline-checked-background-color: var(--color-main-6);
+    --toggle-outline-checked-border-color: transparent;
+
+    /* toggle-type:slide */
+    --toggle-slide-background-color: #cccccc;
+    /* --toggle-slide-checked-background-color: var(--color-main-6); */
+    --toggle-slide-background-color-checked: var(--color-main-6);
+    --toggle-slide-circle-color: #f0f0f0;
+    --toggle-slide-circle-color-checked: var(--color-main-1);
+}
+
+.n-toggle-type\:outline-box:before{
+    content: none;
+}
+
+@media (min-width: 780px) {
+    label:has(.n-toggle) {
+        font-size: var(--font-size-3);
+    }
+    label:has(+.n-textbox) {
+        font-size: var(--font-size-3);
+    }
+}
+
+.n-textbox {
+--textbox-border-color-focus: var(--color-main-6);
+}
+
+.icon\:magnifying_glass:hover::before{
+background-color:var(--color-main-6) ;
+}

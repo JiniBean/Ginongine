@@ -1,0 +1,15 @@
+div:has(input[name='ioDate']:invalid)::after{
+    margin-left: 8px;
+    content : "입출고일을 선택해주세요";
+    color: var(--color-base-5);
+}
+
+div:has(input[name='madeDate']:invalid)::after{
+    margin-left: 8px;
+    content : "수확일을 선택해주세요";
+    color: var(--color-base-5);
+}
+
+input:invalid{
+    border-bottom: var(--color-accent-1) 1px solid;
+}

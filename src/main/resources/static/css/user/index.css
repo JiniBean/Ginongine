@@ -1,0 +1,227 @@
+/* 상품카드 영역 (시즌아웃임박 / 커밍순) */
+.product-card {
+    gap: var(--gap-2);
+    font-size: var(--font-size-2);
+}
+
+.product-card > div:nth-child(1) > div:nth-child(1) {
+    width: 179px;
+    height: 186px;
+}
+
+.product-card > div:nth-child(2) {
+    gap: var(--gap-1);
+}
+
+.product-card > div:nth-child(2) > div {
+    gap: var(--gap-1);
+}
+
+/* 호버 상태일 때 이미지를 살짝 키우는 스타일 */
+.item-card{
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.item-card > img {
+    transition: transform 0.3s ease-in-out; /* 변환에 대한 부드러운 전환 효과 적용 */
+}
+
+.item-card > img:hover {
+    transform: scale(1.1); /* 원래 크기보다 10% 더 크게 */
+    border-radius: 5px;
+}
+.product-card > div:first-child {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.product-card > div:first-child > div:first-child > img {
+    transition: transform 0.3s ease-in-out; /* 변환에 대한 부드러운 전환 효과 적용 */
+}
+
+.product-card > div:first-child > div:first-child > img:hover {
+    transform: scale(1.1); /* 원래 크기보다 10% 더 크게 */
+    border-radius: 5px;
+}
+
+/* 커밍순 스타일 */
+.coming-soon-container {
+    position: relative;
+    width: 100%; /* 조정 가능 */
+    height: 500px; /* 조정 가능 */
+}
+
+.coming-soon-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 컨테이너를 완전히 채우도록 설정 */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검은색 투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* 텍스트 색상 */
+    font-size: 2em; /* 텍스트 크기 */
+    padding: 10px
+}
+
+.overlay p {
+    margin: 0; /* 기본 여백 제거 */
+    color: #cccccc;
+}
+
+/* 베스트, 특가, 추천 상품 영역 */
+.recommand-section ul > li {
+    padding: 5px;
+    width: 100%;
+}
+
+.recommand-section ul > li.selected {
+    padding: 5px;
+    border-bottom: 2px solid #FD7E14;
+}
+
+
+/* 블로그(농촌일기) 영역 */
+.blog-section img {
+    height: 144px;
+}
+
+.blog-section a {
+    position: relative;
+}
+
+.blog-section a > div {
+    height: 60px;
+    background-color: rgba(51, 51, 51, 0.5);
+}
+
+.blog-section a > div > span:first-child {
+    font-size: var(--font-size-1);
+}
+
+.blog-section a > div > span:nth-child(2) {
+    font-size: var(--font-size-5);
+}
+
+/* 장바구니 영역 */
+.cart-section{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+
+    position: absolute;
+
+    padding-bottom: 8px;
+    bottom: 0px;
+
+}
+.cart-section > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+
+    border-radius: 999px;
+    background-color: var(--color-icon-bg);
+    width: 36px;
+    height: 36px;
+}
+
+.cacrt-section > div:active {
+    background-color: var(--color-main-6);
+}
+.card{
+    width: 179px;
+}
+@media (min-width: 768px) {
+
+    /* 상품카드 영역 (시즌아웃임박 / 커밍순) */
+
+    .card{
+        width: 280px;
+    }
+    .product-card {
+        gap: var(--gap-5);
+        font-size: var(--font-size-3);
+    }
+
+    .product-card > div:nth-child(1) > div:nth-child(1) {
+        width: 280px;
+        height: 280px;
+    }
+
+    /* 블로그(농촌일기) 영역 */
+    .blog-section img {
+        height: 500px;
+    }
+
+    .blog-section a {
+        position: relative;
+    }
+
+    .blog-section a > div {
+        width: 100%;
+        height: 150px;
+        background-color: rgba(51, 51, 51, 0.5);
+    }
+
+    .blog-section a > div > span:first-child {
+        font-size: var(--font-size-4);
+    }
+
+    .blog-section a > div > span:nth-child(2) {
+        font-size: 30px;
+    }
+
+    /*  장바구니 영역  */
+    .cart-section{
+        height: 60px;
+        padding: 0px;
+        bottom: 0px;
+    }
+
+    div:has(div.cart-section):hover > div.cart-section{
+        background-color: rgb(255,255,255,0.5);
+    }
+
+    .cart-section > div{
+        background-color: var(--color-base-1);
+        width: 44px;
+        height: 44px;
+    }
+
+    .cart-section > div:hover {
+        background-color: var(--color-icon-bg);
+    }
+
+    .cart-section > div:active {
+        background-color: var(--color-main-6);
+    }
+
+
+    .cart-section > div:hover .icon\:shopping_cart_simple::before {
+        background-color: var(--color-base-1);
+    }
+
+    .icon\:shopping_cart_simple:hover::before,
+    .icon\:shopping_cart_simple:active::before {
+        background-color: var(--color-base-1) !important;
+
+    }
+
+    .icon-color\:base-1:before {
+        background-color: var(--color-base-9);
+    }
+
+}

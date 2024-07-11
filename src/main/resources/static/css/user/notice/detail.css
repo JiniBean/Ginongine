@@ -1,0 +1,9 @@
+.logo{
+    background-image: url("/img/logo-signin.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 140px;
+    background-position: center;
+    text-indent: -999px;
+}

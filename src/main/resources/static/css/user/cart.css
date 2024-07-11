@@ -1,0 +1,59 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cursor\:pointer:hover,
+.cursor\:pointer:active{
+    color: var(--color-sub-5);
+}
+
+.icon\:minus:hover::before,
+.icon\:minus:active::before{
+    background-color: var(--color-sub-2);
+}
+
+.icon\:plus:hover::before,
+.icon\:plus:active::before{
+    background-color: var(--color-sub-5);
+}
+
+
+@media (min-width: 780px) {
+    .info{
+        display: grid;
+        justify-content: center;
+
+        gap: 16px;
+        grid-template-columns: 2fr 0.6fr 1fr;
+        grid-template-rows: 1fr 0.4fr;
+        grid-template-areas:
+        "name price qty"
+        "stock price qty";
+    }
+
+    .info > * {
+        margin-top: 24px;
+    }
+
+    .info>:first-child{
+        grid-area: name;
+    }
+
+    .info>:nth-child(2){
+        grid-area: price;
+        justify-self: center;
+    }
+
+    .info>:nth-child(3){
+        grid-area: qty;
+        justify-self: center;
+    }
+    .info > .full-width {
+        margin-top: 0;
+        grid-area: stock;
+    }
+
+}

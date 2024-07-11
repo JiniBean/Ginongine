@@ -1,0 +1,16 @@
+.search-bar {
+    background-color: var(--color-main-6); /*테스트용*/
+    width: 100%;
+    height: 100%;
+    min-height: 105px;
+    top: var(--top-2);
+
+}
+
+
+@media(min-width:780px){
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    top: var(--top-2);
+}

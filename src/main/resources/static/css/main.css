@@ -1,0 +1,33 @@
+/*부모 태그에 pos:relative 클래스 줘야함*/
+/*========== .bar =================*/  /* 텍스트 구분 선(세로) user/product/HistoryList.html 참고 */
+.bar:before {
+    content: '';
+    width: 2px;
+    height: 14px;
+    background: #e0e0e0;
+    position: absolute;
+    top: 49.5%;
+    transform: translateY(-50%);
+}
+
+div:has(.preview.invalid)>:first-child::after{
+    margin-top: 22px;
+    content: '이미지만 업로드 가능합니다';
+    color: var(--color-base-6);
+    font-size: 16px;
+    display: flex;
+    align-items: start;
+    /*height: 40px;*/
+
+    background-image: url(../icon/x.svg);
+    mask-repeat: no-repeat;
+    background-repeat: no-repeat;
+    text-indent: 24px;
+
+}
+
+/*테이블 내용 마우스 커서 변경*/
+table > tbody th:hover,
+table > tbody td:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기농이네 관리자</title>
+    <link rel="stylesheet" href="/css/user/product/list.css">
+    <script type="module" src="/js/admin/product/list.js"></script>
+</head>
+<body>
+<main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pt:8 md:pt:13  pr:4 pl:4 md:pr:0 md:pl:0 md:pb:4">
+    <section class="d:flex jc:center w:10p">
+        <h1 class="d:none">검색폼</h1>
+        <form class="pos:relative w:10p md:w:8 h:2" method="get">
+            <fieldset>
+                <legend class="d:none">상품검색</legend>
+                <input type="text" class="n-textbox border-color:main-6 bd-radius:4" placeholder="검색어를 입력해 주세요" name="q">
+                <button class="pos:absolute m-right:1 icon icon:magnifying_glass icon-size:3 icon-color:base-5" style="top:2px; right:4px;"></button>
+            </fieldset>
+        </form>
+    </section>
+    <form class="d:flex fl-dir:column gap:8 md:gap:13" method="post">
+        <section class="w:10p">
+            <h1 class="d:none">상품선택목록</h1>
+            <div class="d:flex jc:space-between ai:center w:10p">
+                <label class="fw:3">
+                    <input type="checkbox" class="all n-toggle n-toggle-type:check n-toggle-size:1">
+                    전체 선택
+                </label>
+                <div>
+                    <button class="n-btn n-btn:outline fw:3 color:main-6">품절</button>
+                    <button class="n-btn fw:3">숨김</button>
+                </div>
+            </div>
+        </section>
+        <div class="fl-grow:1 n-btn n-btn:outline border-color:base-3 box-shadow:1 ml:7 h:4">
+            <a class="w:10p icon icon-size:4 icon:plus " href="/admin/product/reg">
+                상품 추가
+            </a>
+        </div>
+        <section class="d:flex fl-dir:column gap:4 w:10p" >
+            <h1 class="d:none">상품카드 목록</h1>
+            <div class="d:flex ai:center fl-dir:row gap:3" th:each="p:${list}" >
+                <div>
+                    <input type="checkbox" class="n-toggle n-toggle-type:check n-toggle-size:1" name="state" th:value="${p.id}" th:data="${p.id}">
+                </div>
+                <div class="d:flex n-item color:color-base-4 fl-grow:1 gap:2">
+                    <a href="#" th:href="@{/templates/product/product/admin/update(id=${p.id})}" class="d:flex w:10p gap:2">
+                        <div class="h:5 w:3">
+                            <!-- <img src="/img/carrot.png" alt="상품썸네일"> -->
+                            <img src="/img/carrot.png" th:src="|${p.thumbnailPath}/${p.thumbnailName}|" class="w:10p h:10p bd-radius:1" alt="상품썸네일">
+
+                        </div>
+                        <div class="d:flex fl-dir:column gap:2 w:10p">
+                            <div th:text="${p.name}">흙당근 2개입</div>
+                            <div th:text="${#numbers.formatInteger(p.price,3,'COMMA') + '원'}">2500</div>
+                            <div class="d:flex fl-dir:row gap:3 pos:relative">
+                                <span class="stock" th:text="${'재고 : ' + p.currentAmount}" th:data-id="${p.id}">재고</span>
+                                <!--                        <span th:text="${list.amount}">200</span>-->
+                                <span class="bar"></span>
+                                <span th:text="${p.state?'판매중':'숨김'}">활성화</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    <section class="d:flex w:10p mb:5 jc:center">
+        <h1 class="d:none">페이저</h1>
+        <ul class="n-pager d-flex" th:with="page=${param.p} eq null ? 1 : ${{param.p}}
+                                                , temp=(${page}-1)/4
+                                                , startnum=${T(java.lang.Math).floor(temp)}*4+1
+                                                , temp1=${count div 20}
+                                                , lastnum=${count} mod 20 eq 0 ? ${temp1} : ${temp1}+1">
+            <li>
+                <span th:if="${startnum} le 5">이전</span>
+                <a th:if="${startnum} gt 5" th:href="@{./list(p=${startnum-1})}" href="list?p=1">이전</a>
+            </li>
+            <li th:each="n:${#numbers.sequence(startnum,startnum+4)}" th:class="${{param.p}} eq ${n}? 'active' : ''" th:if="${n} le ${lastnum}">
+                <a th:href="@{./list(p=${n})}" th:text="${n}" href="list?p=1">1</a>
+            </li>
+            <li>
+                <span th:if="${startnum+4} le ${lastnum}">다음</span>
+                <a th:if="${startnum+4} le ${lastnum}" th:href="@{./list(p=${startnum+4})}" href="list?p=6">다음</a>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+</html>

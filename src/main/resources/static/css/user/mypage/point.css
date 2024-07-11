@@ -1,0 +1,6 @@
+.p\:5::after {
+    content: "";
+    display: block;
+    border-bottom: 1px #EDEFF1 solid;
+    margin-top: 10px; /* 원하는 여백 크기로 조절하세요 */
+}

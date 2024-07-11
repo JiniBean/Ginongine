@@ -1,0 +1,15 @@
+.bd-radius\:full{
+    width: 24px;
+    height: 24px;
+}
+
+@media (min-width: 780px) {
+    .button{
+        width: 100px;
+    }
+
+    .bd-radius\:full{
+        width: 36px;
+        height: 36px;
+    }
+}

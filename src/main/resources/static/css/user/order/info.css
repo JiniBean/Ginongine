@@ -1,0 +1,57 @@
+li {
+    list-style: none;
+}
+.small-button {
+    display: flex;
+    height: 26px;
+    padding: 4px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+    width: 90px;
+    align-items: center;
+    justify-content: center;
+}
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+/*처음 클릭하는 곳 스타일링*/
+.selected-option {
+    background-color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid var(--color-main-5);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 680px;
+    height : 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/*메뉴 고르는곳 스타일링*/
+.options {
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff;
+    border: 1px solid var(--color-main-5);
+    border-top: none;
+    border-radius: 5px;
+    display: none;
+    width: 100%;
+    max-width: 680px;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.optionDesc {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.optionDesc:hover {
+    background-color: var(--color-base-2); /*버튼 마우스오버 시 색상 지정*/
+}

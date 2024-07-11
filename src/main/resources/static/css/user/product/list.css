@@ -1,0 +1,196 @@
+.cart-section{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+
+    position: absolute;
+    bottom: 0px;
+
+}
+.cart-section > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+
+    border-radius: 999px;
+    background-color: var(--color-icon-bg);
+    width: 36px;
+    height: 36px;
+}
+
+.product-card > div:first-child {
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.product-card > div:first-child > div:first-child > img {
+    transition: transform 0.3s ease-in-out; /* 변환에 대한 부드러운 전환 효과 적용 */
+}
+
+.product-card > div:first-child > div:first-child > img:hover {
+    transform: scale(1.1); /* 원래 크기보다 10% 더 크게 */
+    border-radius: 5px;
+}
+
+.cart-section > div:active {
+    background-color: var(--color-main-6);
+}
+
+.n-pager li.active>*, .n-pager .n-page.active {
+    background-color: var(--color-main-6);
+}
+div:has(div.cart-section):hover >.cart-section{
+    background-color: rgb(0,0,0,0.3);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+div:has(div.cart-section):hover >.cart-section > div{
+    background-color: rgb(255,255,255,0.5);
+}
+div:has(div.cart-section):hover >.cart-section > div > .icon\:shopping_cart_simple::before{
+    background-color: var(--color-base-9)
+}
+
+.icon\:shopping_cart_simple:hover::before,
+.icon\:shopping_cart_simple:active::before {
+    background-color: var(--color-base-9)
+
+}
+
+
+@media (min-width: 768px) {
+    .cart-section{
+        height: 60px;
+    }
+
+    .cart-section > div:hover {
+        background-color: var(--color-icon-bg);
+    }
+
+
+    .cart-section > div{
+        background-color: var(--color-base-1);
+        width: 44px;
+        height: 44px;
+    }
+
+    div:has(div.cart-section):hover > div.cart-section{
+        background-color: rgb(255,255,255,0.5);
+    }
+
+    .cart-section > div:active {
+        background-color: var(--color-main-6);
+    }
+
+
+    .cart-section > div:hover .icon\:shopping_cart_simple::before {
+        background-color: var(--color-base-1);
+    }
+
+    .icon\:shopping_cart_simple:hover::before,
+    .icon\:shopping_cart_simple:active::before {
+        background-color: var(--color-base-1)
+
+    }
+
+    .icon-color\:base-1:before {
+        background-color: var(--color-base-9);
+    }
+
+
+}
+
+/* ################ Dropdown styles ################ */
+/*                ### HTML 코드 예시 ###               */
+/*
+            <div class="dropdown">
+                <button class="dropdown-btn" aria-haspopup="menu">
+                    <span>Framework</span>
+                    <span class="arrow"></span>
+                </button>
+                <ul class="dropdown-content" role="menu">
+                    <li><a href="#">React</a></li>
+                    <li><a href="#">Angular</a></li>
+                    <li><a href="#">Vue</a></li>
+                    <li><a href="#">Svelte</a></li>
+                </ul>
+            </div>
+*/
+/* 출처 : https://blog.logrocket.com/making-dropdown-menus-css/ */
+
+.dropdown {
+    /* 기본 스타일 */
+    box-sizing: border-box;
+    padding: 0;
+    max-width: 13em;
+    position: relative;
+    width: 100%;
+}
+
+    .dropdown-btn {
+        font-size: 16px;
+        width: 100%;
+        border: none;
+        color: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7em 0.5em;
+        border-radius: 0.5em;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .arrow {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #ff922b;
+        transition: transform ease-in-out 0.3s;
+    }
+
+    .dropdown-content {
+        list-style: none;
+        position: absolute;
+        top: 3.2em;
+        width: 100%;
+        visibility: hidden;
+        overflow: hidden;
+        padding-left: 1em;
+        margin: 0;
+    }
+
+    .dropdown-content.show {
+        visibility: visible;
+    }
+
+    .dropdown-content li {
+        border-radius: 0.5em;
+        position: relative;
+        transform: translateY(-1em);
+        transition: transform ease 0.3s;
+    }
+
+        .dropdown-content.show li {
+            transform: translateY(0);
+        }
+
+        /* 삼각형 회전 */
+        .dropdown-btn.active > .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content li a {
+            display: block;
+            padding: 0.4em 0.2em;
+            color: black;
+            margin: 0.1em 0;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .dropdown-content li a:hover {
+            color: #ff922b;
+        }

@@ -1,0 +1,30 @@
+.arrow {
+    transition: transform 0.3s ease;
+    margin-top: 12px;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.faq-title:hover {
+    cursor: pointer;
+}
+
+.faq-question {
+    border-bottom: 1px solid var(--color-base-2);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.faq-answer {
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+    max-height: 0;
+    padding: 0 1rem;
+}
+
+.faq-answer.open {
+    max-height: 300px; /* 충분히 큰 값으로 설정 */
+    padding: 1rem;
+}

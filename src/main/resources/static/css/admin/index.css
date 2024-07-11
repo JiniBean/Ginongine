@@ -1,0 +1,15 @@
+
+.none-stock{
+    column-span: 3;
+}
+
+@media (min-width: 780px) {
+    .stock{
+        width: 200px;
+    }
+    .none-stock{
+        -webkit-column-span: all;
+        -moz-column-span: all;
+        column-span: all;
+    }
+}

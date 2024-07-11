@@ -1,0 +1,51 @@
+li {
+    list-style: none;
+}
+
+img {
+    width: 90px;
+    height: 90px;
+}
+
+.real-upload {
+    display: none;
+}
+
+.upload {
+    /*position: relative;*/
+    /*display: inline-flex;*/
+}
+
+.upload::before {
+    /*content: url(/icon/camera.svg);*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+
+
+    /*margin-right: 100px; !* 이미지와 텍스트 간격 조정 *!*/
+}
+
+.text {
+    padding-left: 25px; /* 이미지 너비 + 간격만큼 텍스트를 이동시킴 */
+}
+
+
+
+.image-preview {
+    width: 1300px;
+    height: 90px;
+    background-color: #FFFFFF;
+    display: flex;
+    gap: 20px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center; /* 입력 필드와 버튼을 수직 중앙 정렬합니다. */
+}
+
+.input-wrapper input {
+    flex: 1; /* 입력 필드가 가능한 한 많은 공간을 차지하도록 설정합니다. */
+    margin-right: 8px; /* 입력 필드와 버튼 사이의 간격을 조절합니다. */
+}

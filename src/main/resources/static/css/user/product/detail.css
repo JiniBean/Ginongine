@@ -1,0 +1,28 @@
+.n-expander .n-expander-title:after {
+    background-image: none;
+}
+
+/*수량inputbox*/
+
+.l-numberBox a,
+.numberBox a {
+    position: absolute;
+    top: 0;
+    width: 37px;
+    line-height: 34px;
+    text-align: center;
+}
+
+.l-numberBox .btn-minus::before
+,.numberBox .btn-minus::before{
+    content: "\2500";
+}
+
+.l-numberBox .btn-plus::before
+,.numberBox .btn-plus::before{
+    content: "\253C";
+}
+
+.n-expander .n-expander-content {
+    transition: visibility .1s;
+}

@@ -1,0 +1,38 @@
+.logo{
+    background-image: url("/img/logo-signin.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100px;
+    background-position: center;
+    margin-bottom: 60px;
+    text-indent: -999px;
+}
+.social-logo{
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+}
+.kakao{
+    background-image: url("/img/logo-kakao.svg");
+
+}
+.naver{
+    background-image: url("/img/logo-naver.svg");
+}
+.google{
+    background-image: url("/img/logo-google.svg");
+}
+.apple{
+    background-image: url("/img/logo-apple.svg");
+}
+
+.error-message{
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    font-size: var(--font-size-2);
+    @media (min-width: 780px) {
+        font-size : var(--font-size-2);
+    }
+}

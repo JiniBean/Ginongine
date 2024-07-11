@@ -1,0 +1,117 @@
+:root{
+
+/*========== width ==============================*/
+   --width-0: 0px;
+   --width-1: 70px;
+   --width-2: 80px;
+   --width-3: 120px;
+   --width-4: 136px;
+   --width-5: 250px;
+   --width-6: 300px;
+   --width-7: 450px;
+   --width-8: 500px;    /* PC 버전 로그인, 회원가입 */
+   --width-9: 680px;    /* PC 버전 컨텐츠 가로 기본 */
+   --width-10: 1240px;  /* PC 버전 컨텐츠 가로 최대 */
+
+
+   --height-0: 0px;
+   --height-1: 30px;
+   --height-2: 40px;    /* 모바일 탭 높이 */
+   --height-3: 50px;
+   --height-4: 60px;    /* PC 탭 높이 */
+   --height-5: 72px;    /* 모바일 헤더, 네비 높이*/
+   --height-6: 100px;   /* PC 헤더 높이*/
+
+
+/*========== top ==============================*/
+   --top-2: 72px;
+   --top-3: 100px;
+   --top-4: 112px;
+   --top-5: 160px;
+   --bottom-2: 80px;
+
+/*========== font-size ==============================*/
+   --font-size-1 : 12px;
+   --font-size-2 : 14px;   /* 모바일 기본 폰트 사이즈 */
+   --font-size-3 : 16px;   /* PC 기본 폰트 사이즈 */
+   --font-size-4 : 18px;   /* 모바일 제목 폰트 사아즈 */
+   --font-size-5 : 20px;   /* PC 제목 폰트 사아즈 */
+   --font-size-6 : 24px;
+   --font-weight-3: 700;
+
+/*========== icon-size ==============================*/
+   --icon-size-1: 16px;
+   --icon-size-2: 18px;
+   --icon-size-3: 20px;
+   --icon-size-4: 24px;
+   --icon-size-5: 32px;
+
+/*========== deco-size ==============================*/
+   --deco-size-1: 16px;
+   --deco-size-2: 18px;
+   --deco-size-3: 20px;
+   --deco-size-4: 24px;
+   --deco-size-5: 32px;
+
+/*========== color ==============================*/
+   --color-base-1: #FFFFFF;
+   --color-base-2: #F5F5F5;
+   --color-base-3: #EEEEEE;
+   --color-base-4: #C4C8CC;
+   --color-base-5: #A0A0A0;
+   --color-base-6: #9C9999;
+   --color-base-7: #7D7D7D;
+   --color-base-8: #616063;
+   --color-base-9: #333333;
+   --color-base-10: #000000;
+
+   --color-main-1: #FFF4E6;
+   --color-main-2: #FFE8CC;
+   --color-main-3: #FFC078;
+   --color-main-4: #FFA94D;        
+   --color-main-5: #FF922B;        
+   --color-main-6: #FD7E14;  
+   
+   --color-sub-1: #F67676;  
+   --color-sub-2: #F5665E;
+   --color-sub-3: #6BB56D;  
+   --color-sub-4: #74B94C;  
+   --color-sub-5: #28A745;  
+   --color-sub-6: #0B623B;
+
+   --color-icon-bg: rgb(0,0,0,0.5);
+
+   --color-accent-1: #DC3545;  /* 삭제 버튼 */
+
+
+/*========== gap ==============================*/
+   --gap-1: 8px;    /* 모바일 최소 간격 */
+   --gap-2: 12px;
+   --gap-3: 16px;
+   --gap-4: 20px;
+   --gap-5: 24px;
+   --gap-6: 28px;
+   --gap-7: 32px;
+   --gap-8: 40px;   /* 모바일 최대 간격 */
+   --gap-9: 44px;
+   --gap-10: 40px;
+   --gap-11: 44px; 
+   --gap-12: 48px; 
+   --gap-13: 52px;  /* 관리자 PC 최대 간격 */
+   --gap-14: 56px; 
+   --gap-15: 60px; 
+   --gap-16: 64px; 
+   --gap-17: 68px; 
+   --gap-18: 72px; 
+   --gap-19: 76px; 
+   --gap-20: 80px;  /* 사용자 PC 최대 간격 */
+
+
+/*========== border ==============================*/
+   --border-color: var(--color-base-4);   /* 기본 색상 */
+   --border-radius-1: 5px;
+   --border-radius-2: 10px;
+
+
+
+}

@@ -1,0 +1,12 @@
+section > div > div > div > span {
+    flex: 1;
+    text-align: center;
+}
+.position-relative {
+    position: relative;
+}
+
+.border-top {
+    border-top: 1px #EEEEEE;
+}
+

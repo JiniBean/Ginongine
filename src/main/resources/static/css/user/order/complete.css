@@ -1,0 +1,52 @@
+
+/* 블로그(농촌일기) 영역 */
+.blog-section img {
+    height: 144px;
+}
+
+.blog-section a {
+    position: relative;
+}
+
+.blog-section a > div {
+    height: 60px;
+    background-color: rgba(51, 51, 51, 0.5);
+}
+
+.blog-section a > div > span:first-child {
+    font-size: var(--font-size-1);
+}
+
+.blog-section a > div > span:nth-child(2) {
+    font-size: var(--font-size-5);
+}
+
+
+@media (min-width: 768px) {
+
+    /* 블로그(농촌일기) 영역 */
+    .blog-section img {
+        height: 250px;
+    }
+
+    .blog-section a {
+        position: relative;
+    }
+
+    .blog-section a > div {
+        width: 100%;
+        height: 100px;
+        background-color: rgba(51, 51, 51, 0.5);
+    }
+
+    .blog-section a > div > span:first-child {
+        font-size: var(--font-size-4);
+    }
+
+    .blog-section a > div > span:nth-child(2) {
+        font-size: 30px;
+    }
+
+
+
+}

@@ -1,0 +1,112 @@
+.icon\:RT::before,
+.icon\:RT::after {
+    -webkit-mask-image: url("../icon/RT.svg");
+    mask-image: url("../icon/RT.svg");
+}
+
+
+.icon\:clap::before,
+.icon\:clap::after {
+    -webkit-mask-image: url("../icon/clap.svg");
+    mask-image: url("../icon/clap.svg");
+}
+
+.icon\:leaf::before,
+.icon\:leaf::after {
+    -webkit-mask-image: url("../icon/leaf.svg");
+    mask-image: url("../icon/leaf.svg");
+}
+
+
+.icon\:thumbsup::before,
+.icon\:thumbsup::after {
+    -webkit-mask-image: url("../icon/thumbsup.svg");
+    mask-image: url("../icon/thumbsup.svg");
+}
+
+.icon\:recents::before,
+.icon\:recents::after {
+    -webkit-mask-image: url("../icon/recents.svg");
+    mask-image: url("../icon/recents.svg");
+}
+
+
+.icon\:smile::before,
+.icon\:smile::after {
+    -webkit-mask-image: url("../icon/smile.svg");
+    mask-image: url("../icon/smile.svg");
+}
+
+.icon\:x::before,
+.icon\:x::after {
+    -webkit-mask-image: url(../icon/x.svg);
+    mask-image: url(../icon/x.svg);
+    background-color: var(--color-sub-2);
+
+    width: 12px;
+    height: 12px;
+}
+
+
+.icon\:checkCircle::before,
+.icon\:checkCircle::after {
+    -webkit-mask-image: url("../icon/checkCircle.svg");
+    mask-image: url("../icon/checkCircle.svg");
+}
+
+.icon\:carrot::before,
+.icon\:carrot::after {
+    -webkit-mask-image: url("../icon/carrot.svg");
+    mask-image: url("../icon/carrot.svg");
+}
+
+.icon\:camera::before,
+.icon\:camera::after {
+    -webkit-mask-image: url("../icon/camera.svg");
+    mask-image: url("../icon/camera.svg");
+}
+.icon\:minus::before,
+.icon\:minus::after{
+    -webkit-mask-image: url("../icon/minus.svg");
+    mask-image: url("../icon/minus.svg");
+}
+
+.icon\:eye::before{
+    -webkit-mask-image: url("../icon/eye.svg");
+    mask-image: url("../icon/eye.svg");
+}
+
+.icon\:eyeSlash::before{
+    -webkit-mask-image: url("../icon/eyeSlash.svg");
+    mask-image: url("../icon/eyeSlash.svg");
+}
+.icon\:calendar::before,
+.icon\:calendar::after{
+    -webkit-mask-image: url("../icon/calendar.svg");
+    mask-image: url("../icon/calendar.svg");
+}
+
+.icon\:caretDoubleLeft::before{
+    -webkit-mask-image: url("../icon/caretDoubleLeft.svg");
+    mask-image: url("../icon/caretDoubleLeft.svg");
+}
+
+.icon\:caretDoubleRight::before{
+    -webkit-mask-image: url("../icon/caretDoubleRight.svg");
+    mask-image: url("../icon/caretDoubleRight.svg");
+}
+
+.icon\:notePencil::before{
+    -webkit-mask-image: url("../icon/notePencil.svg");
+    mask-image: url("../icon/notePencil.svg");
+}
+
+.icon\:trash::before{
+    -webkit-mask-image: url("../icon/trash.svg");
+    mask-image: url("../icon/trash.svg");
+}
+
+.icon\:close::before{
+    -webkit-mask-image: url("../icon/close.svg");
+    mask-image: url("../icon/close.svg");
+}
