@@ -1,4 +1,4 @@
-package kr.co.ginong.web.product.product.entity;
+package kr.co.ginong.web.entity.product;
 
 
 import lombok.AllArgsConstructor;
@@ -34,5 +34,7 @@ public class Prd {
     private String prdCtgNo;
     private String prdCtgNm;
     private Integer prdImgNo;
+    private Integer likeCount;
+    private Integer cartQty;
 
 }

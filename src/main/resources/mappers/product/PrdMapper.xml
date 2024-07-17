@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ginong.web.repository.product.PrdRepository">
+
+    <select id="findAll" resultType="Prd">
+        SELECT
+        p.*,
+            cd.DETAIL_NM QTY_CTG_NM,
+            cd1.DETAIL_NM WT_CTG_NM,
+            cd2.DETAIL_NM STG_TYPE_NM,
+            cd3.DETAIL_NM PRD_CTG_NM
+        FROM prd p
+        LEFT JOIN code_detail cd
+            ON p.QTY_CTG_CD = cd.DETAIL_CD
+        LEFT JOIN code_detail cd1
+            ON p.WT_CTG_CD = cd1.DETAIL_CD
+        LEFT JOIN code_detail cd2
+            ON p.STG_TYPE_CD = cd2.DETAIL_CD
+        LEFT JOIN code_detail cd3
+            ON p.PRD_CTG_NO = cd3.DETAIL_CD
+        WHERE p.USE_YN = 1;
+    </select>
+
+</mapper>
