@@ -8,7 +8,6 @@
     <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
     <link rel="stylesheet" href="/css/user/product/list.css">
     <script type="module" src="/js/user/product/list.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/newtil-css@0.1.49/dist/style.min.css" />
 </head>
 
 <body>
@@ -55,7 +54,7 @@
                     <a href="" th:href="@{/prd/detail(id=${m.prdNo})}">
                     <div class="d:flex w:10p gap:3">
                         <div class="pos:relative">
-                            <img th:src="/${m.thmbPath +'/'+ m.thmbNm}" src="" height="110px" width="110px" alt="상품 이미지" class="bd-radius:1"/>
+                            <img th:src="${ m.thmbPath +'/'+ m.thmbNm}" src="" height="110px" width="110px" alt="상품 이미지" class="bd-radius:1"/>
                             <div class="cart-section">
                                 <div class="cart-box" th:data-id="${m.prdNo}"
                                      th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">

@@ -19,7 +19,7 @@
         LEFT JOIN code_detail cd2
             ON p.STG_TYPE_CD = cd2.DETAIL_CD
         LEFT JOIN code_detail cd3
-            ON p.PRD_CTG_NO = cd3.DETAIL_CD
+            ON p.PRD_CTG_CD = cd3.DETAIL_CD
         WHERE p.USE_YN = 1;
     </select>
 
