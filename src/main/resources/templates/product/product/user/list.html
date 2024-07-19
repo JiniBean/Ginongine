@@ -13,7 +13,7 @@
 <body>
     <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:20 max-w:10 w:10p pr:4 pl:4 md:pr:0 md:pl:0 ">
 
-        <!--  카테고리  -->
+        <!--  정렬  -->
         <section id="sort" class="w:10p d:flex ai:center jc:space-between">
             <h1 class="d:none">정렬 카테고리</h1>
             <div>
@@ -44,11 +44,11 @@
         </section>
 
         <!--  상품 영역 모바일  -->
-        <section id="prd-list">
+        <section id="prd">
             <h1 class="d:none">상품 리스트</h1>
 
             <!--  아이템 목록(리스트 / 확인)  -->
-            <section class="menu-card-row d:flex fl-dir:column md:d:none gap:5">
+            <section class="row d:flex fl-dir:column md:d:none gap:5">
                 <h1 class="d:none">상품카드 - row</h1>
                 <div th:each="m:${list}">
                     <a href="" th:href="@{/prd/detail(id=${m.prdNo})}">
@@ -56,7 +56,7 @@
                         <div class="pos:relative">
                             <img th:src="${ m.thmbPath +'/'+ m.thmbNm}" src="" height="110px" width="110px" alt="상품 이미지" class="bd-radius:1"/>
                             <div class="cart-section">
-                                <div class="cart-box" th:data-id="${m.prdNo}"
+                                <div class="cart-box" th:data-no="${m.prdNo}"
                                      th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">
                                     <span th:if="${m.cartQty == null}"
                                           class="icon icon:shopping_cart_simple icon-color:base-1 icon-size:4">장바구니아이콘
@@ -79,7 +79,7 @@
             </section>
 
             <!--  아이템 목록(바둑판) / 확인  -->
-            <section class="menu-card-col d:flex flex-wrap:wrap ai:center gap:2 md:d:none d:none">
+            <section class="col d:flex flex-wrap:wrap ai:center gap:2 md:d:none d:none">
                 <h1 class="d:none">상품카드 - col</h1>
                 <div th:each="m:${list}">
                     <a href="#" th:href="@{/prd/detail(id=${m.prdNo})}" class="">
@@ -87,7 +87,7 @@
                         <div class="pos:relative">
                             <img th:src="${m.thmbPath +'/'+ m.thmbNm}" src="" height="180px" width="180px" alt="상품 이미지" class="bd-radius:1"/>
                             <div class="cart-section">
-                                <div class="cart-box" th:data-id="${m.prdNo}"
+                                <div class="cart-box" th:data-no="${m.prdNo}"
                                      th:classappend="${m.cartQty}!= null ?'bg-color:main-6' ">
                                     <span th:if="${m.cartQty == null}"
                                           class="icon icon:shopping_cart_simple icon-color:base-1 icon-size:4">장바구니아이콘

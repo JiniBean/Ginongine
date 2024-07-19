@@ -50,9 +50,10 @@ export default class Header {
         }
         else {
             // 쿠키에 있는 상품 개수 가져오기
-            let cookie = new Cookie();
-            count = cookie.get("cartList");
-            count = count.length;
+            // let cookie = new Cookie();
+            // count = cookie.get("cartList");
+            // count = count.length || 0;
+            count = 0
         }
 
         // 있다면 장바구니에 개수 표시

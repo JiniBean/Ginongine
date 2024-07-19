@@ -1,3 +1,67 @@
+function Cookie() {
+    this.map = {};
+
+    if (document.cookie) {
+        let cookieDecoded = decodeURIComponent(document.cookie);
+        let tokens = cookieDecoded.split(";");
+
+        for (let c of tokens) {
+            let tmp = c.split("=");
+            let key = tmp[0];
+            let value = tmp[1];
+            if(key==='cartList')
+                this.map[key] = JSON.parse(value);
+            else
+                this.map[key] = value;
+        }
+    }
+
+}
+
+Cookie.prototype = {
+    get: function (name) {
+        return this.map[name];
+    },
+
+    save: function () {
+        // document.cookie = "menus=hh; path=/;";
+        let list = this.map["menus"];
+        let size = list.length;
+        let lastIdx = size - 1;
+
+        let str = "[";
+
+        for (m of list) {
+            str += JSON.stringify(m);
+            if (m !== list[lastIdx]) str += ",";
+        }
+
+        str = "]";
+        let encoded = encodeURIComponent(str);
+        document.cookie = `menus=${encoded}; path=/;`;
+
+    },
+
+    remove: function (name) {
+
+    },
+
+    add: function (name, value) {
+
+    },
+
+    addItem: function (name, item) {
+        let list = this.map[name];
+        list.push(item);
+    },
+
+    set: function (name, value) {
+        let s = `${name}=${value}; path=/; SameSite=None; Secure`;
+        document.cookie = s;
+    }
+}
+
+
 import CartRepository from "/js/module/CartRepository.js";
 import Header from "/js/module/header.js";
 

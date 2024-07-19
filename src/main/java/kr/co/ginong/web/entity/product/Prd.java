@@ -31,7 +31,7 @@ public class Prd {
     private String thmbNm;
     private String thmbPath;
     private Boolean useYn;
-    private String prdCtgNo;
+    private String prdCtgCd;
     private String prdCtgNm;
     private Integer prdImgNo;
     private Integer likeCount;
