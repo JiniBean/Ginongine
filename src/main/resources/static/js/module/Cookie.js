@@ -7,11 +7,8 @@ export default class Cookie {
 
     initCookie(name) {
         if (document.cookie) {
-            // 쿠키가 존재하는 경우, 파싱하여 map에 저장
+            // 쿠키가 존재하는 경우 map에 저장, value 파싱이 필요한 경우 name 값 제공
             this.parseCookie(name);
-        } else {
-            // 쿠키가 존재하지 않으면 Product : 빈 배열로 초기화
-            this.map[name] = [];
         }
     }
 
@@ -31,7 +28,7 @@ export default class Cookie {
     }
 
     get(name) {
-        return this.map[name];
+        return this.map[name] || [];
     }
 
     save(name) {
@@ -40,12 +37,19 @@ export default class Cookie {
         document.cookie = `${name}=${encoded}; path=/;`;
     }
 
-    add(name, item) {
-        // const list = this.map[name];
-        // list.push(item);
-        // this.map[name] = list;
+    addItem(name, item) {
+        this.map[name] = this.map[name] || [];
         this.map[name].push(item);
     }
+
+    add(name, list) {
+        this.map[name] = list;
+    }
+
+    set(name, value) {
+        document.cookie  = `${name}=${value}; path=/;`;
+    }
+
 
     remove(name) {
         document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;

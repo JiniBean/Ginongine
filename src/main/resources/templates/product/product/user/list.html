@@ -35,11 +35,12 @@
                 </div>
             </div>
 
-            <div class="pos:relative d:flex gap:3">
-<!--                <a th:href="@{list(c=${param.c}, q=${param.q}, r=${param.r}, s=1)}"  th:classappend="${{param.s}}==1 ? 'color:main-6': ''"-->
-<!--                      href="list?s=1" class="price">가격순</a>-->
-<!--                <span class="bar"></span>-->
-<!--                <a th:href="@{list(c=${param.c}, q=${param.q}, r=${param.r}, s=2)}"  th:classappend="${{param.s}}==2 ? 'color:main-6': ''">추천순</a>-->
+            <div class="order pos:relative d:flex gap:3">
+                <a th:classappend="${{param.s}}==1 ? 'color:main-6': ''"
+                      href="list?s=1">가격순</a>
+                <span class="bar"></span>
+                <a th:classappend="${{param.s}}==2 ? 'color:main-6': ''"
+                      href="list?s=2"> 추천순</a>
             </div>
         </section>
 
@@ -71,7 +72,7 @@
                                 <div th:text="${m.prdNm + ', ' + m.qty + m.qtyCtgNm + '(' + m.wt + m.wtCtgNm + ')'}">텃밭 흙 당근, 2개입</div>
                                 <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
                             </div>
-                            <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 icon-size:1 deco-size:1">1234</div>
+                            <div th:text="${m.likeCnt}" class="deco icon:smile deco-color:sub-4 icon-size:1 deco-size:1">1234</div>
                         </div>
                     </div>
                     </a>
@@ -101,7 +102,7 @@
                                 <div th:text="${m.prdNm + ', ' + m.qty + m.qtyCtgNm + '(' + m.wt + m.wtCtgNm + ')'}">텃밭 흙 당근, 2개입</div>
                                 <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
                             </div>
-                            <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 deco-size:1 icon-size:1">1234</div>
+                            <div th:text="${m.likeCnt}" class="deco icon:smile deco-color:sub-4 deco-size:1 icon-size:1">1234</div>
                         </div>
                     </div>
                     </a>
@@ -134,7 +135,7 @@
                             <div th:text="${m.prdNm + ', ' + m.qty + m.qtyCtgNm + '(' + m.wt + m.wtCtgNm + ')'}">텃밭 흙 당근, 2개입</div>
                             <div th:text="${#numbers.formatInteger(m.price, 3, 'COMMA')} + ' 원'" class="fw:3">2,500원</div>
                         </div>
-                        <div th:text="${m.likeCount}" class="deco icon:smile deco-color:sub-4 icon-size:4 deco-size:4">1234</div>
+                        <div th:text="${m.likeCnt}" class="deco icon:smile deco-color:sub-4 icon-size:4 deco-size:4">1234</div>
                     </div>
                 </div>
                 </a>

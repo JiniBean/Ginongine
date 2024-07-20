@@ -1,32 +1,5 @@
 import CartRepository from "./CartRepository.js";
-
-function Cookie() {
-    this.map = {};
-
-    if (document.cookie) {
-        let cookieDecoded = decodeURIComponent(document.cookie);
-        let tokens = cookieDecoded.split(";");
-
-        for (let c of tokens) {
-            let tmp = c.split("=");
-            let key = tmp[0];
-            key = key.trimStart();
-            let value = tmp[1];
-            if(key==='cartList')
-                this.map[key] = JSON.parse(value);
-            else
-                this.map[key] = value;
-        }
-    }
-
-}
-
-Cookie.prototype = {
-    get: function (name) {
-        return this.map[name];
-    }
-
-}
+import Cookie from "./Cookie.js";
 
 export default class Header {
     #header     //header 전체 영역
@@ -50,15 +23,14 @@ export default class Header {
         }
         else {
             // 쿠키에 있는 상품 개수 가져오기
-            // let cookie = new Cookie();
-            // count = cookie.get("cartList");
-            // count = count.length || 0;
-            count = 0
+            let cookie = new Cookie("cartList");
+            count = cookie.get("cartList");
+            count = count.length || 0;
         }
 
         // 있다면 장바구니에 개수 표시
         if(count > 0){
-            this.#cartCircle.classList.remove("d:none")
+            this.#cartCircle.classList.toggle("d:none")
             this.#cartCircle.textContent = count;
         }
     }
@@ -90,15 +62,15 @@ export default class Header {
             if(path !== 'product') return;
             if (searchBar.classList.contains('d:none')) {
                 // 검색 창 화면 출력 및 아이콘 X 로 변경
-                searchBar.classList.remove('d:none');
-                headerSearchIcon.classList.remove('icon:magnifying_glass');
-                headerSearchIcon.classList.add('icon:close');
+                searchBar.classList.toggle('d:none');
+                headerSearchIcon.classList.toggle('icon:magnifying_glass');
+                headerSearchIcon.classList.toggle('icon:close');
                 searchInput.focus();
             } else {
                 // 검색 창 화면 제거 및 아이콘 돋보기 로 변경
-                searchBar.classList.add('d:none');
-                headerSearchIcon.classList.add('icon:magnifying_glass');
-                headerSearchIcon.classList.remove('icon:close');
+                searchBar.classList.toggle('d:none');
+                headerSearchIcon.classList.toggle('icon:magnifying_glass');
+                headerSearchIcon.classList.toggle('icon:close');
             }
         });
     }
