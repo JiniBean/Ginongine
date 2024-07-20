@@ -14,7 +14,7 @@ public class PrdServiceImp implements PrdService{
     private PrdRepository repository;
 
     @Override
-    public List<Prd> getList() {
-        return repository.findAll();
+    public List<Prd> getList(String ctgCd, String query, Integer sortType) {
+        return repository.findAll(ctgCd,query,sortType);
     }
 }

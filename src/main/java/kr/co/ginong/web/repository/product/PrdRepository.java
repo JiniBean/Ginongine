@@ -8,5 +8,5 @@ import java.util.List;
 @Mapper
 public interface PrdRepository {
 
-    List<Prd> findAll();
+    List<Prd> findAll(String ctgCd, String query, Integer sortType);
 }

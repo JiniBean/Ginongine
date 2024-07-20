@@ -34,7 +34,7 @@ public class Prd {
     private String prdCtgCd;
     private String prdCtgNm;
     private Integer prdImgNo;
-    private Integer likeCount;
+    private Integer likeCnt;
     private Integer cartQty;
 
 }
