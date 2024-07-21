@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ginong.web.repository.member.MbrRepository">
+
+    <select id="findAll" resultType="Mbr">
+        SELECT
+            p.*,
+            cd.DETAIL_NM QTY_CTG_NM,
+            cd1.DETAIL_NM WT_CTG_NM,
+            cd2.DETAIL_NM STG_TYPE_NM,
+            cd3.DETAIL_NM PRD_CTG_NM,
+            ifnull(r.LIKE_CNT, 0) LIKE_CNT
+        FROM prd p
+        LEFT JOIN code_detail cd
+            ON p.QTY_CTG_CD = cd.DETAIL_CD
+        LEFT JOIN code_detail cd1
+            ON p.WT_CTG_CD = cd1.DETAIL_CD
+        LEFT JOIN code_detail cd2
+            ON p.STG_TYPE_CD = cd2.DETAIL_CD
+        LEFT JOIN code_detail cd3
+            ON p.PRD_CTG_CD = cd3.DETAIL_CD
+        LEFT JOIN (
+            SELECT
+                pr.PRD_NO PRD_NO,
+                sum(pr.TAG_BEST + pr.TAG_FRESH + pr.TAG_THUMBS) LIKE_CNT
+            FROM prd_review pr
+            GROUP BY pr.PRD_NO )r
+            ON p.PRD_NO = r.PRD_NO
+        <where>
+            <if test="ctgCd != null">
+                p.PRD_CTG_CD = #{ctgCd}
+            </if>
+            <if test="query != null">
+                p.PRD_NM like '%#{query}%'
+            </if>
+            AND p.USE_YN = 1
+        </where>
+        <if test="sortType == 1">
+            ORDER BY p.PRICE
+        </if>
+        <if test="sortType == 2">
+            ORDER BY LIKE_CNT DESC
+        </if>
+
+    </select>
+
+</mapper>
