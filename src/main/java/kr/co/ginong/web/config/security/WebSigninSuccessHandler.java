@@ -4,8 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.co.ginong.web.service.cart.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -33,17 +31,14 @@ public class WebSigninSuccessHandler extends SavedRequestAwareAuthenticationSucc
         this.maxAge = maxAge;
     }
 
-    @Autowired
-    CartService cartService;
 
-
-    @Override               //인증에 성공 했을때 처리할 로직 작성할 메소드
+    //인증에 성공 했을때 처리할 로직 작성할 메소드
+    @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         String targetUrl="/";
         WebUserDetails userDetails = (WebUserDetails) authentication.getPrincipal();
         if(userDetails.getAuthorities() == null) {
-
             targetUrl = "/signup/social";
             redirectStrategy.sendRedirect(request,response,targetUrl);
         }
@@ -56,13 +51,13 @@ public class WebSigninSuccessHandler extends SavedRequestAwareAuthenticationSucc
                 cookie.setMaxAge(maxAge);                                                           //생명주기를 2주로 설정
                 cookie.setPath("/signin");                                                          //saved_username cookie 를 사용할 url 설정
                 response.addCookie(cookie);                                                         //HttpServletResponse response에 cookie 추가
-            } else {                                                                                  //signin 페이지 아이디 저장 체크 박스를 누르지 않는다면
-                Cookie cookie = new Cookie(COOKIE_NAME, "");                                        //빈 문자열의 cookie 를 생성, 생명주기도 없는체 만든다.
+            } else {                                                                                //signin 페이지 아이디 저장 체크 박스를 누르지 않는다면
+                Cookie cookie = new Cookie(COOKIE_NAME, "");                                  //빈 문자열의 cookie 를 생성, 생명주기도 없는체 만든다.
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
-            targetUrl = determineTargetUrl(request);                                         //기존 가려고 했던 페이지로 로그인 완료 후 가기 위한 메소드 호출
-            getRedirectStrategy().sendRedirect(request, response, targetUrl);                       //determineTargetUrl 에서 얻어온 url 로 리다이렉트 해준다.
+            targetUrl = "/cart/add";  //쿠키에 담긴 장바구니 목록 저장하기 위한 url
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);                       //cart/add로 리다이렉트
             super.onAuthenticationSuccess(request, response, authentication);                       //onAuthenticationSuccess 에 정의 된 나머지 동작들을 수행
         }
 

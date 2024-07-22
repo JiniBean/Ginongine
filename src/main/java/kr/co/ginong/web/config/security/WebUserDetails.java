@@ -19,6 +19,7 @@ public class WebUserDetails implements UserDetails, OAuth2User {
     private String  phone;	    /** 연락처 */
     private Boolean mbrStatus;	/** 회원_상태 */
     private List<GrantedAuthority> authorities;
+    private Map<String, Object> attributes;
 
     @Override
     public String getName() {
@@ -82,18 +83,27 @@ public class WebUserDetails implements UserDetails, OAuth2User {
         this.phone = phone;
     }
 
-    private Map<String, Object> attributes;
+    public Boolean getMbrStatus() {
+        return mbrStatus;
+    }
 
+    public void setMbrStatus(Boolean mbrStatus) {
+        this.mbrStatus = mbrStatus;
+    }
 
     @Override
     public Map<String, Object> getAttributes() {
-        return null;
+        return attributes;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthorities() {return authorities;}
+
+
+    public void setAuthorities(List<GrantedAuthority> authorities) {this.authorities = authorities;}
+
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
-
-
 }
