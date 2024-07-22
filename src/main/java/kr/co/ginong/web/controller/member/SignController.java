@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SignController {
 
-    @GetMapping("/signin")
+    @GetMapping("signin")
     public String signin() {
         return "member/sign/signin";
     }
 
+    @GetMapping("signup/step1")
+    public String step1() {
+        return "member/sign/step1";
+    }
 }
