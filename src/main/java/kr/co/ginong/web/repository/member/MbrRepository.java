@@ -9,4 +9,6 @@ public interface MbrRepository {
     Mbr findByUsername(String username);
     Mbr findByEmail(String email);
     Mbr findByMbrNo(Integer mbrNo);
+
+    Boolean save(Mbr member);
 }

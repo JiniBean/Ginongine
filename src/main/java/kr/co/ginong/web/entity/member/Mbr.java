@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class Mbr {
     private String  pwd;	    /** 비밀번호 */
     private String  email;	    /** 이메일 */
     private String  phone;	    /** 연락처 */
-    private Date    birthDd;	/** 생년월일 */
+    private String    birthDd;	/** 생년월일 */
     private Boolean emailRxYn;	/** 이메일_수신_여부 */
     private Boolean mbrStatus;	/** 회원_상태 */
     private Date    joinDt;	    /** 가입_일시 */

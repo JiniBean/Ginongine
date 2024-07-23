@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html
-        lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="inc/user/layout" xmlns="http://www.w3.org/1999/html">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="inc/user/layout" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
@@ -28,17 +26,17 @@
 
     <section class="d:flex fl-grow:1 fl-dir:column">
         <h1 class="d:none">회원정보 입력 영역</h1>
-        <form method="post" class="d:flex fl-dir:column gap:10 md:gap:15 mb:4 md:mb:8">
-            <section class="col-gap:2">
+        <form method="post" name="member" class="d:flex fl-dir:column gap:10 md:gap:15 mb:4 md:mb:8">
+            <section>
                 <h1 class="d:none">이름 입력</h1>
                 <div><span>이름</span><span class="color:accent-3">*</span></div>
-                <input type="text" name="nm" class="n-textbox n-textbox-type:underline" autofocus autocomplete="false" />
+                <div><input type="text" name="nm" class="n-textbox n-textbox-type:underline" autofocus autocomplete="false" /></div>
                 <div class="nm d:none color:accent-3">이름을 입력해주세요</div>
             </section>
             <section>
                 <h1 class="d:none">전화번호 입력</h1>
                 <div><span>전화번호</span><span class="color:accent-3">*</span></div>
-                <div class="d:flex col-gap:2">
+                <div >
                     <input type="text" name="phone" class="n-textbox n-textbox-type:underline" autocomplete="false"/>
                 </div>
                 <div class="phone d:none color:accent-3">전화번호를 입력해주세요</div>
@@ -46,7 +44,7 @@
             <section>
                 <h1 class="d:none">생년월일 입력</h1>
                 <div><span>생년월일</span><span class="color:accent-3">*</span></div>
-                <div class="d:flex col-gap:2">
+                <div>
                     <input type="date" name="birthDd" class="n-textbox n-textbox-type:underline"/>
                 </div>
                 <div class="birthDd d:none color:accent-3">생년월일을 입력해주세요</div>
@@ -60,32 +58,28 @@
                         user@ginong.co.kr
                     </div>
                 </div>
-                <div class="d:flex fl-dir:column gap:10 md:gap:15 ">
+                <div class="d:flex fl-dir:column gap:10 md:gap:15">
                     <div id="email-send">
                         <div><span>이메일</span><span class="color:accent-3">*</span></div>
                         <div class="d:flex col-gap:2">
                             <input type="text" name="email" class="n-textbox n-textbox-type:underline"
                                    autocomplete="false"/>
-                            <button type="submit" class="n-btn n-btn:outline color:base-9 send-mail-btn"
+                            <button class="n-btn n-btn:outline color:base-9"
                                     style="top:-3px;">인증번호 발송
                             </button>
                         </div>
                     </div>
-                    <div id="email-confirm" class="col-gap:2 pos:relative">
-                        <div class="verify-form">
-                            <div>인증번호</div>
-                            <div class="d:flex col-gap:2">
-                                <input type="text" class="n-textbox n-textbox-type:underline verification-code"
-                                       name="verification-code" autocomplete="false"/>
-                                <button class="n-btn n-btn:outline color:base-9 verify_btn disabled" style="top:-3px;">
-                                    인증번호 확인
-                                </button>
-                            </div>
-                            <div class="d:flex jc:end mr:6">
-                                <span class="countdown"></span>
-                            </div>
+                    <div id="email-confirm">
+                        <div>인증번호</div>
+                        <div class="d:flex col-gap:2">
+                            <input type="text" name="code" class="n-textbox n-textbox-type:underline"
+                                   autocomplete="false"/>
+                            <button class="n-btn n-btn:outline color:base-9 disabled" style="top:-3px;">
+                                인증번호 확인
+                            </button>
                         </div>
-                        <div class="verification-result"></div>
+                        <div class="count d:flex jc:end mr:6 d:none">인증 유효 시간</div>
+                        <div class="result d:none">인증 결과 메세지</div>
                     </div>
                 </div>
             </section>

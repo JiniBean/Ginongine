@@ -46,4 +46,18 @@
 
     </select>
 
+    <insert id="save">
+        INSERT INTO MBR (MBR_NO, NM, USER_NM, PWD, EMAIL, PHONE, BIRTH_DD, EMAIL_RX_YN)
+        VALUES(
+        <if test="mbrNo != null"> MBR_NO = #{mbrNo}, </if>
+        <if test="nm != null"> NM = #{nm}, </if>
+        <if test="userNm != null"> USER_NM = #{userNm}, </if>
+        <if test="pwd != null"> PWD = #{pwd}, </if>
+        <if test="email != null"> EMAIL = #{email}, </if>
+        <if test="phone != null"> PHONE = #{phone}, </if>
+        <if test="birthDd != null"> BIRTH_DD = #{birthDd}, </if>
+        <if test="emailRxYn != null"> EMAIL_RX_YN = #{emailRxYn} </if>
+        )
+    </insert>
+
 </mapper>
