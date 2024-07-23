@@ -22,54 +22,59 @@
             <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>3</span></div>
         </div>
     </section>
-    <section class="d:flex gap:2 fl-dir:column">
-        <h1 class="d:none">필수동의 영역</h1>
-        <div class="n-item n-item-type:underline" style="padding: 12px 0">
-            <label class="fw:bold">
-                <input type="checkbox" name="all" th:checked="${all}" class="n-toggle n-toggle-type:check-box bd-radius:full">
-                전체 약관 동의
-            </label>
-        </div>
-        <div class="d:flex fl-dir:column gap:1">
-            <div>
-                <label>
-                    <input type="checkbox" name="age" th:checked="${age}" class="n-toggle n-toggle-type:check-box bd-radius:full" required>
-                    [필수] 만 14세 이상입니다.
+    <section class="d:flex fl-grow:1 fl-dir:column">
+        <h1 class="d:none">약관 동의 영역</h1>
+        <form method="post" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p">
+            <div class="n-item n-item-type:underline" style="padding: 12px 0">
+                <label class="fw:bold">
+                    <input type="checkbox" name="all" th:checked="${all}" class="n-toggle n-toggle-type:check-box bd-radius:full">
+                    전체 약관 동의
                 </label>
             </div>
-            <div>
-                <label>
-                    <input type="checkbox" name="agree" th:checked="${agree}" class="n-toggle n-toggle-type:check-box bd-radius:full" required>
-                    [필수] 개인정보 수집 및 이용약관 동의
-                </label>
+            <!----------- 필수 동의 영역 ------------>
+            <div class="d:flex gap:2 fl-dir:column">
+                <div class="d:flex fl-dir:column gap:1">
+                    <div>
+                        <label>
+                            <input type="checkbox" name="age" th:checked="${age}" class="required n-toggle n-toggle-type:check-box bd-radius:full" >
+                            [필수] 만 14세 이상입니다.
+                            <span class="color:sub-2 fs:2"> * 만 14세 미만 아동은 회원가입이 불가합니다.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="agree" th:checked="${agree}" class=" required n-toggle n-toggle-type:check-box bd-radius:full" >
+                            [필수] 개인정보 수집 및 이용약관 동의
+                        </label>
+                    </div>
+                </div>
+                <div class="n-item n-item-type:outline-box bd-color:base-6 ln-h:2">
+                    <div>※ 개인정보 수집</div>
+                    <div>목적&emsp;&emsp;&emsp;개인식별,서비스 이용알림,고객 고충 처리</div>
+                    <div>항목&emsp;&emsp;&emsp;이름,아이디,비밀번호,전화번호</div>
+                    <div>보유기간&emsp;회원탈퇴 시 즉시 파기</div>
+                </div>
             </div>
-        </div>
-        <div class="n-item n-item-type:outline-box bd-color:base-6 ln-h:2">
-            <div>※ 개인정보 수집</div>
-            <div>목적&emsp;&emsp;&emsp;개인식별,서비스 이용알림,고객 고충 처리</div>
-            <div>항목&emsp;&emsp;&emsp;이름,아이디,비밀번호,전화번호</div>
-            <div>보유기간&emsp;회원탈퇴 시 즉시 파기</div>
-        </div>
-    </section>
-    <section class="d:flex gap:2 fl-dir:column">
-        <h1 class="d:none">선택동의 영역</h1>
-        <div>
-            <label>
-                <input type="checkbox" name="email" th:checked="${email}" class="n-toggle n-toggle-type:check-box bd-radius:full" required>
-                [선택] 혜택 정보 및 광고 수신 동의 (sms,E-mail)
-            </label>
-        </div>
-        <div class="n-item n-item-type:outline-box bd-color:base-6 ln-h:2">
-            <div>※ 선택정보 수집</div>
-            <div>목적&emsp;&emsp;&emsp;혜택, 서비스 알림</div>
-            <div>항목&emsp;&emsp;&emsp;이메일,추천인 아이디</div>
-            <div>보유기간&emsp;회원탈퇴 시 즉시 파기</div>
-        </div>
-    </section>
-
-    <section class="mb:8 fl-grow:1">
-        <h1 class="d:none">동의버튼 영역</h1>
-        <button class="n-btn n-btn-type:filled w:10p fs:4 h:4">동의하고 회원가입 시작</button>
+            <!----------- 선택 동의 영역 ------------>
+            <div class="d:flex gap:2 fl-dir:column">
+                <div>
+                    <label>
+                        <input type="checkbox" name="email" th:checked="${email}" class="n-toggle n-toggle-type:check-box bd-radius:full">
+                        [선택] 혜택 정보 및 광고 수신 동의 (sms,E-mail)
+                    </label>
+                </div>
+                <div class="n-item n-item-type:outline-box bd-color:base-6 ln-h:2">
+                    <div>※ 선택정보 수집</div>
+                    <div>목적&emsp;&emsp;&emsp;혜택, 서비스 알림</div>
+                    <div>항목&emsp;&emsp;&emsp;이메일,추천인 아이디</div>
+                    <div>보유기간&emsp;회원탈퇴 시 즉시 파기</div>
+                </div>
+            </div>
+            <div class="d:flex gap:2 fl-dir:column mb:8 fl-grow:1">
+                <div class="error color:sub-2 d:none">* 모든 필수 동의 항목에 체크해주세요</div>
+                <div><button class="n-btn n-btn-type:filled w:10p fs:4 h:4">동의하고 회원가입 시작</button></div>
+            </div>
+        </form>
     </section>
 </main>
 </body>
