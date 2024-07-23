@@ -35,3 +35,5 @@ build/
 
 ### Git Convention Configuration ###
 .commitmessage.txt
+/src/main/java/test/
+/src/main/java/test/Test.java
