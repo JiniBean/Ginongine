@@ -3,11 +3,10 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="user/inc/layout" xmlns="http://www.w3.org/1999/html">
+        layout:decorate="inc/user/layout" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="/js/user/signup/step2.js"></script>
     <script src="/js/Identity-email.js"></script>
 </head>
@@ -18,67 +17,62 @@
         <div class="n-item n-item-type:underline bd-color:main-6 fs:4 txt-al:center fw:bold">회원가입</div>
     </section>
 
-    <section class="s-signup">
-        <h1 class="d:none">step</h1>
-        <section id="stepDivs">
-            <h1 class="d:none">step 영역</h1>
-            <div class="d:flex jc:center gap:4">
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>1</span></div>
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center bg-color:main-6" style="width: 21px; height: 21px;"><span class="color:base-1">2</span></div>
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>3</span></div>
-            </div>
-        </section>
+    <section>
+        <h1 class="d:none">step 영역</h1>
+        <div class="d:flex jc:center gap:4">
+            <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>1</span></div>
+            <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center bg-color:main-6" style="width: 21px; height: 21px;"><span class="color:base-1">2</span></div>
+            <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>3</span></div>
+        </div>
+    </section>
 
-        <!--sec1-->
-        <section id="sec1" class="d:flex fl-dir:column gap:10 md:gap:15 mb:8">
-                <section class="col-gap:2">
-                    <h1 class="d:none">이름 입력</h1>
-                    <div><span>이름</span><span class="emphasis color:accent-3">*</span></div>
-                    <input type="text" class="name n-textbox n-textbox-type:underline" autofocus autocomplete="false" />
-                    <div class="verify-name d:none color:accent-3">이름을 입력해주세요</div>
-                </section>
-                <section>
-                    <h1 class="d:none">전화번호 입력</h1>
-                    <div><span>전화번호</span><span class="emphasis color:accent-3">*</span></div>
-                    <div class="d:flex col-gap:2">
-                        <input type="text" class="phone n-textbox n-textbox-type:underline" autocomplete="false"/>
-                    </div>
-                    <div class="verify-phone d:none color:accent-3">전화번호를 입력해주세요</div>
-                </section>
-                <section>
-                    <h1 class="d:none">생년월일 입력</h1>
-                    <div><span>생년월일</span><span class="emphasis color:accent-3">*</span></div>
-                    <div class="d:flex col-gap:2">
-                        <input type="date" class="birthDate phone n-textbox n-textbox-type:underline"/>
-                    </div>
-                    <div class="verify-birth d:none color:accent-3">생년월일을 입력해주세요</div>
-                    <div class="verify-age d:none color:accent-3">14세 미만의 회원은 가입할 수 없습니다.</div>
-                </section>
-            <section class="d:flex fl-dir:column gap:10 md:gap:15 mb:8">
-                <div v-if="socialuserinfo.email" >
-                    <div><span>이메일</span><span class="emphasis color:accent-3">*</span></div>
-                    <div class="d:flex col-gap:2">
-                        <input type="text" name="email" class="email n-textbox n-textbox-type:underline" readonly
-                                :value="socialuserinfo.email"/>
+    <section class="d:flex fl-grow:1 fl-dir:column">
+        <h1 class="d:none">회원정보 입력 영역</h1>
+        <form method="post" class="d:flex fl-dir:column gap:10 md:gap:15 mb:4 md:mb:8">
+            <section class="col-gap:2">
+                <h1 class="d:none">이름 입력</h1>
+                <div><span>이름</span><span class="color:accent-3">*</span></div>
+                <input type="text" name="nm" class="n-textbox n-textbox-type:underline" autofocus autocomplete="false" />
+                <div class="nm d:none color:accent-3">이름을 입력해주세요</div>
+            </section>
+            <section>
+                <h1 class="d:none">전화번호 입력</h1>
+                <div><span>전화번호</span><span class="color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="text" name="phone" class="n-textbox n-textbox-type:underline" autocomplete="false"/>
+                </div>
+                <div class="phone d:none color:accent-3">전화번호를 입력해주세요</div>
+            </section>
+            <section>
+                <h1 class="d:none">생년월일 입력</h1>
+                <div><span>생년월일</span><span class="color:accent-3">*</span></div>
+                <div class="d:flex col-gap:2">
+                    <input type="date" name="birthDd" class="n-textbox n-textbox-type:underline"/>
+                </div>
+                <div class="birthDd d:none color:accent-3">생년월일을 입력해주세요</div>
+                <div class="age d:none color:accent-3">14세 미만의 회원은 가입할 수 없습니다.</div>
+            </section>
+            <section class="d:flex fl-dir:column gap:10 md:gap:15">
+                <h1 class="d:none">이메일 영역</h1>
+                <div>
+                    <div><span>이메일</span><span class="color:accent-3">*</span></div>
+                    <div class="n-textbox n-textbox-type:underline">
+                        user@ginong.co.kr
                     </div>
                 </div>
-                <div v-else class="d:flex fl-dir:column gap:10 md:gap:15 mb:8">
-                    <form class="mail-form" action="/mailSend" method="post">
-                        <section id="email-send">
-                            <h1 class="d:none">이메일 입력</h1>
-                            <div><span>이메일</span><span class="emphasis color:accent-3">*</span></div>
-                            <div class="d:flex col-gap:2">
-                                <input type="text" name="email" class="email n-textbox n-textbox-type:underline"
-                                       autocomplete="false"/>
-                                <button type="submit" class="verify_btn n-btn n-btn:outline color:base-9 send-mail-btn"
-                                        style="top:-3px;">인증번호 발송
-                                </button>
-                            </div>
-                        </section>
-                    </form>
-                    <section id="email-confirm" class="col-gap:2 pos:relative">
-                        <h1 class="d:none">이메일 인증번호 확인</h1>
-                        <form class="verify-form">
+                <div class="d:flex fl-dir:column gap:10 md:gap:15 ">
+                    <div id="email-send">
+                        <div><span>이메일</span><span class="color:accent-3">*</span></div>
+                        <div class="d:flex col-gap:2">
+                            <input type="text" name="email" class="n-textbox n-textbox-type:underline"
+                                   autocomplete="false"/>
+                            <button type="submit" class="n-btn n-btn:outline color:base-9 send-mail-btn"
+                                    style="top:-3px;">인증번호 발송
+                            </button>
+                        </div>
+                    </div>
+                    <div id="email-confirm" class="col-gap:2 pos:relative">
+                        <div class="verify-form">
                             <div>인증번호</div>
                             <div class="d:flex col-gap:2">
                                 <input type="text" class="n-textbox n-textbox-type:underline verification-code"
@@ -90,19 +84,16 @@
                             <div class="d:flex jc:end mr:6">
                                 <span class="countdown"></span>
                             </div>
-                        </form>
+                        </div>
                         <div class="verification-result"></div>
-                    </section>
+                    </div>
                 </div>
-                <section id="bottom-button" class="btn-box d:flex gap:8">
-                    <h1 class="d:none">버튼</h1>
-                    <button type="button" class="prev n-btn n-btn:outline w:10p">이전</button>
-                    <button type="button" class="next-button next n-btn w:10p" :class="{ disabled: !socialuserinfo.email }">다음</button>
-                </section>
-
             </section>
-
-        </section>
+            <div class="d:flex gap:8">
+                <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
+                <div class="fl-grow:1"><button class="n-btn w:10p">다음</button></div>
+            </div>
+        </form>
     </section>
 </main>
 </body>
