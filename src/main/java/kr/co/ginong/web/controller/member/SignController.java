@@ -23,10 +23,10 @@ public class SignController {
 
     @GetMapping("signup/step1")
     public String step1(HttpSession session, Model model) {
+
         Boolean age = Optional.ofNullable((Boolean) session.getAttribute("age")).orElse(false);
         Boolean agree = Optional.ofNullable((Boolean) session.getAttribute("agree")).orElse(false);
         Boolean email = Optional.ofNullable((Boolean) session.getAttribute("email")).orElse(false);
-
         Boolean all = age && agree && email;
 
         model.addAttribute("all", all);
@@ -49,21 +49,20 @@ public class SignController {
     }
 
     @GetMapping("signup/step2")
-    public String step2(){
+    public String step2(HttpSession session, Model model){
+
+        Mbr member = Optional.ofNullable((Mbr) session.getAttribute("member")).orElse(new Mbr());
+        model.addAttribute("m", member);
+
         return "member/sign/step2";
     }
 
     @PostMapping("signup/step2")
     public String step2(@ModelAttribute Mbr member, HttpSession session) {
+
         Boolean rxEmail = (Boolean) session.getAttribute("email");
         member.setEmailRxYn(rxEmail);
-        System.out.println(member);
-        member.setMbrNo(1111);
-        member.setPwd("sldk");
-        member.setUserNm("admin");
 
-       boolean test = service.addMember(member);
-        System.out.println(test);
         session.setAttribute("member", member);
         return "redirect:step3";
     }

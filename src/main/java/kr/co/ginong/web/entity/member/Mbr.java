@@ -19,7 +19,8 @@ public class Mbr {
     private String  pwd;	    /** 비밀번호 */
     private String  email;	    /** 이메일 */
     private String  phone;	    /** 연락처 */
-    private String    birthDd;	/** 생년월일 */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date  birthDd;	/** 생년월일 */
     private Boolean emailRxYn;	/** 이메일_수신_여부 */
     private Boolean mbrStatus;	/** 회원_상태 */
     private Date    joinDt;	    /** 가입_일시 */
