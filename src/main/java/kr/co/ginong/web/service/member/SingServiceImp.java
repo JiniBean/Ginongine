@@ -15,4 +15,17 @@ public class SingServiceImp implements SignService{
     public Boolean addMember(Mbr member) {
         return mbrRepository.save(member);
     }
+
+    @Override
+    public Boolean checkMember(Mbr member) {
+        Mbr check;
+        if(member.getMbrNo()!=null)
+            check = mbrRepository.findByMbrNo(member.getMbrNo());
+        else if (member.getUserNm()!=null)
+            check = mbrRepository.findByUsername(member.getUserNm());
+        else
+            check = mbrRepository.findByEmail(member.getEmail());
+
+        return check != null;
+    }
 }

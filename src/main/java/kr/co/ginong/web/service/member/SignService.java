@@ -7,4 +7,7 @@ import org.springframework.stereotype.Service;
 public interface SignService {
 
     Boolean addMember(Mbr member);
+
+    Boolean checkMember(Mbr member);
+
 }

@@ -109,7 +109,7 @@ window.addEventListener("load", function () {
     sendBtn.onclick = function (e) {
         e.preventDefault();
         const confirm = form.querySelector("#email-confirm");
-        verifier.verify(email.value, confirm, valid);
+        verifier.verify(email.value,sendBtn, confirm, valid, true);
 
     }
 

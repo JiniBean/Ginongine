@@ -14,7 +14,7 @@ export default class MemberRepository{
 
     }
 
-    async findUser(){
+    async findByEmail(email){
         let url = `${baseUrl}/api/member/userinfo`;
 
         let response = await this.findPromise(url)
