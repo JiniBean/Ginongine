@@ -7,6 +7,8 @@ window.addEventListener("load", function () {
     const email = form.querySelector("input[name='email']");
     const sendBtn = form.querySelector("#email-send");
     const submitBtn = form.querySelector("button.submit");
+    const confirm = form.querySelector("#email-confirm");
+    const confirmBtn = confirm.querySelector("button");
 
     const verifier = new EmailVerifier;
     let valid = {email:false, birth:false};
@@ -85,7 +87,7 @@ window.addEventListener("load", function () {
 
 
     }
-    
+
     email.oninput = function () {
         const error = form.querySelector("div.format");
 
@@ -108,9 +110,17 @@ window.addEventListener("load", function () {
     // --------- 이메일 인증 ---------------
     sendBtn.onclick = function (e) {
         e.preventDefault();
-        const confirm = form.querySelector("#email-confirm");
-        verifier.verify(email.value,sendBtn, confirm, valid, true);
+        let isSend = verifier.send(email.value,sendBtn, true);
+        if(isSend){
+            confirmBtn.classList.remove("disabled");
+            confirmBtn.disabled = false;
+            verifier.count(confirm);
+        }
+    }
 
+    confirmBtn.onclick = function (e) {
+        e.preventDefault();
+        let isConfirm = verifier.confirm(confirm, valid);
     }
 
 
