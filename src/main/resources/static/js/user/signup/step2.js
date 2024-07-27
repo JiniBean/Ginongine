@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
     const confirm = form.querySelector("#email-confirm");
     const confirmBtn = confirm.querySelector("button");
 
-    const verifier = new EmailVerifier;
+    const verifier = new EmailVerifier(confirm);
     let valid = {email:false, birth:false};
 
     // --------- 다음 버튼 눌렀을 때 유효성 검사 ---------------
@@ -111,16 +111,16 @@ window.addEventListener("load", function () {
     sendBtn.onclick = function (e) {
         e.preventDefault();
         let isSend = verifier.send(email.value,sendBtn, true);
-        if(isSend){
-            confirmBtn.classList.remove("disabled");
-            confirmBtn.disabled = false;
-            verifier.count(confirm);
-        }
+
     }
 
     confirmBtn.onclick = function (e) {
         e.preventDefault();
-        let isConfirm = verifier.confirm(confirm, valid);
+
+        // 형식 유효검사
+
+
+        let isConfirm = verifier.confirm(valid);
     }
 
 
