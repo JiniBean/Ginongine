@@ -8,4 +8,5 @@ public interface MailService {
 
     void send(Map<String,Object> info) throws IllegalStateException, MessagingException;
 
+    boolean confirm(int code);
 }

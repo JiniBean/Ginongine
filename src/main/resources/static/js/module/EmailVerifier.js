@@ -22,10 +22,14 @@ export default class EmailVerifier {
 
     }
 
-    checkFormat(email){
-        let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        console.log(pattern.test(email))
-        return pattern.test(email);
+    checkEmail(email){
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
+    checkCode(code){
+        const codePattern = /^\d{6}$/;
+        return codePattern.test(code);
     }
 
     async send(email, sendBtn, isNew = false) {
@@ -37,7 +41,7 @@ export default class EmailVerifier {
             return false;
         }
 
-        let isValid = this.checkFormat(email);
+        let isValid = this.checkEmail(email);
         if(!isValid){
             alert("이메일 형식이 맞지 않습니다");
             return false;
@@ -77,7 +81,7 @@ export default class EmailVerifier {
         const confirmBtn = this.#confirmDiv.querySelector("button");
 
         // 인증 유효시간 (3)
-        const VALID_TIME  = 1 * 10 * 1000; // 5분을 밀리초로 변환
+        const VALID_TIME  = 1 * 60 * 1000; // 5분을 밀리초로 변환
 
         // 현재 시간과 유효시간을 더하여 만료 시간을 설정
         const expireTime  = new Date().getTime() + VALID_TIME ;
@@ -108,21 +112,59 @@ export default class EmailVerifier {
 
     }
 
-    async confirm(valid) {
+    async confirm(valid, submitBtn) {
         const confirmBtn = this.#confirmDiv.querySelector("button");
         const code = this.#confirmDiv.querySelector("input").value;
         const timer = this.#confirmDiv.querySelector("div.timer");
+        const resultMsg = this.#confirmDiv.querySelector("div.result");
 
-        if (confirmBtn.disable || timer.hasClass("d:none"))
+        // 인증 가능한 상태인지 검사
+        if (confirmBtn.disable || timer.classList.contains("d:none"))
             return;
+
+        //입력이 제대로 되어있는지 검사
         if (!code) {
             alert("인증번호를 입력해주세요");
             return;
         }
+        if(!this.checkCode(code)){
+            alert("인증번호 형식이 맞지 않습니다");
+            return;
+        }
 
-        let url = `${baseUrl}/rest/mail/confirm?`;
+        let url = `${baseUrl}/rest/mail/confirm?c=${code}`;
         let response = await this.findPromise(url);
         let result = await response.json();
+
+        resultMsg.classList.remove("d:none");
+
+        //인증 성공이 아닐 경우 return
+        if(!(result.code===200)){
+            submitBtn.classList.add("disabled");
+            submitBtn.disabled = true;
+            resultMsg.textContent = result.msg;
+            resultMsg.style.color = 'red';
+            return false;
+        }
+
+        //성공일 경우
+
+        //다음버튼 활성화
+        submitBtn.classList.remove('disabled');
+        submitBtn.disabled = false;
+        //결과 출력
+        resultMsg.textContent = result.msg;
+        resultMsg.style.color = 'green';
+        confirmBtn.disable = true;
+        confirmBtn.textContent = '인증 완료';
+
+        //타이머 비활성화
+        timer.classList.add('d:none');
+        clearInterval(this.#timerInterval );
+
+        valid.email = true;
+        return true;
+
     }
 
 

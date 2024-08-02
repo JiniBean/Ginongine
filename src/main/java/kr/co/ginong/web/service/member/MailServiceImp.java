@@ -62,4 +62,13 @@ public class MailServiceImp implements MailService{
 
     }
 
+    @Override
+    public boolean confirm(int code) {
+
+        System.out.println(code);
+        System.out.println(this.code);
+
+        return code == this.code;
+    }
+
 }

@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailSendException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,5 +57,21 @@ public class MailController {
             rep.put("msg", "이메일 전송에 실패했습니다");
             return ResponseEntity.ok(rep);
         }
+    }
+
+    @GetMapping("confirm")
+    public ResponseEntity<Map<String,Object>> confirm(@RequestParam("c") int code) {
+
+        Map<String, Object> rep = new HashMap<>();
+        rep.put("code", -1);
+        rep.put("msg", "인증에 실패하였습니다");
+
+        boolean isConfirmed = service.confirm(code);
+        if (isConfirmed) {
+            rep.put("code", 200);
+            rep.put("msg", "인증에 성공하였습니다");
+        }
+        return ResponseEntity.ok(rep);
+
     }
 }

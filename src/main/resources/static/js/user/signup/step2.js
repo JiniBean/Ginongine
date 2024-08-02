@@ -5,10 +5,12 @@ window.addEventListener("load", function () {
     const phone = form.querySelector("input[name='phone']");
     const birthDate = form.querySelector("input[name='birthDd']");
     const email = form.querySelector("input[name='email']");
+    const code = form.querySelector("input[name='code']");
     const sendBtn = form.querySelector("#email-send");
     const submitBtn = form.querySelector("button.submit");
     const confirm = form.querySelector("#email-confirm");
     const confirmBtn = confirm.querySelector("button");
+    const result = confirm.querySelector("div.result");
 
     const verifier = new EmailVerifier(confirm);
     let valid = {email:false, birth:false};
@@ -45,6 +47,11 @@ window.addEventListener("load", function () {
             form.querySelector(`input[name=${invalid[0]}]`).focus() ;
             return;
         }
+
+        if(valid.email&&valid.birth)
+            this.form.submit();
+
+
 
     }
 
@@ -96,7 +103,7 @@ window.addEventListener("load", function () {
             return;
         }
         // 형식 유효검사
-        let isValid = verifier.checkFormat(email.value);
+        let isValid = verifier.checkEmail(email.value);
 
         if (!isValid) {
             error.classList.remove("d:none");
@@ -106,10 +113,18 @@ window.addEventListener("load", function () {
         error.classList.add("d:none");
     }
 
+    code.oninput = function () {
+        // 숫자만 입력 가능하게 만들기
+        this.value = this.value.replace(/[^0-9]/g, "");
+        // 6자리 이상 입력하면 11자리까지 잘라내기
+        this.value = this.value.length <= 6 ? this.value : this.value.slice(0, 6);
+    }
+
 
     // --------- 이메일 인증 ---------------
     sendBtn.onclick = function (e) {
         e.preventDefault();
+        result.classList.add('d:none');
         let isSend = verifier.send(email.value,sendBtn, true);
 
     }
@@ -117,10 +132,8 @@ window.addEventListener("load", function () {
     confirmBtn.onclick = function (e) {
         e.preventDefault();
 
-        // 형식 유효검사
-
-
-        let isConfirm = verifier.confirm(valid);
+        result.classList.add('d:none');
+        let isConfirm = verifier.confirm(valid, submitBtn);
     }
 
 
