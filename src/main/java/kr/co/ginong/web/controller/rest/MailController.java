@@ -64,7 +64,7 @@ public class MailController {
 
         Map<String, Object> rep = new HashMap<>();
         rep.put("code", -1);
-        rep.put("msg", "인증에 실패하였습니다");
+        rep.put("msg", "인증번호를 다시 확인해 주세요");
 
         boolean isConfirmed = service.confirm(code);
         if (isConfirmed) {
