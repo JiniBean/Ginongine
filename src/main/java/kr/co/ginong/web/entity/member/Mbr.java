@@ -23,6 +23,8 @@ public class Mbr {
     private Date    birthDd;	/** 생년월일 */
     private Boolean emailRxYn;	/** 이메일_수신_여부 */
     private Boolean mbrStatus;	/** 회원_상태 */
+    private String  joinRtCd;	/** 가입_경로_코드 */
+    private Integer refNo;	    /** 추천_(회원)번호 */
     private Date    joinDt;	    /** 가입_일시 */
     private Date    cxlDt;	    /** 탈퇴_일시 */
 
