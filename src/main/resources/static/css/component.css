@@ -102,7 +102,7 @@
     --toggle-outline-color: var(--color-main-6);
     --toggle-outline-background-color: var(--color-base-1);
     --toggle-outline-border-color: var(--color-main-6);
-    --toggle-outline-checked-color: var(--color-main-6);
+    --toggle-outline-checked-color: var(--color-base-1);
     --toggle-outline-background-color-checked: var(--color-main-6);
     --toggle-outline-checked-background-color: var(--color-main-6);
     --toggle-outline-checked-border-color: transparent;
@@ -120,12 +120,22 @@
 }
 
 @media (min-width: 780px) {
-    label:has(.n-toggle) {
+    .n-toggle,
+    .n-toggle > span{
         font-size: var(--font-size-3);
     }
-    label:has(+.n-textbox) {
+    label:has(+.n-textbox),
+    label:has(+.n-textbox) > span{
         font-size: var(--font-size-3);
     }
+}
+
+.n-toggle > span{
+    color: var(--toggle-outline-color);
+}
+
+.n-toggle:has(input:checked) > span{
+    color: var(--toggle-outline-checked-color);
 }
 
 .n-textbox {
