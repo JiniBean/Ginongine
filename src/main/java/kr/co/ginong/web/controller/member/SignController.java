@@ -1,13 +1,16 @@
 package kr.co.ginong.web.controller.member;
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.ginong.web.entity.code.CodeDetail;
 import kr.co.ginong.web.entity.member.Mbr;
+import kr.co.ginong.web.service.code.CodeService;
 import kr.co.ginong.web.service.member.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping()
@@ -15,6 +18,9 @@ import java.util.Optional;
 public class SignController {
     @Autowired
     private SignService service;
+
+    @Autowired
+    private CodeService codeService;
 
     @GetMapping("signin")
     public String signin() {
@@ -68,7 +74,21 @@ public class SignController {
     }
 
     @GetMapping("signup/step3")
-    public String step3(@SessionAttribute("member") Mbr member){
+    public String step3(Model model){
+        List<CodeDetail> routeList = codeService.getList("MBR_JOIN_RT");
+        model.addAttribute("routeList", routeList);
         return "member/sign/step3";
+    }
+
+    @PostMapping("signup/step3")
+    public String step3(@ModelAttribute Mbr member, HttpSession session) {
+        return "redirect:complete";
+    }
+
+    @GetMapping("signup/complete")
+    public String complete(Model model, HttpSession session) {
+        Mbr member = (Mbr) session.getAttribute("member");
+        model.addAttribute("name", member.getNm());
+        return "member/sign/complete";
     }
 }

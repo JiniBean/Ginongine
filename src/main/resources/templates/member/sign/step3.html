@@ -16,87 +16,66 @@
         <div class="n-item n-item-type:underline bd-color:main-6 fs:4 txt-al:center fw:bold">회원가입</div>
     </section>
 
-    <section class="s-signup">
-        <h1 class="d:none">모바일 영역 step</h1>
-        <section id="stepDivs">
-            <h1 class="d:none">step 영역</h1>
-            <div class="d:flex jc:center gap:4">
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>1</span></div>
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>2</span></div>
-                <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center bg-color:main-6" style="width: 21px; height: 21px;"><span class="color:base-1">3</span></div>
+    <section class="d:flex jc:center gap:4">
+        <h1 class="d:none">step 영역</h1>
+        <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>1</span></div>
+        <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>2</span></div>
+        <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center bg-color:main-6" style="width: 21px; height: 21px;"><span class="color:base-1">3</span></div>
+    </section>
+    <section>
+        <h1 class="d:none">회원정보 입력 영역</h1>
+        <form method="post" name="member" class="d:flex fl-dir:column gap:10 md:gap:17 mb:8">
+            <div class="pos:relative">
+                <div>아이디<span class="color:accent-3">*</span></div>
+                <div>
+                    <input type="text" name="userNm" class="n-textbox n-textbox-type:underline" placeholder="영문 소문자, 숫자 (5~20자리)" autofocus required autocomplete="false"/>
+                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</span>
+                </div>
+                <div class="userNm d:none color:accent-3">아이디를 입력해주세요</div>
+                <div class="format d:none color:accent-3 mt:2">5~20자의 영문 소문자와 숫자만 사용 가능해요.</div>
             </div>
-        </section>
-
-        <!--sec2-->
-        <section id="sec2">
-            <form class="d:flex fl-dir:column gap:10 md:gap:17 mb:8">
-                <section class="col-gap:2 pos:relative">
-                    <h1 class="d:none">인풋박스</h1>
-                    <div>
-                        <div><span>아이디</span><span class="emphasis color:accent-3">*</span></div>
-                        <input type="text" class="user-name n-textbox n-textbox-type:underline" autofocus required autocomplete="false"/>
+            <div class="pos:relative">
+                <div> 비밀번호<span class="color:accent-3">*</span></div>
+                <div>
+                    <input type="password" name="pwd" class="n-textbox n-textbox-type:underline" placeholder="영문 대소문자, 숫자 (7자리 이상)" required/>
+                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</span>
+                </div>
+                <div class="pwd d:none color:accent-3 mt:2">비밀번호를 입력해주세요</div>
+                <div class="format d:none color:accent-3 mt:2">영문 대소문자, 숫자를 조합하여 7자리 이상 입력해주세요.</div>
+            </div>
+            <div class="pos:relative">
+                <div>비밀번호 재확인<span class="color:accent-3">*</span></div>
+                <div>
+                    <input type="password" name="check" class="n-textbox n-textbox-type:underline" required/>
+                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 일치 ]</span>
+                </div>
+                <div class="check d:none color:accent-3 mt:2">비밀번호 재확인을 해주세요</div>
+            </div>
+            <div class="d:flex gap:3 fl-dir:column" >
+                <div>가입경로<span class="color:accent-3">*</span></div>
+                <div class="d:flex jc:space-between gap:2">
+                    <div th:each="r:${routeList}">
+                        <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
+                            <span th:text="${r.detailNm}">가입 경로</span>
+                            <input type="radio" class="d:none" name="joinRtCd" th:value="${r.detailCd}" required>
+                        </label>
                     </div>
-                    <div class="verify-id d:none color:accent-3">아이디를 입력해주세요</div>
-                    <div class="verify-kor d:none color:accent-3">한글은 입력할 수 없습니다.</div>
-                    <div class="id-info d:none color:accent-3 mt:2">영문, 숫자만을 조합해서 입력하셔야 합니다.</div>
-                   <div class="check-id d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</div>
-                    <div class="check-id d:none color:accent-3 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용중 ]</div>
-                </section>
-                <section class="col-gap:2 pos:relative">
-                    <h1 class="d:none">비밀번호</h1>
-                    <div>
-                        <div><span>비밀번호</span><span class="emphasis color:accent-3">*</span></div>
-                        <input type="password" class="password n-textbox n-textbox-type:underline" required/>
-                        <div class="verify-pwd d:none color:accent-3 mt:2">비밀번호를 입력해주세요</div>
-                        <div class="check-pwd d:none color:accent-3 mt:2">영문, 숫자를 조합하여 최소 7자리 이상 입력하셔야 합니다.</div>
-                    </div>
-                    <div class="check-pwd d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</div>
-                </section>
-                <section class="col-gap:2 pos:relative">
-                    <h1 class="d:none">비밀번호 확인</h1>
-                    <div>
-                        <div>비밀번호 재확인</div>
-                        <input type="password" class="verify-password n-textbox n-textbox-type:underline" required/>
-                    </div>
-                    <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 일치 ]</div>
-                    <div class="check-password d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 불일치 ]</div>
-                </section>
-                <section class="d:flex gap:3 flex-direction:column" >
-                    <h1>유입경로 선택</h1>
-                    <ul class="join-route w:full d:flex jc:space-between gap:2">
-                        <li>
-                            <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
-                                블로그
-                                <input  type="radio" class="d:none" name="route" th:value="blog">
-                            </label>
-                        </li>
-                        <li>
-                            <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
-                                인터넷
-                                <input  type="radio" class="d:none" name="route" th:value="internet" >
-                            </label>
-                        </li>
-                        <li>
-                            <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
-                                SNS
-                                <input  type="radio" class="d:none" name="route" th:value="sns">
-                            </label>
-                        </li>
-                        <li>
-                            <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
-                                지인추천
-                                <input type="radio" class="d:none" name="route" th:value="person">
-                            </label>
-                        </li>
-                    </ul>
-                </section>
-                <section class="btn-box d:flex gap:8">
-                    <h1 class="d:none">버튼</h1>
-                    <button type="button" class="prev n-btn n-btn:outline w:10p">이전</button>
-                    <button type="button" class="signup n-btn w:10p">회원가입</button>
-                </section>
-            </form>
-        </section>
+                </div>
+                <div class="joinRtCd d:none color:accent-3 mt:2">가입 경로를 선택해주세요</div>
+            </div>
+            <div class="pos:relative">
+                <div>추천인 아이디</div>
+                <div>
+                    <input type="text" name="ref" class="n-textbox n-textbox-type:underline"/>
+                    <input type="hidden" name="refNo" class="n-textbox n-textbox-type:underline"/>
+                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 확인 ]</span>
+                </div>
+            </div>
+            <div class="d:flex gap:8">
+                <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
+                <div class="fl-grow:1"><button class="submit n-btn w:10p" >다음</button></div>
+            </div>
+        </form>
     </section>
 </main>
 </body>
