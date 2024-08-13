@@ -10,7 +10,7 @@
             cd.DETAIL_NM QTY_CTG_NM,
             cd1.DETAIL_NM WT_CTG_NM,
             cd2.DETAIL_NM STG_TYPE_NM,
-            cd3.DETAIL_NM PRD_CTG_NM,
+            cd3.DETAIL_NM CTG_NM,
             ifnull(r.LIKE_CNT, 0) LIKE_CNT
         FROM prd p
         LEFT JOIN code_detail cd
@@ -20,7 +20,7 @@
         LEFT JOIN code_detail cd2
             ON p.STG_TYPE_CD = cd2.DETAIL_CD
         LEFT JOIN code_detail cd3
-            ON p.PRD_CTG_CD = cd3.DETAIL_CD
+            ON p.CTG_CD = cd3.DETAIL_CD
         LEFT JOIN (
             SELECT
                 pr.PRD_NO PRD_NO,
@@ -30,7 +30,7 @@
             ON p.PRD_NO = r.PRD_NO
         <where>
             <if test="ctgCd != null">
-                p.PRD_CTG_CD = #{ctgCd}
+                p.CTG_CD = #{ctgCd}
             </if>
             <if test="query != null">
                 p.PRD_NM like '%#{query}%'

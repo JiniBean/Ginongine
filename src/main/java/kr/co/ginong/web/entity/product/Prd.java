@@ -31,8 +31,8 @@ public class Prd {
     private String  thmbNm;	    /** 썸네일_이름 */
     private String  thmbPath;	/** 썸네일_경로 */
     private Boolean useYn;	    /** 사용_여부 */
-    private String  prdCtgCd;	/** 상품_카테고리_코드 */
-    private String  prdCtgNm;   /** 상품_카테고리_이름 */
+    private String  ctgCd;	    /** 상품_카테고리_코드 */
+    private String  ctgNm;      /** 상품_카테고리_이름 */
     private Integer likeCnt;    /** 추천수 */
     private Integer cartQty;    /** 장바구니 수량 */ /* 로그인 시에만 사용 */
 
