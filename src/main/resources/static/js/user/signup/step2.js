@@ -1,13 +1,12 @@
 import EmailVerifier from "/js/module/EmailVerifier.js";
 
 window.addEventListener("load", function () {
-    const form = document.querySelector("form[name='member']");
-    const phone = form.querySelector("input[name='phone']");
-    const birthDate = form.querySelector("input[name='birthDd']");
-    const email = form.querySelector("input[name='email']");
-    const code = form.querySelector("input[name='code']");
+    const form = document.forms['member'];
+    const phone = form['phone'];
+    const birthDate = form['birthDd'];
+    const email = form['email'];
+    const code = form['code'];
     const sendBtn = form.querySelector("#email-send");
-    const submitBtn = form.querySelector("button.submit");
     const confirm = form.querySelector("#email-confirm");
     const confirmBtn = confirm.querySelector("button");
     const result = confirm.querySelector("div.result");
@@ -17,17 +16,15 @@ window.addEventListener("load", function () {
 
     // --------- 다음 버튼 눌렀을 때 유효성 검사 ---------------
 
-    // 입력 시작 시 에러 문구 지우기
+    // 입력 시작 시 에러 문구 지우기(다음 버튼 누른 후)
     function toggle(e) {
         const error = e.target.closest("section").querySelector(`div.${e.target.name}`);
-        if (e.target.value)
-            error.classList.add("d:none");
-        else
-            error.classList.remove("d:none");
+        error.classList.toggle('d:none', e.target.value);
     }
 
-    submitBtn.onclick = function (e) {
+    form.onsubmit = (e) => {
         e.preventDefault();
+        console.log('valid : ', valid);
         const inputs = form.querySelectorAll("input");
         let invalid = [];
 
@@ -36,32 +33,32 @@ window.addEventListener("load", function () {
             if(!i.value){
                 form.querySelector(`div.${i.name}`).classList.remove("d:none");
                 invalid.push(i.name);
-                i.addEventListener("input", toggle);
             }
+            i.addEventListener("input", toggle);
 
         });
 
         // 입력 안된 항목 중 가장 첫번째에 커서 focus
         if(invalid.length > 0){
-            form.querySelector(`input[name=${invalid[0]}]`).focus() ;
+            form[`${invalid[0]}`].focus() ;
+            console.log('invalid');
             return;
         }
 
         // 인증 완료 및 14세 이상일 경우에만 제출
         if(valid.email && valid.birth)
-            this.form.submit();
-
+            form.submit();
     }
 
 
     // --------- 각 항목별 유효성 검사 ---------------
 
-    phone.oninput = function (){
+    phone.oninput = () => {
         // 11자리 숫자만 입력
         this.value = this.value.replace(/[^0-9]/g, "").slice(0, 11);
     }
 
-    birthDate.onchange = function (){
+    birthDate.onchange = () => {
         const birth = new Date(birthDate.value);
         const today = new Date();
         let age = today.getFullYear() - birth.getFullYear();
@@ -76,7 +73,7 @@ window.addEventListener("load", function () {
 
     }
 
-    email.oninput = function () {
+    email.oninput = () =>  {
         const error = form.querySelector("div.format");
 
         if(!email.value){
@@ -85,11 +82,11 @@ window.addEventListener("load", function () {
         }
 
         // 형식 유효검사
-        let isValid = verifier.checkEmail(email.value);
+        let isValid = verifier.checkFormat(email.value, 'email');
         error.classList.toggle('d:none', isValid);
     }
 
-    code.oninput = function () {
+    code.oninput = () =>  {
         // 6자리 숫자만 입력 가능하게 만들기
         this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
     }
@@ -98,7 +95,7 @@ window.addEventListener("load", function () {
     // --------- 이메일 인증 ---------------
     sendBtn.onclick = async function (e) {
         e.preventDefault();
-        if(valid.email)
+        if(valid.email || email.readOnly)
             return;
 
         result.classList.add('d:none');
@@ -113,8 +110,10 @@ window.addEventListener("load", function () {
     confirmBtn.onclick = async function (e) {
         e.preventDefault();
 
-        result.classList.add('d:none');
-        valid.email = await verifier.confirm(submitBtn);
+        result.classList.toggle('d:none',!valid.email);
+        if (valid.email)
+            return;
+        valid.email = await verifier.confirm();
         if (valid.email)
             code.readOnly = true;
     }
@@ -123,4 +122,4 @@ window.addEventListener("load", function () {
 
 
 
-})
+});

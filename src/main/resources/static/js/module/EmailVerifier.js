@@ -24,14 +24,13 @@ export default class EmailVerifier {
 
     }
 
-    checkEmail(email){
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
-    }
-
-    checkCode(code){
-        const codePattern = /^\d{6}$/;
-        return codePattern.test(code);
+   checkFormat(args, name) {
+        const pattern =
+            {
+                email : /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                code : /^\d{6}$/
+            }
+        return pattern[name].test(args);
     }
 
     async send(email, sendBtn, isNew = false) {
@@ -42,7 +41,7 @@ export default class EmailVerifier {
             return false;
         }
 
-        if(!this.checkEmail(email)){
+        if(!this.checkFormat(email, 'email')){
             alert("이메일 형식이 맞지 않습니다");
             return false;
         }
@@ -96,21 +95,21 @@ export default class EmailVerifier {
         }
     }
 
-    async confirm(submitBtn) {
+    async confirm() {
         const code = this.#confirmDiv.querySelector("input").value;
         const timer = this.#confirmDiv.querySelector("div.timer");
         const resultMsg = this.#confirmDiv.querySelector("div.result");
 
         // 인증 가능한 상태인지 검사
         if (this.confirmBtn.disable || timer.classList.contains("d:none"))
-            return;
+            return false;
 
         //입력이 제대로 되어있는지 검사
         if (!code) {
             alert("인증번호를 입력해주세요");
             return false;
         }
-        if(!this.checkCode(code)){
+        if(!this.checkFormat(code, 'code')){
             alert("인증번호 형식이 맞지 않습니다");
             return false;
         }
@@ -118,28 +117,24 @@ export default class EmailVerifier {
         const url = `${baseUrl}/rest/mail/confirm?c=${code}`;
         const response = await this.findPromise(url);
         const result = await response.json();
-        const ok = result.code === 200
+        const isOk = result.code === 200
 
 
         //성공이라면 타이며 비활성화
-        if(ok){
+        if(isOk){
             timer.classList.add('d:none');
             clearInterval(this.#timerInterval );
         }
 
-        //다음버튼 변동
-        submitBtn.classList.toggle('disabled', !ok);
-        submitBtn.disabled = !ok;
-
         //결과 출력
         resultMsg.classList.remove("d:none");
         resultMsg.textContent = result.msg;
-        resultMsg.style.color = ok ? 'green' : 'red';
+        resultMsg.style.color = isOk ? 'green' : 'red';
 
-        this.confirmBtn.disable = ok;
-        this.confirmBtn.textContent = ok? '인증 완료' : this.confirmBtn.textContent;
+        this.confirmBtn.disable = isOk;
+        this.confirmBtn.textContent = isOk? '인증 완료' : this.confirmBtn.textContent;
 
-        return ok;
+        return isOk;
 
     }
 
