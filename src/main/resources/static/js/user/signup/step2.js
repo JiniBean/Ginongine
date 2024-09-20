@@ -16,15 +16,8 @@ window.addEventListener("load", function () {
 
     // --------- 다음 버튼 눌렀을 때 유효성 검사 ---------------
 
-    // 입력 시작 시 에러 문구 지우기(다음 버튼 누른 후)
-    function toggle(e) {
-        const error = e.target.closest("section").querySelector(`div.${e.target.name}`);
-        error.classList.toggle('d:none', e.target.value);
-    }
-
     form.onsubmit = (e) => {
         e.preventDefault();
-        console.log('valid : ', valid);
         const inputs = form.querySelectorAll("input");
         let invalid = [];
 
@@ -41,11 +34,13 @@ window.addEventListener("load", function () {
         // 입력 안된 항목 중 가장 첫번째에 커서 focus
         if(invalid.length > 0){
             form[`${invalid[0]}`].focus() ;
-            console.log('invalid');
             return;
         }
 
         // 인증 완료 및 14세 이상일 경우에만 제출
+        valid.birth = ageValidation();
+        valid.email = confirmBtn.disable;
+
         if(valid.email && valid.birth)
             form.submit();
     }
@@ -53,26 +48,20 @@ window.addEventListener("load", function () {
 
     // --------- 각 항목별 유효성 검사 ---------------
 
+    // 11자리 숫자만 입력
     phone.oninput = () => {
-        // 11자리 숫자만 입력
         this.value = this.value.replace(/[^0-9]/g, "").slice(0, 11);
     }
 
+    //만 14세 이상 유효검사
     birthDate.onchange = () => {
-        const birth = new Date(birthDate.value);
-        const today = new Date();
-        let age = today.getFullYear() - birth.getFullYear();
-
-        if(today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate()))
-            age--;
-        valid.birth = age >= 14;
-
-        //만 14세 이상 유효검사
+        const isValid = ageValidation();
         const error = form.querySelector("div.age");
-        error.classList.toggle('d:none', valid.birth);
+        error.classList.toggle('d:none', isValid);
 
     }
 
+    // 형식 유효검사
     email.oninput = () =>  {
         const error = form.querySelector("div.format");
 
@@ -81,18 +70,20 @@ window.addEventListener("load", function () {
             return;
         }
 
-        // 형식 유효검사
         let isValid = verifier.checkFormat(email.value, 'email');
         error.classList.toggle('d:none', isValid);
     }
 
+
+    // 6자리 숫자만 입력
     code.oninput = () =>  {
-        // 6자리 숫자만 입력 가능하게 만들기
+
         this.value = this.value.replace(/[^0-9]/g, "").slice(0, 6);
     }
 
 
     // --------- 이메일 인증 ---------------
+
     sendBtn.onclick = async function (e) {
         e.preventDefault();
         if(valid.email || email.readOnly)
@@ -110,7 +101,7 @@ window.addEventListener("load", function () {
     confirmBtn.onclick = async function (e) {
         e.preventDefault();
 
-        result.classList.toggle('d:none',!valid.email);
+        result.classList.toggle('d:none', confirmBtn.disable);
         if (valid.email)
             return;
         valid.email = await verifier.confirm();
@@ -119,6 +110,24 @@ window.addEventListener("load", function () {
     }
 
 
+    // --------- 추가 기능 ---------------
+
+    // 입력 시작 시 에러 문구 지우기(다음 버튼 누른 후)
+    function toggle(e) {
+        const error = e.target.closest("section").querySelector(`div.${e.target.name}`);
+        error.classList.toggle('d:none', e.target.value);
+    }
+
+    // 만 14이상 인지 유효성 검사
+    function ageValidation(){
+        const birth = new Date(birthDate.value);
+        const today = new Date();
+        let age = today.getFullYear() - birth.getFullYear();
+
+        if(today < new Date(today.getFullYear(), birth.getMonth(), birth.getDate()))
+            age--;
+        return age >= 14;
+    }
 
 
 
