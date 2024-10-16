@@ -4,17 +4,64 @@ server:
 
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+          naver:
+            client-id:
+            client-secret:
+            redirect-uri:
+            authorization-grant-type:
+            scope:
+            client-name:
+          kakao:
+            clientId:
+            scope:
+            client-name:
+            authorization-grant-type:
+            redirect-uri:
+            client-authentication-method:
+        provider:
+          naver:
+            authorization_uri:
+            token_uri:
+            user-info-uri:
+            user_name_attribute:
+          kakao:
+            authorization-uri:
+            token-uri:
+            user-info-uri:
+            user-name-attribute:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url:
     username:
     password:
 
+
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttl0s.enable: true
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/*/*Mapper.xml
   type-aliases-package: kr.co.ginong.web.entity.**
+
 
 logging:
   level:

@@ -28,16 +28,16 @@
             <div class="pos:relative">
                 <div>아이디<span class="color:accent-3">*</span></div>
                 <div>
-                    <input type="text" name="userNm" class="n-textbox n-textbox-type:underline" placeholder="영문 소문자, 숫자 (5~20자리)" autofocus required autocomplete="false"/>
+                    <input type="text" name="userNm" class="n-textbox n-textbox-type:underline required" placeholder="영문 소문자, 숫자 (5~20자리)" autofocus  autocomplete="false"/>
                     <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</span>
                 </div>
-                <div class="userNm d:none color:accent-3">아이디를 입력해주세요</div>
+                <div class="userNm d:none color:accent-3 mt:2">아이디를 입력해주세요</div>
                 <div class="format d:none color:accent-3 mt:2">5~20자의 영문 소문자와 숫자만 사용 가능해요.</div>
             </div>
             <div class="pos:relative">
                 <div> 비밀번호<span class="color:accent-3">*</span></div>
                 <div>
-                    <input type="password" name="pwd" class="n-textbox n-textbox-type:underline" placeholder="영문 대소문자, 숫자 (7자리 이상)" required/>
+                    <input type="password" name="pwd" class="n-textbox n-textbox-type:underline required" placeholder="영문 대소문자, 숫자 (7자리 이상)" />
                     <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 사용가능 ]</span>
                 </div>
                 <div class="pwd d:none color:accent-3 mt:2">비밀번호를 입력해주세요</div>
@@ -46,8 +46,8 @@
             <div class="pos:relative">
                 <div>비밀번호 재확인<span class="color:accent-3">*</span></div>
                 <div>
-                    <input type="password" name="check" class="n-textbox n-textbox-type:underline" required/>
-                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 일치 ]</span>
+                    <input type="password" name="check" class="n-textbox n-textbox-type:underline required" />
+                    <span class="check d:none fw:500 color:sub-5 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 일치 ]</span>
                 </div>
                 <div class="check d:none color:accent-3 mt:2">비밀번호 재확인을 해주세요</div>
             </div>
@@ -55,9 +55,8 @@
                 <div>가입경로<span class="color:accent-3">*</span></div>
                 <div class="d:flex jc:space-between gap:2">
                     <div th:each="r:${routeList}">
-                        <label class="n-toggle n-toggle-type:outline-box md:w:4 w:2 md:h:2">
-                            <span th:text="${r.detailNm}">가입 경로</span>
-                            <input type="radio" class="d:none" name="joinRtCd" th:value="${r.detailCd}" required>
+                        <label class="n-toggle n-toggle-type:outline-box ai:center jc:center ac:center md:w:4 w:2 md:h:2">
+                            <input type="radio" class="d:none" name="joinRtCd" th:value="${r.detailCd}" th:text="${r.detailNm}" >
                         </label>
                     </div>
                 </div>
@@ -73,7 +72,7 @@
             </div>
             <div class="d:flex gap:8">
                 <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
-                <div class="fl-grow:1"><button class="submit n-btn w:10p" >다음</button></div>
+                <div class="fl-grow:1"><button type="submit" class="submit n-btn w:10p" >다음</button></div>
             </div>
         </form>
     </section>
