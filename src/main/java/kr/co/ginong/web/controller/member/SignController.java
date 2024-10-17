@@ -82,6 +82,11 @@ public class SignController {
 
     @PostMapping("signup/step3")
     public String step3(@ModelAttribute Mbr member, HttpSession session) {
+        Mbr mbr = (Mbr)session.getAttribute("member");
+        mbr.setUserNm(member.getUserNm());
+        mbr.setPwd(member.getPwd());
+        mbr.setJoinRtCd(member.getJoinRtCd());
+
         return "redirect:complete";
     }
 

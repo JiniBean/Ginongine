@@ -14,20 +14,35 @@ export default class MemberRepository{
 
     }
 
-    async findByEmail(email){
-        let url = `${baseUrl}/api/member/userinfo`;
+    async getMember(username){
+
+        let url = `${baseUrl}/rest/sign/${username}`;
 
         let response = await this.findPromise(url)
 
         // 응답의 상태 코드 확인
-        if (response.status === 200) {
+        if (response.status === 200){
             //response가 비었는지 확인
-            if (response.headers.get('content-length') === '0') {
+            if (response.headers.get('content-length') === '0')
                 return null;
-            }
+
             return await response.json();
         }
+        return null;
     }
+    async checkMember(username){
+        let url = `${baseUrl}/rest/sign/c/${username}`;
+
+        let response = await this.findPromise(url)
+
+        // 응답의 상태 코드 확인
+        if (response.status === 200)
+            return await response.json();
+
+        return null;
+
+    }
+
 
 
 

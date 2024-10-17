@@ -10,4 +10,5 @@ public interface SignService {
 
     Boolean checkMember(Mbr member);
 
+    Mbr getMember(String username);
 }

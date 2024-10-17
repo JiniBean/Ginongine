@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
-    <script src="/js/user/signup/step3.js"></script>
+    <script type="module" src="/js/user/signup/step3.js"></script>
 </head>
 <body>
 <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0">
@@ -22,9 +22,9 @@
         <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center" style="width: 21px; height: 21px;"><span>2</span></div>
         <div class="n-item n-item-type:outline-box fs:4 txt-al:center bd-radius:full n-list-item-padding:1 ai:center d:flex jc:center bg-color:main-6" style="width: 21px; height: 21px;"><span class="color:base-1">3</span></div>
     </section>
-    <section>
+    <section  class="d:flex fl-grow:1">
         <h1 class="d:none">회원정보 입력 영역</h1>
-        <form method="post" name="member" class="d:flex fl-dir:column gap:10 md:gap:17 mb:8">
+        <form method="post" name="member" class="d:flex fl-grow:1 fl-dir:column gap:10 md:gap:17 mb:8">
             <div class="pos:relative">
                 <div>아이디<span class="color:accent-3">*</span></div>
                 <div>
@@ -67,10 +67,10 @@
                 <div>
                     <input type="text" name="ref" class="n-textbox n-textbox-type:underline"/>
                     <input type="hidden" name="refNo" class="n-textbox n-textbox-type:underline"/>
-                    <span class="check d:none color:main-6 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 확인 ]</span>
+                    <span class="check d:none color:sub-5 pos:absolute right:0 txt-al:right bg-color:base-1" style="top:25px;">[ 확인 ]</span>
                 </div>
             </div>
-            <div class="d:flex gap:8">
+            <div class="d:flex fl-grow:1 gap:8 ai:end">
                 <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
                 <div class="fl-grow:1"><button type="submit" class="submit n-btn w:10p" >다음</button></div>
             </div>

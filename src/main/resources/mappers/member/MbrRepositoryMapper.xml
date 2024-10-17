@@ -46,6 +46,13 @@
 
     </select>
 
+    <select id="findByUsername" resultType="Mbr">
+        SELECT
+        *
+        from MBR
+        WHERE USER_NM = #{username}
+    </select>
+
     <select id="findByEmail" resultType="Mbr">
         SELECT
         *
