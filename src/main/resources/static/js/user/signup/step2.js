@@ -41,8 +41,9 @@ window.addEventListener("load", function () {
         valid.birth = ageValidation();
         valid.email = confirmBtn.disable;
 
-        if(valid.email && valid.birth)
-            form.submit();
+        if(![valid.email, valid.birth].every(Boolean))
+            return;
+        form.submit();
     }
 
 

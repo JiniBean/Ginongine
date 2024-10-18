@@ -83,10 +83,16 @@ public class SignController {
     @PostMapping("signup/step3")
     public String step3(@ModelAttribute Mbr member, HttpSession session) {
         Mbr mbr = (Mbr)session.getAttribute("member");
+        mbr.setMbrNo(member.getMbrNo());
         mbr.setUserNm(member.getUserNm());
         mbr.setPwd(member.getPwd());
         mbr.setJoinRtCd(member.getJoinRtCd());
 
+        session.setAttribute("member", mbr);
+        boolean save = service.addMember(mbr);
+        if(!save){
+            return "redirect:step3";
+        }
         return "redirect:complete";
     }
 
@@ -94,6 +100,7 @@ public class SignController {
     public String complete(Model model, HttpSession session) {
         Mbr member = (Mbr) session.getAttribute("member");
         model.addAttribute("name", member.getNm());
+        session.removeAttribute("member");
         return "member/sign/complete";
     }
 }

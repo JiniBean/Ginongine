@@ -60,6 +60,13 @@
         WHERE EMAIL = #{email}
     </select>
 
+    <select id="findByMbrNo" resultType="Mbr">
+        SELECT
+        *
+        from MBR
+        WHERE MBR_NO = #{mbrNo}
+    </select>
+
     <insert id="save" parameterType="Mbr">
         INSERT INTO MBR (MBR_NO, NM, USER_NM, PWD, EMAIL, PHONE, BIRTH_DD, EMAIL_RX_YN)
         VALUES(#{mbrNo},#{nm},#{userNm},#{pwd},#{email},#{phone},#{birthDd},#{emailRxYn})

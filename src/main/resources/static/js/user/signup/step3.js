@@ -1,5 +1,5 @@
 import SignRepository from "/js/module/SignRepository.js";
-
+import debounce from "/js/module/Debounce.js";
 
 window.addEventListener("load", function () {
 
@@ -51,19 +51,29 @@ window.addEventListener("load", function () {
         const isUsernameValid = await usernameValidation();
         const isPwdValid = pwdValidation();
         const isPwdMatch = pwdMatchValidation();
+        const isMember = await refValidation();
+        console.log('ref', isMember);
 
-        if (![isUsernameValid, isPwdValid, isPwdMatch].every(Boolean))
+        console.log(isUsernameValid, isPwdValid, isPwdMatch);
+
+        const isValid = [isUsernameValid, isPwdValid, isPwdMatch, isMember].every(Boolean);
+        if (!isValid)
             return;
 
+        form.submit();
 
     };
 
     // --------- 각 항목별 유효성 검사 ---------------
-    username.oninput = usernameValidation;
+
+    username.oninput = debounce(usernameValidation);
+    // pwd.addEventListener("input", debounce(pwdValidation));
+    // pwd.addEventListener("input", debounce(pwdMatchValidation));
+    // checkPwd.oninput = debounce(pwdMatchValidation);
     pwd.addEventListener("input", pwdValidation);
     pwd.addEventListener("input", pwdMatchValidation);
-    checkPwd.oninput = pwdMatchValidation;
-    ref.oninput = refValidation;
+    checkPwd.oninput = debounce(pwdMatchValidation);
+    ref.oninput = debounce(refValidation);
 
 
     // --------- 추가 기능 ---------------
@@ -77,13 +87,13 @@ window.addEventListener("load", function () {
 
     // 패턴 유효성 검사
     function checkFormat(name, args) {
-        const pattern =
-            {
-                username : /^[a-z0-9]{5,20}$/,
-                pwd : /^[a-zA-Z0-9]{7,}$/
-            }
+        const pattern = {
+            username: /^[a-z0-9]{5,20}$/,
+            pwd: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{7,}$/
+        }
         return pattern[name].test(args);
     }
+
 
 
     // 아이디 유효성 검사
@@ -115,6 +125,7 @@ window.addEventListener("load", function () {
 
 
         check.classList.remove('d:none');
+        return !isMember;
 
         }
 
@@ -122,10 +133,10 @@ window.addEventListener("load", function () {
 
     // 비밀번호 유효성 검사
     function pwdValidation() {
-        const isValid =  checkFormat('pwd', pwd);
+        const isValid =  checkFormat('pwd', pwd.value);
         const error = pwd.closest("div:has(div)").querySelector(`div.format`);
 
-        error.classList.toggle('d:none', !isValid);
+        error.classList.toggle('d:none', isValid);
         return isValid;
 
     }
@@ -154,7 +165,7 @@ window.addEventListener("load", function () {
 
         if(!ref.value){
             check.classList.add('d:none');
-            return false;
+            return true;
         }
 
         let signRepository = new SignRepository;
@@ -172,24 +183,10 @@ window.addEventListener("load", function () {
         if(refMember)
             refNo.value = refMember.mbrNo;
 
+        return refMember !==null;
+
 
     }
-
-    function debounce(callback, delay = 300) {
-        let timeoutId;
-
-            clearTimeout(this.timeoutId);
-        timeoutId = setTimeout(() => {
-            callback.apply(this, args); // 원래 함수 호출
-        }, delay);
-        return function(...args) {
-            // 이전 타이머를 취소합니다.
-
-            // 새로운 타이머를 설정하여 지정된 지연 후 함수를 호출합니다.
-
-        };
-    }
-
 
 
 });
