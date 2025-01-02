@@ -1,7 +1,7 @@
-.icon\:RT::before,
-.icon\:RT::after {
-    -webkit-mask-image: url("../icon/RT.svg");
-    mask-image: url("../icon/RT.svg");
+.icon\:rt::before,
+.icon\:rt::after {
+    -webkit-mask-image: url("../icon/rt.svg");
+    mask-image: url("../icon/rt.svg");
 }
 
 
@@ -24,10 +24,11 @@
     mask-image: url("../icon/thumbsup.svg");
 }
 
-.icon\:recents::before,
-.icon\:recents::after {
-    -webkit-mask-image: url("../icon/recents.svg");
-    mask-image: url("../icon/recents.svg");
+.icon\:history::before,
+.icon\:history::after {
+    -webkit-mask-image: url("../icon/history.svg");
+    mask-image: url("../icon/history.svg");
+    background-color: currentColor;
 }
 
 
