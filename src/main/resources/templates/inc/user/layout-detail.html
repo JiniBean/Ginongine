@@ -21,21 +21,21 @@
     <script type="module" src="/js/user/inc/layout.js" defer></script>
 <body>
         <!-- header 부분 -->
-        <div th:replace="~{user/user/header}">헤더</div>
+        <div th:replace="~{inc/user/header}">헤더</div>
 
         <!-- aside 부분 -->
-        <div th:replace="~{user/user/aside}">전체메뉴</div>
+        <div th:replace="~{inc/user/aside}">전체메뉴</div>
 
         <!-- category 부분 -->
-        <div th:replace="~{user/user/category}">카테고리</div>
+        <div th:replace="~{inc/user/category}">카테고리</div>
 
         <!-- main 부분 -->
         <div layout:fragment="main">메인</div>
 
         <!-- footer 부분 -->
-        <div th:replace="~{user/user/footer}">푸터</div>
+        <div th:replace="~{inc/user/footer}">푸터</div>
 
         <!-- navi 부분 -->
-        <div th:replace="~{user/user/navi-detail}">장바구니, 바로구매 버튼</div>
+        <div th:replace="~{inc/user/navi-detail}">장바구니, 바로구매 버튼</div>
 </body>
 </html>
