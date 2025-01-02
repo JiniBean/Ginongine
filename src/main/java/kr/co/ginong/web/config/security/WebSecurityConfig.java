@@ -3,6 +3,8 @@ package kr.co.ginong.web.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,12 @@ public class WebSecurityConfig{
 	@Autowired
 	private WebOAuth2UserDetailsService oAuth2UserDetailsService;
 
+
+	@Bean
+	public AuthenticationManager authenticationManager(
+			AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder(){
@@ -41,17 +49,17 @@ public class WebSecurityConfig{
 		.anyRequest().permitAll())
 		.formLogin((form)->form
 				.loginPage("/signin")
-				.permitAll()
 				.successHandler(webSigninSuccessHandler())					//로그인 성공 시 처리 로직
 				.failureHandler(new WebSigninFailureHandler())				//로그인 실패 시 처리 로직
+				.permitAll()
 				)
-		.oauth2Login(config->config
-				.userInfoEndpoint(userInfo->userInfo
-				.userService(oAuth2UserDetailsService))
-				.successHandler(webSigninSuccessHandler())
-				)
+//		.oauth2Login(config->config
+//				.userInfoEndpoint(userInfo->userInfo
+//				.userService(oAuth2UserDetailsService))
+//				.successHandler(webSigninSuccessHandler())
+//				)
 		.logout((logout)->logout
-				.logoutUrl("/signsout")
+				.logoutUrl("/signout")
 				.logoutSuccessUrl("/index")									//로그아웃 성공시 보낼 url
 				.permitAll());
 

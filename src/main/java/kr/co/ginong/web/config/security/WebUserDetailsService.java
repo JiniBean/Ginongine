@@ -31,12 +31,13 @@ public class WebUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        for(MbrRole role : roles) //권한 정보들을 꺼내서 authorities에 넣어준다.
+        //권한 정보들을 꺼내서 authorities에 넣어준다.
+        for(MbrRole role : roles)
             authorities.add(new SimpleGrantedAuthority(role.getRoleNm()));
 
+        //userDetails 에 정보를 담아줌. 이 정보는 세션으로 로그인 한 페이지에 들고 다니고, 필요정보를 빼다 쓸수 있음
         WebUserDetails userDetails = new WebUserDetails();
 
-        //userDetails 에 정보를 담아줌. 이 정보는 세션으로 로그인 한 페이지에 들고 다니고, 필요정보를 빼다 쓸수 있음
         userDetails.setMbrNo(member.getMbrNo());
         userDetails.setNm(member.getNm());
         userDetails.setUserNm(member.getUserNm());
@@ -45,8 +46,6 @@ public class WebUserDetailsService implements UserDetailsService {
         userDetails.setPhone(member.getPhone());
         userDetails.setMbrStatus(member.getMbrStatus());
         userDetails.setAuthorities(authorities);
-
-
 
         return userDetails;
     }

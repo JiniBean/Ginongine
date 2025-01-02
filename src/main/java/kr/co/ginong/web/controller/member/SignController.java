@@ -1,11 +1,13 @@
 package kr.co.ginong.web.controller.member;
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.ginong.web.config.security.WebUserDetails;
 import kr.co.ginong.web.entity.code.CodeDetail;
 import kr.co.ginong.web.entity.member.Mbr;
 import kr.co.ginong.web.service.code.CodeService;
 import kr.co.ginong.web.service.member.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,9 +99,10 @@ public class SignController {
     }
 
     @GetMapping("signup/complete")
-    public String complete(Model model, HttpSession session) {
-        Mbr member = (Mbr) session.getAttribute("member");
-        model.addAttribute("name", member.getNm());
+    public String complete(Model model, HttpSession session,
+                           @AuthenticationPrincipal WebUserDetails user) {
+
+        model.addAttribute("name", user.getName());
         session.removeAttribute("member");
         return "member/sign/complete";
     }
