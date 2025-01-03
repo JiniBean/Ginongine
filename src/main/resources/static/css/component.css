@@ -145,3 +145,21 @@
 .icon\:magnifying_glass:hover::before{
 background-color:var(--color-main-6) ;
 }
+
+
+
+/* Toast 스타일 */
+.custom-toast {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: var(--font-size-2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 70%;
+}
+
+@media (min-width: 780px) {
+    .custom-toast {
+        font-size: var(--font-size-3);
+        min-width: 200px;
+    }
+}
