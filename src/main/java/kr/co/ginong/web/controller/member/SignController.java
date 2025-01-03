@@ -30,38 +30,14 @@ public class SignController {
     }
 
     @GetMapping("signup/step1")
-    public String step1(HttpSession session, Model model) {
+    public String step1() {
 
-        Boolean age = Optional.ofNullable((Boolean) session.getAttribute("age")).orElse(false);
-        Boolean agree = Optional.ofNullable((Boolean) session.getAttribute("agree")).orElse(false);
-        Boolean email = Optional.ofNullable((Boolean) session.getAttribute("email")).orElse(false);
-        Boolean all = age && agree && email;
-
-        model.addAttribute("all", all);
-        model.addAttribute("age", age);
-        model.addAttribute("agree", agree);
-        model.addAttribute("email", email);
         return "member/sign/step1";
     }
 
-    @PostMapping("signup/step1")
-    public String step1(@RequestParam Boolean age
-                        , @RequestParam Boolean agree
-                        , @RequestParam(defaultValue = "false") Boolean email
-                        , HttpSession session) {
-
-        session.setAttribute("age",age);
-        session.setAttribute("agree",agree);
-        session.setAttribute("email",email);
-        return "redirect:step2";
-    }
 
     @GetMapping("signup/step2")
-    public String step2(HttpSession session, Model model){
-
-        Mbr member = Optional.ofNullable((Mbr) session.getAttribute("member")).orElse(new Mbr());
-        model.addAttribute("m", member);
-
+    public String step2(){
         return "member/sign/step2";
     }
 
@@ -90,7 +66,7 @@ public class SignController {
         mbr.setPwd(member.getPwd());
         mbr.setJoinRtCd(member.getJoinRtCd());
 
-        session.setAttribute("member", mbr);
+        session.removeAttribute("member");
         boolean save = service.addMember(mbr);
         if(!save){
             return "redirect:step3";
@@ -99,11 +75,11 @@ public class SignController {
     }
 
     @GetMapping("signup/complete")
-    public String complete(Model model, HttpSession session,
+    public String complete(Model model,
                            @AuthenticationPrincipal WebUserDetails user) {
 
         model.addAttribute("name", user.getName());
-        session.removeAttribute("member");
+
         return "member/sign/complete";
     }
 }

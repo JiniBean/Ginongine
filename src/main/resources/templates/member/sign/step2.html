@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>기농이네 - 순수한 땅, 순수한 먹거리</title>
-    <script type="module" src="/js/user/signup/step2.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/user/signup/step2.js" defer></script>
 </head>
 <body>
 <main layout:fragment="main" class="d:flex fl-dir:column gap:8 md:gap:13 max-w:9 w:10p pl:4 pr:4 md:pl:0 md:pr:0">
@@ -25,23 +26,23 @@
 
     <section class="d:flex fl-grow:1 fl-dir:column">
         <h1 class="d:none">회원정보 입력 영역</h1>
-        <form method="post" name="member" class="d:flex fl-dir:column gap:10 md:gap:15 mb:4 md:mb:8">
+        <form method="post"  class="d:flex fl-dir:column gap:10 md:gap:15 mb:4 md:mb:8">
             <section>
                 <h1>이름<span class="color:accent-3">*</span></h1>
-                <div><input th:value="${m.nm != null ? m.nm:''}" type="text" name="nm" class="n-textbox n-textbox-type:underline" autofocus autocomplete="false" /></div>
+                <div><input type="text" v-model="mbr.nm" class="n-textbox n-textbox-type:underline" autofocus autocomplete="false" /></div>
                 <div class="nm d:none color:accent-3">이름을 입력해주세요</div>
             </section>
             <section>
                 <h1>전화번호<span class="color:accent-3">*</span></h1>
                 <div >
-                    <input th:value="${m.phone != null ? m.phone:''}" type="text" name="phone" class="n-textbox n-textbox-type:underline" autocomplete="false"/>
+                    <input type="text" v-model="mbr.phone" class="n-textbox n-textbox-type:underline" autocomplete="false"/>
                 </div>
                 <div class="phone d:none color:accent-3">전화번호를 입력해주세요</div>
             </section>
             <section>
                 <h1>생년월일<span class="color:accent-3">*</span></h1>
                 <div>
-                    <input th:value="${m.birthDd != null ? m.birthDd:''}" type="date" name="birthDd" class="n-textbox n-textbox-type:underline"/>
+                    <input type="date" v-model="mbr.birthDd" class="n-textbox n-textbox-type:underline"/>
                 </div>
                 <div class="birthDd d:none color:accent-3">생년월일을 입력해주세요</div>
                 <div class="age d:none color:accent-3">14세 미만의 회원은 가입할 수 없습니다.</div>
@@ -58,7 +59,7 @@
                     <div>
                         <div>이메일<span class="color:accent-3">*</span></div>
                         <div class="d:flex col-gap:2">
-                            <input th:value="${m.email != null ? m.email:''}" type="text" name="email" class="n-textbox n-textbox-type:underline"
+                            <input type="text" v-model="mbr.email" class="n-textbox n-textbox-type:underline"
                                    autocomplete="false"/>
                             <button id="email-send" class="n-btn n-btn:outline color:base-9"
                                     style="top:-3px;">인증번호 발송
@@ -70,7 +71,7 @@
                     <div id="email-confirm">
                         <div>인증번호</div>
                         <div class="d:flex col-gap:2">
-                            <input type="text" name="code" class="n-textbox n-textbox-type:underline"
+                            <input type="text" inputmode="number" v-model="code" class="n-textbox n-textbox-type:underline"
                                    autocomplete="false"/>
                             <button class="n-btn n-btn:outline color:base-9 disabled" style="top:-3px;">
                                 인증번호 확인
@@ -88,7 +89,7 @@
             </section>
             <div class="d:flex gap:8">
                 <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
-                <div class="fl-grow:1"><button class="submit n-btn w:10p" >다음</button></div>
+                <div class="fl-grow:1 n-btn">다음</div>
             </div>
         </form>
     </section>

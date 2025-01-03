@@ -43,6 +43,8 @@ public class SignServiceImp implements SignService{
 
         member.setMbrNo(num);
         boolean isValid = mbrRepository.save(member);
+
+        //회원 저장 후 자동로그인
         if (isValid) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getUserNm(), pwd);
             Authentication auth = authManager.authenticate(token);
