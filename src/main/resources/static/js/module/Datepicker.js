@@ -69,7 +69,7 @@ export default class DatePicker {
         i18n: this.#i18n,
         firstDay: 1,
         showMonthAfterYear: true,
-        yearRange: [2020, 2030],
+        yearRange: [1900, 2030],
         yearSuffix: '년',
         monthSelector: true,
         yearSelector: true,
