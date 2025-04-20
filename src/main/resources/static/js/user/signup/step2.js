@@ -47,30 +47,38 @@ createApp({
             if(localMbr) this.mbr = JSON.parse(localMbr);
             this.verifier = new EmailVerifier(this.$refs.confirm);
         },
-
-        checkFormat(type){
-
-            let form = {
-                nm: {reg: /[^a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ\s]/g, slice: 20},
-                phone: {reg: /[^0-9]/g , slice: 11},
-                code: {reg: /[^0-9]/g , slice: 6}
-            }
-            this.mbr[type] = this.mbr[type].replace(form[type].reg, "").slice(0, form[type].slice);
-            this.valid[type] = !!(this.retry && !this.mbr[type].length);
+        checkEmail(){
 
         },
 
+        checkFormat(type){
+            let form = {
+                nm: {reg: /[^a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ\s]/g, slice: 20},
+                phone: {reg: /\D/g , slice: 11},
+                code: {reg: /\D/g , slice: 6},
+                format : /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            }
+            this.mbr[type] = this.mbr[type].replace(form[type].reg, "").slice(0, form[type].slice);
+            if(!this.retry) return;
+            this.valid[type] = this.mbr[type].length;
+        },
+
         async send(){
-            this.valid.format = this.verifier.checkFormat(this.mbr.email, 'email')
-            if(!this.valid.format || this.isSend) return;
-            this.isSend = this.verifier.send(
+            if(this.isSend) return;
+
+            this.isSend = await this.verifier.send(
                 this.mbr.email,
                 true,
+                (format)=>{
+                    this.valid.format = format;
+                },
                 ()=> {
                     this.isSend = false;
                 })
+        },
 
-
+        async confirm(){
+            this.isConfirm= await this.verifier.confirm();
         },
 
         initDatePickers() {
@@ -83,6 +91,10 @@ createApp({
                 }
             )
         },
+        openDatePicker(){
+            this.datePicker.show();
+        },
+
         geValidation(){
             const birth = new Date(this.mbr.birthDd);
             const today = new Date();
@@ -94,9 +106,27 @@ createApp({
         },
         submit(){
 
+            this.retry = true;
 
-            localStorage.setItem("agree", JSON.stringify(this.agree));
-            location.href ='/signup/step2';
+            //모든 항목 입력되었는지 체크
+            for (let key in this.mbr)
+                if(!this.mbr[key])
+                    this.valid[key] = false;
+
+            //인증 완료되었는지 체크
+            this.valid.code = this.isConfirm;
+
+            //유효성체크
+            if (Object.values(this.valid).includes(false)) return;
+
+            let agree =  localStorage.getItem('agree')
+            if(agree){
+                agree = JSON.parse(agree);
+                this.mbr.emailRxYn = agree.email;
+            }
+
+            localStorage.setItem("mbr", JSON.stringify(this.mbr));
+            location.href ='/signup/step3';
         }
 
     },

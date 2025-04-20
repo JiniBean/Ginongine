@@ -41,7 +41,7 @@
             </section>
             <section>
                 <h1>생년월일<span class="color:accent-3">*</span></h1>
-                <div class="w:10p deco icon:calendar_blank icon-size:2 icon-color:base-9 deco-pos:right" @click="openDatePicker()">
+                <div class="w:10p deco icon:calendar_blank icon-size:2 icon-color:base-9 deco-pos:right" @click="openDatePicker">
                     <input type="text" v-model="mbr.birthDd" class="datepicker n-textbox n-textbox-type:underline" ref="date"/>
                 </div>
                 <div class="color:accent-3" :class="{'d:none': valid.birthDd}">생년월일을 입력해주세요</div>
@@ -60,7 +60,7 @@
                         <div>이메일<span class="color:accent-3">*</span></div>
                         <div class="d:flex col-gap:2">
                             <input type="text" v-model="mbr.email" class="n-textbox n-textbox-type:underline"
-                                   autocomplete="false" :readonly="isSend" />
+                                   autocomplete="false" :readonly="isSend" @input="checkEmail"/>
                             <div id="send" class="n-btn n-btn:outline color:base-9"
                                     style="top:-3px;" @click="send">인증번호 발송
                             </div>
@@ -73,7 +73,7 @@
                         <div class="d:flex col-gap:2">
                             <input type="text" inputmode="number" v-model="code" class="n-textbox n-textbox-type:underline"
                                    autocomplete="false" @input="checkFormat('code')" :readonly="!isSend"/>
-                            <button id="confirm" class="n-btn n-btn:outline color:base-9" :disabled="!isSend" style="top:-3px;">
+                            <button id="confirm" class="n-btn n-btn:outline color:base-9" :disabled="!isSend" style="top:-3px;" @click="confirm">
                                 인증번호 확인
                             </button>
                         </div>
@@ -89,7 +89,7 @@
             </section>
             <div class="d:flex gap:8">
                 <div class="fl-grow:1"><a href="javascript:history.back()" class="n-btn n-btn:outline w:10p">이전</a></div>
-                <div class="fl-grow:1 n-btn">다음</div>
+                <div class="fl-grow:1 n-btn" @click="submit">다음</div>
             </div>
         </form>
     </section>

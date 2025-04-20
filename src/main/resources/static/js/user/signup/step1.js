@@ -36,8 +36,6 @@ createApp({
 
             //필수동의 항목 유효성검사
             if(!(this.agree.age && this.agree.info)){
-                Toast.success("모든 필수 동의 항목에 체크해주세요");
-                Toast.error("모든 필수 동의 항목에 체크해주세요");
                 Toast.info("모든 필수 동의 항목에 체크해주세요");
                 return;
             }

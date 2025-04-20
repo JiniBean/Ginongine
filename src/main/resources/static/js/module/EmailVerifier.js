@@ -40,7 +40,7 @@ export default class EmailVerifier {
         return pattern[name].test(args);
     }
 
-    async send(email, isNew = false, expireCallback = null){
+    async send(email, isNew = false, formatCallback = null, expireCallback = null){
 
         //유효성 검사
         if(!email){
@@ -48,11 +48,12 @@ export default class EmailVerifier {
             return false;
         }
 
-        if(!this.checkFormat(email, 'email')){
+        let format = this.checkFormat(email, 'email');
+        formatCallback(format);
+        if(!format){
             Toast.error("이메일 형식이 맞지 않습니다");
             return false;
         }
-
 
         const info = JSON.stringify({email, isNew}); //isNew = 신규회원인지
         const url = `${baseUrl}/rest/mail/send`;
